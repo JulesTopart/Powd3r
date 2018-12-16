@@ -13,10 +13,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_actionSTL_triggered()
-{
-    browseFile();
-}
 
 
 void MainWindow::on_actionClose_triggered()
@@ -26,7 +22,7 @@ void MainWindow::on_actionClose_triggered()
 
 void MainWindow::browseFile(){
     QString filePath = QFileDialog::getOpenFileName(this,
-        tr("Open Object"), "", tr("3D Files (*.stl *.obj)"));
+        tr("Open Object"), "", tr("3D Files (*.stl)"));
     processFile(filePath);
 }
 
@@ -36,8 +32,9 @@ void MainWindow::processFile(QString filePath){
     QString ext = fi.suffix();
     if(ext == "stl"){
         processSTLFile(filePath);
-    }else if(ext == ".obj"){
-        processOBJFile(filePath);
+    }else {
+        ui->progressLabel->setText("Invalide file extension !");
+        ui->progressBar->setValue(0);
     }
 }
 
@@ -45,25 +42,45 @@ void MainWindow::processFile(QString filePath){
 
 
 void MainWindow::processSTLFile(QString filePath){
+    mesh::Model model;
     ui->progressLabel->setText("Checking STL File...");
     ui->progressBar->setValue(5);
-    stl::STL_STATUS status = stl::checkStlFileFormat(filePath);
-    if(status == stl::STL_INVALID){
+    mesh::FILE_FORMAT format = mesh::getFileFormat(filePath);
+    if(format == mesh::INVALID){
         ui->progressBar->setValue(0);
         ui->progressLabel->setText("Corrupted file !");
+        return;
     }else{
         ui->progressBar->setValue(10);
-        ui->progressLabel->setText("Processing vertex...");
+        if(format == mesh::ASCII ){
+            ui->progressLabel->setText("Processing ASCII vertex...");
+            model = mesh::parseAscii(filePath, *ui->progressBar);
+            if(model.facets.size() != 0){
+                ui->progressLabel->setText("Rendering...");
+                ui->progressBar->setValue(0);
+                ui->openGLWidget->loadModel(model);
+                ui->openGLWidget->updateGL();
+                ui->progressBar->setValue(100);
+                ui->progressLabel->setText("Done.");
+            }
+        }
+        else{
+            ui->progressLabel->setText("Processing Binary vertex...");
+            model = mesh::parseBinary(filePath.toStdString(), *ui->progressBar);
+            if(model.facets.size() != 0){
+                ui->progressLabel->setText("Rendering...");
+                ui->progressBar->setValue(0);
+                ui->openGLWidget->loadModel(model);
+                ui->openGLWidget->updateGL();
+                ui->progressBar->setValue(100);
+                ui->progressLabel->setText("Done.");
+            }
+        }
     }
 }
 
-void MainWindow::processOBJFile(QString filePath){
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        return;
+
+void MainWindow::on_actionImporter_triggered()
+{
+   browseFile();
 }
-
-
-
-
-

@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QFileDialog>
 
-#include "stlreader.h"
+#include "mesh.h"
 
 namespace Ui {
 class MainWindow;
@@ -25,9 +25,10 @@ public:
 
 
 private slots:
-    void on_actionSTL_triggered();
 
     void on_actionClose_triggered();
+
+    void on_actionImporter_triggered();
 
 private:
     Ui::MainWindow *ui;

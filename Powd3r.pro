@@ -28,12 +28,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     glwidget.cpp \
-    stlreader.cpp
+    mesh.cpp \
+    geometry.cpp
 
 HEADERS += \
         mainwindow.h \
     glwidget.h \
-    stlreader.h
+    mesh.h \
+    geometry.h
 
 FORMS += \
         mainwindow.ui
