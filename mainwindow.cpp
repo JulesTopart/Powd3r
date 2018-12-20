@@ -59,6 +59,7 @@ void MainWindow::processSTLFile(QString filePath){
                 ui->progressLabel->setText("Rendering...");
                 ui->progressBar->setValue(0);
                 ui->openGLWidget->loadModel(model);
+                ui->listView->addItem();
                 ui->openGLWidget->updateGL();
                 ui->progressBar->setValue(100);
                 ui->progressLabel->setText("Done.");

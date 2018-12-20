@@ -35,7 +35,27 @@ public:
     Facets facets;
 
     void draw();
+
+    void rotate(float x, float y, float z);
+    void rotate(QVector3D v);
+    void scale(float x, float y, float z);
+    void scale(QVector3D v);
+    void move(float x, float y, float z);
+    void move(QVector3D v);
+    void moveTo(float x, float y, float z);
+    void moveTo(QVector3D v);
+
+    //Get Methods
+    QVector3D pos();
+    QVector3D rot();
+    QVector3D scale();
+
+
+    QString _name;
 private:
+    QVector3D _position = QVector3D(0,0,0);
+    QVector3D _rotation= QVector3D(0,0,0);
+    QVector3D _scale= QVector3D(1,1,1);
 };
 
 

@@ -23,6 +23,7 @@ void GLWidget::initializeGL(){
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     glEnable(GL_COLOR_MATERIAL);
+    //glEnable(GL_LINE_SMOOTH);
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);             // Setup The Ambient Light
     glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);             // Setup The Diffuse Light
@@ -38,7 +39,8 @@ void GLWidget::paintGL(){
     glLoadIdentity();
     glMatrixMode(GL_MODELVIEW);
 
-    glTranslatef(0.0f, 0.0f, z);
+    glTranslatef(position.x(), position.y(), position.z());
+    //glRotatef(rotation.length(), rotation.normalized().x(), rotation.normalized().y(), rotation.normalized().z());
     glRotatef(rotation.x(), 1, 0, 0);
     glRotatef(rotation.y(), 0, 1, 0);
     glRotatef(rotation.z(), 0, 0, 1);
@@ -47,6 +49,49 @@ void GLWidget::paintGL(){
     glLightfv(GL_LIGHT0, GL_POSITION,LightPosition);            // Position The Light
 
 
+
+
+    glScalef(scale.x(), scale.y(), scale.z());
+    //Draw axis
+    drawAxis();
+    glColor3f(0.5,0.5,0.48);
+
+    //Draw grid
+    drawGrid(200);
+    glColor3f(0.5,0.5,0.48f); //retablish default color
+
+
+    for(QVector<mesh::Model>::Iterator model = models.begin(); model != models.end(); model ++){
+        glPushMatrix();
+        glScalef(model->scale().x(), model->scale().y(), model->scale().z());
+        glTranslatef(model->pos().x(), model->pos().y(), model->pos().z());
+        glRotatef(model->rot().length(), model->rot().normalized().x(), model->rot().normalized().y(), model->rot().normalized().z());
+        model->draw();
+        glPopMatrix();
+    }
+    rotation += rotationSpeed;     // Add speed To rotation
+}
+
+void GLWidget::drawGrid(int grid_size)
+{
+    int HALF_GRID_SIZE = grid_size/2;
+    glBegin(GL_LINES);
+    glColor3f(0.75f, 0.75f, 0.75f);
+    for(int i=-HALF_GRID_SIZE;i<=HALF_GRID_SIZE;i+=10)
+    {
+        glVertex3f((float)i,0,(float)-HALF_GRID_SIZE);
+        glVertex3f((float)i,0,(float)HALF_GRID_SIZE);
+
+        glVertex3f((float)-HALF_GRID_SIZE,0,(float)i);
+        glVertex3f((float)HALF_GRID_SIZE,0,(float)i);
+    }
+    glEnd();
+}
+
+void GLWidget::drawAxis(){
+    glEnable(GL_LINE_SMOOTH);
+    glPushMatrix();
+    glTranslatef(0,0.06,0);
     glBegin(GL_LINES);
       glColor3f(1,0,0);
       glVertex2i(0,0);glVertex2i(0,10);
@@ -54,18 +99,9 @@ void GLWidget::paintGL(){
       glVertex2i(0,0);glVertex2i(10,0);
       glColor3f(0,0,1);
       glVertex2i(0,0);glVertex3i(0,0,10);
-      glColor3f(0.5,0.5,0.48);
     glEnd();
-
-    glScalef(0.5, 0.5, 0.5);
-    //glTranslatef(0.0f, -50.0f, 0.0);
-    glRotatef(-90, 1.0, 0.0, 0.0);
-    for(QVector<mesh::Model>::Iterator model = models.begin(); model != models.end(); model ++){
-        model->draw();
-    }
-    xRot+=xSpeed;              // Add xspeed To xrot
-    yRot+=ySpeed;              // Add yspeed To yrot
-    zRot+=zSpeed;              // Add yspeed To yrot
+    glPopMatrix();
+    glDisable(GL_LINE_SMOOTH);
 }
 
 void GLWidget::resizeGL(int width, int height){
@@ -88,37 +124,41 @@ void GLWidget::keyPressEvent(QKeyEvent *keyEvent)
             light = !light;
             break;
         case Qt::Key_Up:
-            z-=1.0f;
+
+            position += QVector3D(0,1,0);
             break;
         case Qt::Key_Down:
-            z+=1.0f;
+            position -= QVector3D(0,1,0);
+            break;
+        case Qt::Key_Right:
+            position += QVector3D(1,0,0);
+            break;
+        case Qt::Key_Left:
+            position -= QVector3D(1,0,0);
             break;
         case Qt::Key_Q:
-            ySpeed-=1.0f;
+            rotationSpeed -= QVector3D(0,1.0f,0);
             break;
         case Qt::Key_D:
-            ySpeed+=1.0f;
+            rotationSpeed += QVector3D(0,1.0f,0);
             break;
         case Qt::Key_Z:
-            xSpeed-=1.0f;
+            rotationSpeed -= QVector3D(1.0f,0,0);;
             break;
         case Qt::Key_S:
-            xSpeed+=1.0f;
+            rotationSpeed += QVector3D(1.0f,0,0);;
             break;
         case Qt::Key_Space:
-            xSpeed = 0.0f;
-            ySpeed = 0.0f;
+            rotationSpeed = QVector3D(0,0,0);
             break;
     }
 }
 
 
-void GLWidget::mouseMoveEvent( QMouseEvent *mouseEvent){
-
-}
-
-void GLWidget::scrollEvent( QWheelEvent *wheelEvent){
-
+void GLWidget::wheelEvent( QWheelEvent *event){
+    float t = event->angleDelta().y() * 0.0005;
+    if((this->scale + QVector3D(t,t,t)).length() >= 0.1) this->scale += QVector3D(t,t,t);
+    event->accept();
 }
 
 
@@ -132,98 +172,89 @@ void GLWidget::loadModel(mesh::Model mdl){
     models.push_back(mdl);
 }
 
-void GLWidget::mousePressEvent(QMouseEvent *e)
-{
-    // Save mouse press position
-    mousePressPosition = QVector2D(e->localPos());
+
+void GLWidget::mousePressEvent(QMouseEvent *event){
+    if (event->button() == Qt::LeftButton)
+    {
+        rightMousePressed = true;
+        mousePressPosition = QVector2D(event->x(), event->y());
+        setCursor(Qt::ClosedHandCursor);
+        event->accept();
+        return;
+    }
 }
 
-void GLWidget::mouseReleaseEvent(QMouseEvent *e)
-{
-    // Mouse release position - mouse press position
-    QVector2D diff = QVector2D(e->localPos()) - mousePressPosition;
-
-    // Rotation axis is perpendicular to the mouse position difference
-    // vector
-    QVector3D n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
-
-    // Accelerate angular speed relative to the length of the mouse sweep
-    qreal acc = diff.length() / 100.0;
-
-    // Calculate new rotation axis as weighted sum
-    rotationAxis = (rotationAxis * angularSpeed + n * acc).normalized();
-
-    // Increase angular speed
-    angularSpeed += acc;
+void GLWidget::mouseReleaseEvent(QMouseEvent *event){
+    if (event->button() == Qt::LeftButton)
+    {
+        rightMousePressed = false;
+        setCursor(Qt::ArrowCursor);
+        event->accept();
+        return;
+    }
+    event->ignore();
 }
+
+void GLWidget::mouseMoveEvent(QMouseEvent *event){
+    if (rightMousePressed)
+    {
+        // Mouse release position - mouse press position
+        QVector2D diff = QVector2D(event->localPos()) - mousePressPosition;
+
+        // Rotation axis is perpendicular to the mouse position difference
+        // vector
+        QVector3D n = QVector3D(diff.y(), diff.x(), 0.0);
+        rotation += n;
+
+        mousePressPosition = QVector2D(event->x(), event->y());
+        event->accept();
+        return;
+    }
+    event->ignore();
+
+}
+
 
 void GLWidget::timerEvent(QTimerEvent *)
 {
-    // Decrease angular speed (friction)
-    angularSpeed *= 0.90;
 
-    // Stop rotation when speed goes below threshold
-    if (angularSpeed < 0.01) {
-        angularSpeed = 0.0;
-    } else {
-        // Update rotation
-        rotation = QQuaternion::fromAxisAndAngle(rotationAxis, angularSpeed) * rotation;
-        updateGL();
-    }
 }
 
 void GLWidget::TopView()
 {
     // TODO: Add your command handler code here
-    xRot = 0;
-    yRot = 0;
-    zRot = 0;
+    rotation = QVector3D(0,0,0);
 }
 
 void GLWidget::BottomView()
 {
     // TODO: Add your command handler code here
-    xRot = -180;
-    yRot = 0;
-    zRot = 0;
+    rotation = QVector3D(-180,0,0);
 }
 
 void GLWidget::FrontView()
 {
     // TODO: Add your command handler code here
-    xRot = -90;
-    yRot = 0;
-    zRot = 0;
+    rotation = QVector3D(-90,0,0);
 }
 
 void GLWidget::BackView()
 {
     // TODO: Add your command handler code here
-    xRot = -90;
-    yRot = 0;
-    zRot = -180;
+    rotation = QVector3D(-90,0,-180);
 }
 
 void GLWidget::LeftView()
 {
-    // TODO: Add your command handler code here
-    xRot = -90;
-    yRot = 0;
-    zRot = -90;
+    rotation = QVector3D(-90,0,-90);
 }
 
 void GLWidget::RightView()
 {
-    // TODO: Add your command handler code here
-    xRot = -90;
-    yRot = 0;
-    zRot = 90;
+    rotation = QVector3D(-90,0,90);
 }
 
 void GLWidget::AxonView()
 {
-    // TODO: Add your command handler code here
-    xRot = -45;
-    yRot = 0;
-    zRot = -45;
+rotation = QVector3D(-45,0,-45);
 }

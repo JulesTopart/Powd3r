@@ -58,8 +58,8 @@ Model parseAscii(const QString& stl_path, QProgressBar &pBar){
     }
     file.read(6);
     QString name = file.readLine();
-
     Model output;
+    output._name = name;
     QString cBuf;
     Facet tBuff;
     cBuf = file.readLine();
@@ -259,5 +259,52 @@ void Model::draw(){
         }
     }
 }
+
+void Model::rotate(float x, float y, float z){
+    _rotation += QVector3D(x,y,z);
+}
+
+void Model::rotate(QVector3D v){
+    _rotation += v;
+}
+
+void Model::scale(float x, float y, float z){
+    _scale = QVector3D(x,y,z);
+}
+
+void Model::scale(QVector3D v){
+    _scale = v;
+}
+
+void Model::move(float x, float y, float z){
+    _position += QVector3D(x,y,z);
+}
+
+void Model::move(QVector3D v){
+    _position += v;
+}
+
+void Model::moveTo(float x, float y, float z){
+    _position = QVector3D(x,y,z);
+}
+
+void Model::moveTo(QVector3D v){
+    _position = v;
+}
+
+//Get Methods
+QVector3D Model::pos(){
+    return this->_position;
+}
+
+QVector3D Model::rot(){
+    return this->_rotation;
+}
+
+QVector3D Model::scale(){
+    return this->_scale;
+}
+
+
 
 }

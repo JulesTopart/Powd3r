@@ -13,6 +13,8 @@ public:
     GLWidget(QWidget *parent = nullptr) ;
     ~GLWidget();
     void loadModel(mesh::Model mdl);
+    void drawAxis();
+    void drawGrid(int grid_size);
     void TopView();
     void BottomView();
     void FrontView();
@@ -30,10 +32,10 @@ protected:
      void mouseMoveEvent( QMouseEvent* );
      void mousePressEvent(QMouseEvent *e);
      void mouseReleaseEvent(QMouseEvent *e);
-     void timerEvent(QTimerEvent *);
+     void timerEvent(QTimerEvent*);
 
      void keyPressEvent( QKeyEvent* );
-     void scrollEvent( QWheelEvent *wheelEvent);
+     void wheelEvent( QWheelEvent* );
 
 
 public slots:
@@ -44,25 +46,15 @@ private:
 
     QVector<mesh::Model> models;
 
-    QVector3D rotationAxis;
+    QVector3D mouseRotation;
 
-    float angularSpeed;
     QVector2D mousePressPosition;
+    bool rightMousePressed = false;
 
-    GLfloat xRot=0.0;                     // X Rotation
-    GLfloat yRot=0.0;                     // Y Rotation
-    GLfloat zRot=0.0;                     // Z Rotation
-
-    QQuaternion position;
-    QQuaternion rotation;
-
-    GLfloat xSpeed=0.0;                   // X Rotation Speed
-    GLfloat ySpeed=0.0;                   // Y Rotation Speed
-    GLfloat zSpeed=0.0;
-
-    GLfloat x = 0.0f;                     // Width Into The Screen
-    GLfloat y = 0.0f;                     // Height Into The Screen
-    GLfloat z = -50.0f;                  // Depth Into The Screen
+    QVector3D rotation = QVector3D(0,0,0);
+    QVector3D rotationSpeed = QVector3D(0,0,0);
+    QVector3D position = QVector3D(0,0,-50);
+    QVector3D scale = QVector3D(0.5,0.5,0.5);
 
     BOOL    light=true;                   // Lighting ON / OFF
 
@@ -70,7 +62,7 @@ private:
 
     GLfloat LightDiffuse[4]= { 0.6f, 0.6f, 0.55f, 1.0f };    // Diffuse Light Values ( NEW )
     // Ambient Light Values ( NEW )
-    GLfloat LightPosition[4]= { 0.8f, 0.3f, 2.0f, 0.1f };
+    GLfloat LightPosition[4]= { 50.0f, 150.0f, 0.0f, 0.1f };
 
 };
 
