@@ -29,18 +29,44 @@ SOURCES += \
         mainwindow.cpp \
     glwidget.cpp \
     mesh.cpp \
-    geometry.cpp
+    geometry.cpp \
+    rotdialog.cpp \
+    scaledialog.cpp
 
 HEADERS += \
         mainwindow.h \
     glwidget.h \
     mesh.h \
-    geometry.h
+    geometry.h \
+    mesh.h \
+    scaledialog.h \
+    rotdialog.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    rotdialog.ui \
+    scaledialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES =    ressources/coordinate.png \
+    ressources/delete.png \
+    ressources/frontview.png \
+    ressources/move.png \
+    ressources/remove.png \
+    ressources/rotate.png \
+    ressources/scale.png \
+    ressources/settings.png
+
+DISTFILES += \
+    ressources/coordinate.png \
+    ressources/delete.png \
+    ressources/frontview.png \
+    ressources/move.png \
+    ressources/remove.png \
+    ressources/rotate.png \
+    ressources/scale.png \
+    ressources/settings.png

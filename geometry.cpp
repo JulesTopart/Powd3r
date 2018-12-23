@@ -45,5 +45,3 @@ Polygon::Polygon(Lines lines_) : lines(lines_){
     }
     this->points = pBuf;
 }
-
-

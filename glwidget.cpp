@@ -25,10 +25,9 @@ void GLWidget::initializeGL(){
     glEnable(GL_COLOR_MATERIAL);
     //glEnable(GL_LINE_SMOOTH);
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-    glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);             // Setup The Ambient Light
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);             // Setup The Diffuse Light
+    glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient);             // Setup The Ambient Light
     glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION,.01f);
-    glEnable(GL_LIGHT1);      // Enable Lighting
+    glEnable(GL_LIGHT0);      // Enable Lighting
 }
 
 void GLWidget::paintGL(){
@@ -39,17 +38,15 @@ void GLWidget::paintGL(){
     glLoadIdentity();
     glMatrixMode(GL_MODELVIEW);
 
+
+
     glTranslatef(position.x(), position.y(), position.z());
     //glRotatef(rotation.length(), rotation.normalized().x(), rotation.normalized().y(), rotation.normalized().z());
     glRotatef(rotation.x(), 1, 0, 0);
     glRotatef(rotation.y(), 0, 1, 0);
     glRotatef(rotation.z(), 0, 0, 1);
 
-    //rotation.
-    glLightfv(GL_LIGHT0, GL_POSITION,LightPosition);            // Position The Light
-
-
-
+    glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);             // Setup The Diffuse Light
 
     glScalef(scale.x(), scale.y(), scale.z());
     //Draw axis
@@ -63,12 +60,16 @@ void GLWidget::paintGL(){
 
     for(QVector<mesh::Model>::Iterator model = models.begin(); model != models.end(); model ++){
         glPushMatrix();
+        //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); //WireFrame
         glScalef(model->scale().x(), model->scale().y(), model->scale().z());
         glTranslatef(model->pos().x(), model->pos().y(), model->pos().z());
         glRotatef(model->rot().length(), model->rot().normalized().x(), model->rot().normalized().y(), model->rot().normalized().z());
         model->draw();
         glPopMatrix();
     }
+
+
+
     rotation += rotationSpeed;     // Add speed To rotation
 }
 
@@ -168,10 +169,14 @@ void GLWidget::timeOutSlot()
 }
 
 
-void GLWidget::loadModel(mesh::Model mdl){
-    models.push_back(mdl);
+void GLWidget::loadModel(mesh::Model *mdl){
+    mdl->setId(models.size());
+    models.push_back(*mdl);
 }
 
+void GLWidget::unloadModel(int id){
+    models.remove(id);
+}
 
 void GLWidget::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
@@ -258,3 +263,4 @@ void GLWidget::AxonView()
 {
 rotation = QVector3D(-45,0,-45);
 }
+

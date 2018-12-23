@@ -12,9 +12,16 @@ class GLWidget : public QGLWidget
 public:
     GLWidget(QWidget *parent = nullptr) ;
     ~GLWidget();
-    void loadModel(mesh::Model mdl);
+
+    void loadModel(mesh::Model *mdl);
+    void unloadModel(int id);
+
     void drawAxis();
     void drawGrid(int grid_size);
+
+    mesh::Model* get(int i){return &models[i];}
+    void rotate(int i, QVector3D r){ models[i].rotate(r);}
+
     void TopView();
     void BottomView();
     void FrontView();
@@ -44,25 +51,37 @@ public slots:
 private:
     QTimer *t_Timer;
 
-    QVector<mesh::Model> models;
+    QVector<mesh::Model>
+    models;
 
-    QVector3D mouseRotation;
+    QVector3D
+    mouseRotation;
 
-    QVector2D mousePressPosition;
-    bool rightMousePressed = false;
+    QVector2D
+    mousePressPosition;
+    bool
+    rightMousePressed = false;
 
-    QVector3D rotation = QVector3D(0,0,0);
-    QVector3D rotationSpeed = QVector3D(0,0,0);
-    QVector3D position = QVector3D(0,0,-50);
-    QVector3D scale = QVector3D(0.5,0.5,0.5);
+    QVector3D
+    rotation      = QVector3D(0,0,0);
+    QVector3D
+    rotationSpeed = QVector3D(0,0,0);
+    QVector3D
+    position      = QVector3D(0,0,-50);
+    QVector3D
+    scale         = QVector3D(0.5,0.5,0.5);
 
-    BOOL    light=true;                   // Lighting ON / OFF
+    BOOL
+    light = true;
 
-    GLfloat LightAmbient[4]= { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat
+    LightAmbient[4]  = { 0.6f, 0.6f, 0.6f, 1.0f };
 
-    GLfloat LightDiffuse[4]= { 0.6f, 0.6f, 0.55f, 1.0f };    // Diffuse Light Values ( NEW )
-    // Ambient Light Values ( NEW )
-    GLfloat LightPosition[4]= { 50.0f, 150.0f, 0.0f, 0.1f };
+    GLfloat
+    LightDiffuse[4]  = { 0.5f, 0.5f, 0.45f, 1.0f };
+
+    GLfloat
+    LightPosition[4] = { 0.0f, 2.0f, 2.5f, 0.1f };
 
 };
 

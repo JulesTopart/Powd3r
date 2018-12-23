@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>913</width>
-    <height>622</height>
+    <width>1205</width>
+    <height>645</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -79,6 +79,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>900</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="cursor">
            <cursorShape>ArrowCursor</cursorShape>
           </property>
@@ -92,6 +98,9 @@
         </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
+          </property>
           <property name="leftMargin">
            <number>2</number>
           </property>
@@ -101,39 +110,210 @@
           <item>
            <widget class="QListWidget" name="listWidget">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+             <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
             <property name="maximumSize">
              <size>
-              <width>200</width>
-              <height>150</height>
+              <width>6000</width>
+              <height>200</height>
              </size>
             </property>
            </widget>
           </item>
-          <item alignment="Qt::AlignLeft|Qt::AlignBottom">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <property name="bottomMargin">
+             <number>271</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="scaleButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>10</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>45</width>
+                <height>45</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                <normaloff>:/ressources/scale.png</normaloff>:/ressources/scale.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="deleteButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>45</width>
+                <height>45</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>45</width>
+                <height>45</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                <normaloff>:/ressources/delete.png</normaloff>:/ressources/delete.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="rotateButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>45</width>
+                <height>45</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>45</width>
+                <height>45</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                <normaloff>:/ressources/rotate.png</normaloff>:/ressources/rotate.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="moveButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>45</width>
+                <height>45</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>45</width>
+                <height>45</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                <normaloff>:/ressources/move.png</normaloff>:/ressources/move.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
            <widget class="QLabel" name="progressLabel">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
             <property name="minimumSize">
              <size>
-              <width>180</width>
-              <height>0</height>
+              <width>0</width>
+              <height>10</height>
              </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>10</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
             </property>
             <property name="text">
              <string>No task.</string>
             </property>
            </widget>
           </item>
-          <item alignment="Qt::AlignHCenter">
+          <item>
            <widget class="QProgressBar" name="progressBar">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
@@ -143,7 +323,7 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>200</width>
+              <width>80</width>
               <height>15</height>
              </size>
             </property>
@@ -192,7 +372,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>913</width>
+     <width>1205</width>
      <height>20</height>
     </rect>
    </property>
@@ -252,6 +432,8 @@
    <header>glwidget.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc"/>
+ </resources>
  <connections/>
 </ui>

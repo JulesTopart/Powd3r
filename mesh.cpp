@@ -97,6 +97,7 @@ Model parseAscii(const QString& stl_path, QProgressBar &pBar){
         if(QString(cBuf).startsWith("endsolid")) return output;
     }while(!cBuf.isNull());
 
+    output.calculateBBox();
     return output;
 }
 
@@ -124,6 +125,8 @@ Model parseBinary(const std::string& stl_path, QProgressBar &pBar){
       stl_file.read(dummy, 2);
       pBar.setValue(pBar.value() + 4);
     }
+    model.calculateBBox();
+    return model;
 }
 
 
@@ -305,6 +308,92 @@ QVector3D Model::scale(){
     return this->_scale;
 }
 
-
-
+void Model::setName(QString n){
+    _name = n;
 }
+
+void Model::setId(int i){
+    id = i;
+}
+
+
+BBox::BBox(Model m){
+    Facets f = m.facets;
+    if(f.size() > 0){
+        xmin = f[0].v1.x;
+        xmax = f[0].v1.x;
+        ymin = f[0].v1.y;
+        ymax = f[0].v1.y;
+        zmin = f[0].v1.z;
+        zmax = f[0].v1.z;
+
+        for(Facets::Iterator facet = f.begin(); facet != f.end(); facet++){
+     // X
+            if(facet->v1.x > xmax){
+                xmax = facet->v1.x;
+            }
+            if(facet->v2.x > xmax){
+                xmax = facet->v2.x;
+            }
+            if(facet->v3.x > xmax){
+                xmax = facet->v3.x;
+            }
+
+            if(facet->v1.x < xmin){
+                xmin = facet->v1.x;
+            }
+            if(facet->v2.x < xmin){
+                xmin = facet->v2.x;
+            }
+            if(facet->v3.x < xmin){
+                xmin = facet->v3.x;
+            }
+
+     // Y
+            if(facet->v1.y > ymax){
+                ymax = facet->v1.y;
+            }
+            if(facet->v2.y > ymax){
+                ymax = facet->v2.y;
+            }
+            if(facet->v3.y > ymax){
+                ymax = facet->v3.y;
+            }
+
+            if(facet->v1.y < ymin){
+                ymin = facet->v1.y;
+            }
+            if(facet->v2.y < ymin){
+                ymin = facet->v2.y;
+            }
+            if(facet->v3.y < ymin){
+                ymin = facet->v3.y;
+            }
+
+     // Z
+            if(facet->v1.z > zmax){
+                zmax = facet->v1.z;
+            }
+            if(facet->v2.z > zmax){
+                zmax = facet->v2.z;
+            }
+            if(facet->v3.z > zmax){
+                zmax = facet->v3.z;
+            }
+
+            if(facet->v1.z < zmin){
+                zmin = facet->v1.z;
+            }
+            if(facet->v2.z < zmin){
+                zmin = facet->v2.z;
+            }
+            if(facet->v3.z < zmin){
+                zmin = facet->v3.z;
+            }
+        }
+    }
+}
+
+
+}//namespace
+

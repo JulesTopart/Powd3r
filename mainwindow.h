@@ -30,6 +30,9 @@ private slots:
 
     void on_actionImporter_triggered();
 
+    void on_scaleButton_clicked();
+    void on_rotateButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

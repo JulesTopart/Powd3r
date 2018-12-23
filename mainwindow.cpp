@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "scaledialog.h"
+#include "rotdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,7 +14,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
 
 
 void MainWindow::on_actionClose_triggered()
@@ -39,8 +40,6 @@ void MainWindow::processFile(QString filePath){
 }
 
 
-
-
 void MainWindow::processSTLFile(QString filePath){
     mesh::Model model;
     ui->progressLabel->setText("Checking STL File...");
@@ -58,8 +57,8 @@ void MainWindow::processSTLFile(QString filePath){
             if(model.facets.size() != 0){
                 ui->progressLabel->setText("Rendering...");
                 ui->progressBar->setValue(0);
-                ui->openGLWidget->loadModel(model);
-                ui->listView->addItem();
+                ui->openGLWidget->loadModel(&model);
+                ui->listWidget->addItem( "  " + QString::number(model.id) + "  :  " + model._name + " " + QString::number(model.bbox.width) + "x" + QString::number(model.bbox.heigth)+ "x" + QString::number(model.bbox.depth) + "mm");
                 ui->openGLWidget->updateGL();
                 ui->progressBar->setValue(100);
                 ui->progressLabel->setText("Done.");
@@ -71,7 +70,7 @@ void MainWindow::processSTLFile(QString filePath){
             if(model.facets.size() != 0){
                 ui->progressLabel->setText("Rendering...");
                 ui->progressBar->setValue(0);
-                ui->openGLWidget->loadModel(model);
+                ui->openGLWidget->loadModel(&model);
                 ui->openGLWidget->updateGL();
                 ui->progressBar->setValue(100);
                 ui->progressLabel->setText("Done.");
@@ -84,4 +83,26 @@ void MainWindow::processSTLFile(QString filePath){
 void MainWindow::on_actionImporter_triggered()
 {
    browseFile();
+}
+
+
+void MainWindow::on_scaleButton_clicked()
+{
+    if(this->ui->listWidget->count() > 0){
+        int id = this->ui->listWidget->currentRow();
+        mesh::Model* mdlPtr = this->ui->openGLWidget->get(id);
+        ScaleDialog *dialog = new ScaleDialog(mdlPtr);
+         dialog->show();
+    }
+}
+
+
+void MainWindow::on_rotateButton_clicked()
+{
+    if(this->ui->listWidget->count() > 0){
+        int id = this->ui->listWidget->currentRow();
+        mesh::Model* mdlPtr = this->ui->openGLWidget->get(id);
+        RotDialog *dialog = new RotDialog(mdlPtr);
+        dialog->show();
+    }
 }
