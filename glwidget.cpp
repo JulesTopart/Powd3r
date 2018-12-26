@@ -61,8 +61,8 @@ void GLWidget::paintGL(){
     //glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);                     // Setup The Diffuse Light
     //glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);                       // Setup The Diffuse Light
     glLightfv(GL_LIGHT1, GL_DIFFUSE, LightAmbient);             // Setup The Diffuse Light
-
-    for(QVector<mesh::Model>::Iterator model = models.begin(); model != models.end(); model ++){
+    int index(0);
+    for(QVector<mesh::Model>::Iterator model = models.begin(); model != models.end(); model ++, index++){
         glPushMatrix();
         //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); //WireFrame
         glScalef(model->getScale().x(), model->getScale().y(), model->getScale().z());
@@ -70,6 +70,8 @@ void GLWidget::paintGL(){
         glRotatef(model->getRotation().x(), 1, 0, 0);
         glRotatef(model->getRotation().y(), 0, 1, 0);
         glRotatef(model->getRotation().z(), 0, 0, 1);
+        if(index == selectedModel) glColor3f(0.5,0.8,0.48f);
+        else glColor3f(0.5,0.5,0.48f);
         model->draw();
         glPopMatrix();
     }
@@ -172,37 +174,46 @@ void GLWidget::timeOutSlot()
     updateGL();
 }
 
-
-
-
 void GLWidget::loadModel(mesh::Model *mdl){
-    mdl->setId(models.size());
     models.push_back(*mdl);
+    models[models.size() - 1].setId(models.size() - 1);
 }
 
 void GLWidget::unloadModel(int id){
     models.remove(id);
+    for(int i(0); i < models.size(); i++){
+        models[i].setId(i);
+    }
 }
-
-
-
 
 void GLWidget::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
+        leftMousePressed = true;
+        mousePressPosition = QVector2D(event->x(), event->y());
+        setCursor(Qt::ClosedHandCursor);
+        event->accept();
+        return;
+    }else if(event->button() == Qt::RightButton){
         rightMousePressed = true;
         mousePressPosition = QVector2D(event->x(), event->y());
         setCursor(Qt::ClosedHandCursor);
         event->accept();
         return;
     }
+    event->ignore();
 }
 
 void GLWidget::mouseReleaseEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
+        leftMousePressed = false;
+        setCursor(Qt::OpenHandCursor);
+        event->accept();
+        return;
+    }else if(event->button() == Qt::RightButton){
         rightMousePressed = false;
-        setCursor(Qt::ArrowCursor);
+        setCursor(Qt::OpenHandCursor);
         event->accept();
         return;
     }
@@ -210,7 +221,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event){
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event){
-    if (rightMousePressed)
+    if (leftMousePressed)
     {
         // Mouse release position - mouse press position
         QVector2D diff = QVector2D(event->localPos()) - mousePressPosition;
@@ -219,6 +230,20 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event){
         // vector
         QVector3D n = QVector3D(diff.y(), diff.x(), 0.0);
         rotation += n;
+
+        mousePressPosition = QVector2D(event->x(), event->y());
+        event->accept();
+        return;
+    }
+    if (rightMousePressed)
+    {
+        // Mouse release position - mouse press position
+        QVector2D diff = QVector2D(event->localPos()) - mousePressPosition;
+        diff *= 0.1;
+        // Rotation axis is perpendicular to the mouse position difference
+        // vector
+        QVector3D n = QVector3D(diff.x(), - diff.y(), 0.0);
+        position += n;
 
         mousePressPosition = QVector2D(event->x(), event->y());
         event->accept();
@@ -246,39 +271,46 @@ void GLWidget::centerOnModel(int i){
 void GLWidget::TopView()
 {
     // TODO: Add your command handler code here
-    rotation = QVector3D(0,0,0);
+    position = QVector3D(0,0,-50);
+    rotation = QVector3D(90,0,0);
 }
 
 void GLWidget::BottomView()
 {
     // TODO: Add your command handler code here
-    rotation = QVector3D(-180,0,0);
+    position = QVector3D(0,0,-50);
+    rotation = QVector3D(-90,0,0);
 }
 
 void GLWidget::FrontView()
 {
     // TODO: Add your command handler code here
-    rotation = QVector3D(-90,0,0);
+    position = QVector3D(0,0,-50);
+    rotation = QVector3D(0,0,0);
 }
 
 void GLWidget::BackView()
 {
     // TODO: Add your command handler code here
-    rotation = QVector3D(-90,0,-180);
+    position = QVector3D(0,0,-50);
+    rotation = QVector3D(0,0,-180);
 }
 
 void GLWidget::LeftView()
 {
-    rotation = QVector3D(-90,0,-90);
+    position = QVector3D(0,0,-50);
+    rotation = QVector3D(0,0,-90);
 }
 
 void GLWidget::RightView()
 {
-    rotation = QVector3D(-90,0,90);
+    position = QVector3D(0,0,-50);
+    rotation = QVector3D(0,0,90);
 }
 
 void GLWidget::AxonView()
 {
-rotation = QVector3D(-45,0,-45);
+    position = QVector3D(0,0,-50);
+    rotation = QVector3D(-45,0,-45);
 }
 

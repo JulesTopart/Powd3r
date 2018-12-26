@@ -58,9 +58,17 @@ public:
 class Model{
 public:
     Model(){}
+    Model(const Model &copy){
+        _name = copy._name;
+        id = copy.id;
+        facets = copy.facets;
+        bbox = copy.bbox;
+        _position = copy._position;
+        _rotation = copy._rotation;
+        _scale    = copy._scale;
+    }
 
     void draw();
-
     void rotate(float x, float y, float z);
     void rotate(QVector3D v);
     void scale(float x, float y, float z);
@@ -77,8 +85,13 @@ public:
     QVector3D getRotation();
     QVector3D getScale();
 
+    //Set Methods
     void setName(QString n);
     void setId(int i);
+    void setPosition(QVector3D value);
+    void setRotation(QVector3D value);
+    void setScale(QVector3D value);
+
 
     QString _name;
     int id;

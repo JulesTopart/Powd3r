@@ -59,6 +59,7 @@ Model parseAscii(const QString& stl_path, QProgressBar &pBar){
     file.read(6);
     pBar.setValue(float(float(file.pos()) / float(file.size())) * 100);
     QString name = file.readLine();
+    name.chop(1);
     Model output;
     output._name = name;
     QString cBuf;
@@ -278,11 +279,11 @@ void Model::rotate(QVector3D v){
 }
 
 void Model::scale(float x, float y, float z){
-    _scale = QVector3D(x,y,z);
+    _scale *= QVector3D(x,y,z);
 }
 
 void Model::scale(QVector3D v){
-    _scale = v;
+    _scale *= v;
 }
 
 void Model::move(float x, float y, float z){
@@ -403,6 +404,18 @@ BBox::BBox(Model m){
         qDebug("yep");
     }
     else qDebug("nope");
+}
+
+void Model::setPosition(QVector3D value){
+    _position = value;
+}
+
+void Model::setRotation(QVector3D value){
+    _rotation = value;
+}
+
+void Model::setScale(QVector3D value){
+    _scale = value;
 }
 
 

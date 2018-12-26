@@ -56,10 +56,7 @@ void MainWindow::processSTLFile(QString filePath){
             model = mesh::parseAscii(filePath, *ui->progressBar);
             if(model.facets.size() != 0){
                 ui->progressLabel->setText("Rendering...");
-                ui->progressBar->setValue(0);
-                ui->openGLWidget->loadModel(&model);
-                ui->listWidget->addItem( "  " + QString::number(model.id) + "  :  " + model._name + " " + QString::number(model.bbox.width) + "x" + QString::number(model.bbox.height)+ "x" + QString::number(model.bbox.depth) + "mm");
-                ui->openGLWidget->updateGL();
+                addModel(&model);
                 ui->progressBar->setValue(100);
                 ui->progressLabel->setText("Done.");
             }
@@ -69,13 +66,27 @@ void MainWindow::processSTLFile(QString filePath){
             model = mesh::parseBinary(filePath.toStdString(), *ui->progressBar);
             if(model.facets.size() != 0){
                 ui->progressLabel->setText("Rendering...");
-                ui->progressBar->setValue(0);
-                ui->openGLWidget->loadModel(&model);
+                addModel(&model);
                 ui->openGLWidget->updateGL();
                 ui->progressBar->setValue(100);
                 ui->progressLabel->setText("Done.");
             }
         }
+    }
+}
+
+void MainWindow::addModel(mesh::Model* mdlPtr){
+    ui->openGLWidget->loadModel(mdlPtr);
+    ui->openGLWidget->updateGL();
+    updateList();
+}
+void MainWindow::updateList(){
+   int size = ui->openGLWidget->modelCount();
+    ui->listWidget->clear();
+    mesh::Model* mdlPtr;
+    for(int i(0); i < size; i++){
+        mdlPtr = this->ui->openGLWidget->get(i);
+        ui->listWidget->addItem( "  " + QString::number(mdlPtr->id) + "  :  " + mdlPtr->_name + " " + QString::number(mdlPtr->bbox.width) + "x" + QString::number(mdlPtr->bbox.height)+ "x" + QString::number(mdlPtr->bbox.depth) + "mm");
     }
 }
 
@@ -88,7 +99,7 @@ void MainWindow::on_actionImporter_triggered()
 
 void MainWindow::on_scaleButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0){
+    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
         int id = this->ui->listWidget->currentRow();
         mesh::Model* mdlPtr = this->ui->openGLWidget->get(id);
         ScaleDialog *dialog = new ScaleDialog(mdlPtr);
@@ -99,7 +110,7 @@ void MainWindow::on_scaleButton_clicked()
 
 void MainWindow::on_rotateButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0){
+    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
         int id = this->ui->listWidget->currentRow();
         mesh::Model* mdlPtr = this->ui->openGLWidget->get(id);
         RotDialog *dialog = new RotDialog(mdlPtr);
@@ -109,14 +120,37 @@ void MainWindow::on_rotateButton_clicked()
 
 void MainWindow::on_deleteButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0){
+    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
         this->ui->openGLWidget->unloadModel(this->ui->listWidget->currentRow());
-        QListWidgetItem* item = ui->listWidget->takeItem(this->ui->listWidget->currentRow());
-        delete item;
+        updateList();
+    }
+}
+
+void MainWindow::on_duplicateButton_clicked()
+{
+    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
+        int id = this->ui->listWidget->currentRow();
+        mesh::Model* mdlPtr = this->ui->openGLWidget->get(id);
+        addModel(mdlPtr);
     }
 }
 
 void MainWindow::on_listWidget_itemPressed(QListWidgetItem *item)
 {
-    //int id = item->text()[0].toInt();
+    int id = ui->listWidget->currentRow();
+    ui->openGLWidget->select(id);
+    ui->openGLWidget->updateGL();
+}
+
+
+//Reset View Button
+void MainWindow::on_pushButton_clicked()
+{
+    ui->openGLWidget->FrontView();
+}
+
+//Add button
+void MainWindow::on_pushButton_2_clicked()
+{
+    browseFile();
 }

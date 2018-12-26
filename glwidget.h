@@ -15,12 +15,14 @@ public:
 
     void loadModel(mesh::Model *mdl);
     void unloadModel(int id);
+    int modelCount() {return models.size();}
 
     void drawAxis();
     void drawGrid(int grid_size);
 
     mesh::Model* get(int i){return &models[i];}
     void rotate(int i, QVector3D r){ models[i].rotate(r);}
+    void select(int i){ selectedModel = i;}
 
     void TopView();
     void BottomView();
@@ -55,11 +57,15 @@ private:
     QVector<mesh::Model>
     models;
 
+    int selectedModel = -1;
+
     QVector3D
     mouseRotation;
 
     QVector2D
     mousePressPosition;
+    bool
+    leftMousePressed = false;
     bool
     rightMousePressed = false;
 
@@ -76,7 +82,7 @@ private:
     light = true;
 
     GLfloat
-    LightAmbient[4]  = { 0.5f, 0.5f, 0.5f, 1.0f };
+    LightAmbient[4]  = { 0.3f, 0.3f, 0.3f, 1.0f };
 
     GLfloat
     LightDiffuse[4]  = { 0.01f, 0.01f, 0.01f, 1.0f };
@@ -84,6 +90,8 @@ private:
     GLfloat
     LightPosition[4] = { 5.0f, 5.0f, 5.0f, 1.0f };
 
+    GLfloat
+    selectedEmission[4] = { 1.0, 1.0, 1.0, 1.0 };
 };
 
 #endif // GLWIDGET_H

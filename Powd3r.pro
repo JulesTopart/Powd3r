@@ -38,9 +38,9 @@ HEADERS += \
     glwidget.h \
     mesh.h \
     geometry.h \
-    mesh.h \
     scaledialog.h \
     rotdialog.h
+
 
 FORMS += \
         mainwindow.ui \
@@ -52,21 +52,30 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-RESOURCES =    ressources/coordinate.png \
+RESOURCES = \
+    ressources/coordinate.png \
+    ressources/copy.png \
     ressources/delete.png \
     ressources/frontview.png \
     ressources/move.png \
     ressources/remove.png \
     ressources/rotate.png \
     ressources/scale.png \
-    ressources/settings.png
+    ressources/settings.png \
+    ressources/slice.png \
+    ressources/add.png \
+    ressources/main.png
 
 DISTFILES += \
     ressources/coordinate.png \
+    ressources/copy.png \
     ressources/delete.png \
     ressources/frontview.png \
     ressources/move.png \
     ressources/remove.png \
     ressources/rotate.png \
     ressources/scale.png \
-    ressources/settings.png
+    ressources/settings.png \
+    ressources/slice.png \
+    ressources/add.png \
+    ressources/main.png

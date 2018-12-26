@@ -29,7 +29,8 @@ private slots:
     void on_XSpinBox_valueChanged(double arg1);
 
 private:
-    mesh::Model* rotPtr;
+    mesh::Model* mdlPtr;
+    QVector3D initialValue = QVector3D(0,0,0);
     Ui::RotDialog *ui;
 };
 
