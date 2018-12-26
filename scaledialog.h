@@ -19,6 +19,7 @@ public:
 
 private:
     Ui::ScaleDialog *ui;
+    mesh::Model* mdlPtr;
 };
 
 #endif // SCALEDIALOG_H

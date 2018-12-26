@@ -57,12 +57,14 @@ Model parseAscii(const QString& stl_path, QProgressBar &pBar){
       assert(false);
     }
     file.read(6);
+    pBar.setValue(float(float(file.pos()) / float(file.size())) * 100);
     QString name = file.readLine();
     Model output;
     output._name = name;
     QString cBuf;
     Facet tBuff;
     cBuf = file.readLine();
+    pBar.setValue(float(float(file.pos()) / float(file.size())) * 100);
     do{
         int index = 0;
         while(cBuf[index] != 'l'){
@@ -89,12 +91,16 @@ Model parseAscii(const QString& stl_path, QProgressBar &pBar){
                 tBuff.v3 =  v.asVector3D();
                 output.facets.push_back(tBuff);
             }
-            pBar.setValue(pBar.value() + 1);
+            pBar.setValue(float(float(file.pos()) / float(file.size())) * 100);
         }
         file.readLine();//Skip "endloop"
+        pBar.setValue(float(float(file.pos()) / float(file.size())) * 100);
         file.readLine();//Skip "endFacet"
+        pBar.setValue(float(float(file.pos()) / float(file.size())) * 100);
         cBuf = file.readLine();
+        pBar.setValue(float(float(file.pos()) / float(file.size())) * 100);
         if(QString(cBuf).startsWith("endsolid")) return output;
+
     }while(!cBuf.isNull());
 
     output.calculateBBox();
@@ -296,16 +302,16 @@ void Model::moveTo(QVector3D v){
 }
 
 //Get Methods
-QVector3D Model::pos(){
-    return this->_position;
+QVector3D Model::getPosition(){
+    return _position;
 }
 
-QVector3D Model::rot(){
-    return this->_rotation;
+QVector3D Model::getRotation(){
+    return _rotation;
 }
 
-QVector3D Model::scale(){
-    return this->_scale;
+QVector3D Model::getScale(){
+    return _scale;
 }
 
 void Model::setName(QString n){

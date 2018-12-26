@@ -22,6 +22,12 @@ private slots:
 
     void on_cancelButton_clicked();
 
+    void on_ZSpinBox_valueChanged(double arg1);
+
+    void on_YSpinBox_valueChanged(double arg1);
+
+    void on_XSpinBox_valueChanged(double arg1);
+
 private:
     mesh::Model* rotPtr;
     Ui::RotDialog *ui;

@@ -61,14 +61,14 @@ void GLWidget::paintGL(){
     for(QVector<mesh::Model>::Iterator model = models.begin(); model != models.end(); model ++){
         glPushMatrix();
         //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); //WireFrame
-        glScalef(model->scale().x(), model->scale().y(), model->scale().z());
-        glTranslatef(model->pos().x(), model->pos().y(), model->pos().z());
-        glRotatef(model->rot().length(), model->rot().normalized().x(), model->rot().normalized().y(), model->rot().normalized().z());
+        glScalef(model->getScale().x(), model->getScale().y(), model->getScale().z());
+        glTranslatef(model->getPosition().x(), model->getPosition().y(), model->getPosition().z());
+        glRotatef(model->getRotation().x(), 1, 0, 0);
+        glRotatef(model->getRotation().y(), 0, 1, 0);
+        glRotatef(model->getRotation().z(), 0, 0, 1);
         model->draw();
         glPopMatrix();
     }
-
-
 
     rotation += rotationSpeed;     // Add speed To rotation
 }

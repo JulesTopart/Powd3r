@@ -71,10 +71,11 @@ public:
     void moveTo(QVector3D v);
 
     void calculateBBox(){bbox = BBox(*this);}
+
     //Get Methods
-    QVector3D pos();
-    QVector3D rot();
-    QVector3D scale();
+    QVector3D getPosition();
+    QVector3D getRotation();
+    QVector3D getScale();
 
     void setName(QString n);
     void setId(int i);

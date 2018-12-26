@@ -12,8 +12,13 @@ RotDialog::RotDialog( mesh::Model *ptr) :
     QDialog(nullptr),
     ui(new Ui::RotDialog)
 {
-    ui->setupUi(this);
     rotPtr = ptr;
+    QVector3D rot = rotPtr->getRotation();
+    ui->setupUi(this);
+    ui->XSpinBox->setValue(rot.x());
+    ui->YSpinBox->setValue(rot.y());
+    ui->ZSpinBox->setValue(rot.z());
+
 }
 
 RotDialog::~RotDialog()
@@ -23,11 +28,34 @@ RotDialog::~RotDialog()
 
 void RotDialog::on_applyButton_clicked()
 {
-    rotPtr->rotate(QVector3D(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value()));
+    QVector3D rot(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
+    rot -= rotPtr->getRotation();
+    rotPtr->rotate(rot);
     this->close();
 }
 
 void RotDialog::on_cancelButton_clicked()
 {
     this->close();
+}
+
+void RotDialog::on_ZSpinBox_valueChanged(double arg1)
+{
+    QVector3D rot(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
+    rot -= rotPtr->getRotation();
+    rotPtr->rotate(rot);
+}
+
+void RotDialog::on_YSpinBox_valueChanged(double arg1)
+{
+    QVector3D rot(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
+    rot -= rotPtr->getRotation();
+    rotPtr->rotate(rot);
+}
+
+void RotDialog::on_XSpinBox_valueChanged(double arg1)
+{
+    QVector3D rot(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
+    rot -= rotPtr->getRotation();
+    rotPtr->rotate(rot);
 }

@@ -61,10 +61,33 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QDoubleSpinBox" name="YSpinBox"/>
+     <widget class="QDoubleSpinBox" name="YSpinBox">
+      <property name="suffix">
+       <string>°</string>
+      </property>
+      <property name="minimum">
+       <double>-360.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>360.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>45.000000000000000</double>
+      </property>
+     </widget>
     </item>
     <item row="3" column="1">
-     <widget class="QDoubleSpinBox" name="ZSpinBox"/>
+     <widget class="QDoubleSpinBox" name="ZSpinBox">
+      <property name="suffix">
+       <string>°</string>
+      </property>
+      <property name="minimum">
+       <double>-360.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>45.000000000000000</double>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -73,7 +96,7 @@
     <rect>
      <x>10</x>
      <y>110</y>
-     <width>161</width>
+     <width>168</width>
      <height>51</height>
     </rect>
    </property>
