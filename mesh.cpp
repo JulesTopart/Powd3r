@@ -397,7 +397,12 @@ BBox::BBox(Model m){
                 zmin = facet->v3.z;
             }
         }
+        width = xmax - xmin;
+        height = ymax - ymin;
+        depth = zmax - zmin;
+        qDebug("yep");
     }
+    else qDebug("nope");
 }
 
 

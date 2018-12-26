@@ -35,7 +35,7 @@ class Model;
 class BBox{
 public:
     BBox() :
-        xmin(0), ymin(0), zmin(0), xmax(0), ymax(0), zmax(0), width(0), heigth(0), depth(0){} // default constructor
+        xmin(0), ymin(0), zmin(0), xmax(0), ymax(0), zmax(0), width(0), height(0), depth(0){} // default constructor
     BBox(Model m); //BBox from mesh
     BBox(QVector3D a_ , QVector3D b_) :
         xmin(a_.x()),
@@ -45,13 +45,13 @@ public:
         ymax(b_.y()),
         zmax(b_.z()),
         width(xmax - xmin),
-        heigth(ymax - ymin),
+        height(ymax - ymin),
         depth(zmax - zmin) {}
 
-    QVector3D asVector3D(){ return QVector3D(width,heigth,depth);}   // 3D Vector for point coord
+    QVector3D asVector3D(){ return QVector3D(width,height,depth);}   // 3D Vector for point coord
 
     float xmin,ymin,zmin,xmax,ymax,zmax;
-    float width, heigth, depth; // May have to be recalculated when rotated...
+    float width, height, depth; // May have to be recalculated when rotated...
 };
 
 

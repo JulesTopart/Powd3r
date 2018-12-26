@@ -30,6 +30,7 @@ public:
     void RightView();
     void AxonView();
 
+    void centerOnModel(int i);
 
 protected:
      void initializeGL();
@@ -75,13 +76,13 @@ private:
     light = true;
 
     GLfloat
-    LightAmbient[4]  = { 0.6f, 0.6f, 0.6f, 1.0f };
+    LightAmbient[4]  = { 0.5f, 0.5f, 0.5f, 1.0f };
 
     GLfloat
-    LightDiffuse[4]  = { 0.5f, 0.5f, 0.45f, 1.0f };
+    LightDiffuse[4]  = { 0.01f, 0.01f, 0.01f, 1.0f };
 
     GLfloat
-    LightPosition[4] = { 0.0f, 2.0f, 2.5f, 0.1f };
+    LightPosition[4] = { 5.0f, 5.0f, 5.0f, 1.0f };
 
 };
 

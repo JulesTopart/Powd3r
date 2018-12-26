@@ -58,7 +58,7 @@ void MainWindow::processSTLFile(QString filePath){
                 ui->progressLabel->setText("Rendering...");
                 ui->progressBar->setValue(0);
                 ui->openGLWidget->loadModel(&model);
-                ui->listWidget->addItem( "  " + QString::number(model.id) + "  :  " + model._name + " " + QString::number(model.bbox.width) + "x" + QString::number(model.bbox.heigth)+ "x" + QString::number(model.bbox.depth) + "mm");
+                ui->listWidget->addItem( "  " + QString::number(model.id) + "  :  " + model._name + " " + QString::number(model.bbox.width) + "x" + QString::number(model.bbox.height)+ "x" + QString::number(model.bbox.depth) + "mm");
                 ui->openGLWidget->updateGL();
                 ui->progressBar->setValue(100);
                 ui->progressLabel->setText("Done.");
@@ -105,4 +105,18 @@ void MainWindow::on_rotateButton_clicked()
         RotDialog *dialog = new RotDialog(mdlPtr);
         dialog->show();
     }
+}
+
+void MainWindow::on_deleteButton_clicked()
+{
+    if(this->ui->listWidget->count() > 0){
+        this->ui->openGLWidget->unloadModel(this->ui->listWidget->currentRow());
+        QListWidgetItem* item = ui->listWidget->takeItem(this->ui->listWidget->currentRow());
+        delete item;
+    }
+}
+
+void MainWindow::on_listWidget_itemPressed(QListWidgetItem *item)
+{
+    //int id = item->text()[0].toInt();
 }
