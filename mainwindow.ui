@@ -92,7 +92,7 @@
            <bool>false</bool>
           </property>
           <property name="focusPolicy">
-           <enum>Qt::TabFocus</enum>
+           <enum>Qt::StrongFocus</enum>
           </property>
          </widget>
         </item>
@@ -155,7 +155,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+               <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
                 <normaloff>:/ressources/scale.png</normaloff>:/ressources/scale.png</iconset>
               </property>
               <property name="iconSize">
@@ -193,7 +193,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+               <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
                 <normaloff>:/ressources/delete.png</normaloff>:/ressources/delete.png</iconset>
               </property>
               <property name="iconSize">
@@ -231,7 +231,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+               <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
                 <normaloff>:/ressources/rotate.png</normaloff>:/ressources/rotate.png</iconset>
               </property>
               <property name="iconSize">
@@ -269,7 +269,7 @@
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+               <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
                 <normaloff>:/ressources/move.png</normaloff>:/ressources/move.png</iconset>
               </property>
               <property name="iconSize">
@@ -433,7 +433,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc"/>
+  <include location="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -21,18 +21,19 @@ void GLWidget::initializeGL(){
     glClearColor(0.2f, 0.2f, 0.2f, 1);
     glClearDepth(1.0);
     glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_CULL_FACE);
     glDepthFunc(GL_LEQUAL);
     glEnable(GL_COLOR_MATERIAL);
     //glEnable(GL_LINE_SMOOTH);
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient);             // Setup The Ambient Light
-    glLightf(GL_LIGHT0,GL_QUADRATIC_ATTENUATION,.01f);
-    glEnable(GL_LIGHT0);      // Enable Lighting
+    //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    //glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION, 0.05f);
+    //glEnable(GL_LIGHT0);      // Enable Lighting
+    glEnable(GL_LIGHT1);      // Enable Lighting
+
 }
 
 void GLWidget::paintGL(){
-    if (!light) glDisable(GL_LIGHTING);     // Disable Lighting
-    else        glEnable(GL_LIGHTING);      // Enable Lighting
+    glDisable(GL_LIGHTING);     // Disable Lighting
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -46,17 +47,20 @@ void GLWidget::paintGL(){
     glRotatef(rotation.y(), 0, 1, 0);
     glRotatef(rotation.z(), 0, 0, 1);
 
-    glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);             // Setup The Diffuse Light
 
     glScalef(scale.x(), scale.y(), scale.z());
     //Draw axis
     drawAxis();
-    glColor3f(0.5,0.5,0.48);
+    glColor3f(0.5,0.5,0.48f);
 
     //Draw grid
     drawGrid(200);
     glColor3f(0.5,0.5,0.48f); //retablish default color
 
+    if (light) glEnable(GL_LIGHTING);      // Enable Lighting
+    //glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);                     // Setup The Diffuse Light
+    //glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);                       // Setup The Diffuse Light
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, LightAmbient);             // Setup The Diffuse Light
 
     for(QVector<mesh::Model>::Iterator model = models.begin(); model != models.end(); model ++){
         glPushMatrix();
@@ -92,7 +96,7 @@ void GLWidget::drawGrid(int grid_size)
 void GLWidget::drawAxis(){
     glEnable(GL_LINE_SMOOTH);
     glPushMatrix();
-    glTranslatef(0,0.06,0);
+    glTranslatef(0,0.06f,0);
     glBegin(GL_LINES);
       glColor3f(1,0,0);
       glVertex2i(0,0);glVertex2i(0,10);
@@ -157,7 +161,7 @@ void GLWidget::keyPressEvent(QKeyEvent *keyEvent)
 
 
 void GLWidget::wheelEvent( QWheelEvent *event){
-    float t = event->angleDelta().y() * 0.0005;
+    float t = event->angleDelta().y() * 0.0005f;
     if((this->scale + QVector3D(t,t,t)).length() >= 0.1) this->scale += QVector3D(t,t,t);
     event->accept();
 }
@@ -169,6 +173,8 @@ void GLWidget::timeOutSlot()
 }
 
 
+
+
 void GLWidget::loadModel(mesh::Model *mdl){
     mdl->setId(models.size());
     models.push_back(*mdl);
@@ -177,6 +183,9 @@ void GLWidget::loadModel(mesh::Model *mdl){
 void GLWidget::unloadModel(int id){
     models.remove(id);
 }
+
+
+
 
 void GLWidget::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
@@ -220,9 +229,18 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event){
 }
 
 
+
+
 void GLWidget::timerEvent(QTimerEvent *)
 {
 
+}
+
+
+
+void GLWidget::centerOnModel(int i){
+    mesh::BBox bb = models[i].bbox;
+    position += QVector3D(bb.xmin, bb.ymin, bb.zmin) + (bb.asVector3D()/2);
 }
 
 void GLWidget::TopView()

@@ -33,6 +33,10 @@ private slots:
     void on_scaleButton_clicked();
     void on_rotateButton_clicked();
 
+    void on_deleteButton_clicked();
+
+    void on_listWidget_itemPressed(QListWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
 };
