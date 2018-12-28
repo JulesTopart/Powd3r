@@ -58,3 +58,8 @@ void RotDialog::on_XSpinBox_valueChanged(double arg1)
     QVector3D rot(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
     mdlPtr->setRotation(rot);
 }
+
+void RotDialog::on_RotDialog_destroyed()
+{
+    mdlPtr->setRotation(initialValue);
+}

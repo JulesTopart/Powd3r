@@ -31,7 +31,9 @@ SOURCES += \
     mesh.cpp \
     geometry.cpp \
     rotdialog.cpp \
-    scaledialog.cpp
+    scaledialog.cpp \
+    movedialog.cpp \
+    gl2d.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,13 +41,16 @@ HEADERS += \
     mesh.h \
     geometry.h \
     scaledialog.h \
-    rotdialog.h
+    rotdialog.h \
+    movedialog.h \
+    gl2d.h
 
 
 FORMS += \
         mainwindow.ui \
     rotdialog.ui \
-    scaledialog.ui
+    scaledialog.ui \
+    movedialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

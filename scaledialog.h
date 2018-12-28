@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "mesh.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class ScaleDialog;
@@ -14,7 +15,7 @@ class ScaleDialog : public QDialog
 
 public:
     explicit ScaleDialog(QWidget *parent = nullptr);
-    explicit ScaleDialog(Mesh *parent = nullptr);
+    explicit ScaleDialog(Mesh *mdlPtr = nullptr, MainWindow* mainWindow = nullptr );
     ~ScaleDialog();
 
 private slots:
@@ -28,10 +29,17 @@ private slots:
 
     void on_depthSpin_valueChanged(double arg1);
 
+    void on_fromBBCheckBox_stateChanged(int arg1);
+
+    void on_ScaleDialog_destroyed();
+
 private:
     Ui::ScaleDialog *ui;
-    QVector3D initialScale = QVector3D(0,0,0);;
+    Vec3 initialScale = QVector3D(1,1,1);
+    Vec3 intialDim;
     Mesh* mdlPtr;
+    MainWindow* mw;
+    bool running = false;
 };
 
 #endif // SCALEDIALOG_H

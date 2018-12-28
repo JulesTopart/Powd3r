@@ -46,10 +46,11 @@ public:
     void        move        (float x, float y, float z  );
     void        move        (Vec3 v                     );
     void        normalize   ();                 ///move the 3D model coordinate to be center around COG(0,0,0)
+    void        transform   (QMatrix4x4 mat);
 
     //          ------ Get Methods ------
 
-    Vec3        getBBSize   ();                 ///return bounding box size
+    Vec3        getBBSize   ();                 ///return scaled bounding box size
     QVector3D   getPosition ();                 ///return relative position (self origin)
     QVector3D   getRotation ();                 ///return rotation arround each axis in a QVector
     QVector3D   getScale    ();                 ///return scale factor for each axis
@@ -102,6 +103,8 @@ Vec3        parseQVector        (std::ifstream& s);
 
 Mesh        parseAscii          (const QString& stl_path, QProgressBar &pBar);
 Mesh        parseBinary         (const std::string& stl_path, QProgressBar &pBar);
+void triMeshSlicer(   const Mesh *meshPtr, // the const input mesh
+                     std::vector<std::vector<LineSegment>> &slicesWithLineSegments, float sliceSize);
 
 
 #endif // MESH_H

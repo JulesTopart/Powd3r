@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "scaledialog.h"
 #include "rotdialog.h"
+#include "movedialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,7 +15,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
 
 void MainWindow::on_actionClose_triggered()
 {
@@ -86,7 +86,7 @@ void MainWindow::updateList(){
     Mesh* mdlPtr;
     for(int i(0); i < size; i++){
         mdlPtr = this->ui->openGLWidget->get(i);
-        ui->listWidget->addItem( "  " + QString::number(mdlPtr->getId()) + "  :  " + mdlPtr->getName() + " " + QString::number(mdlPtr->getBBSize().x) + "x" + QString::number(mdlPtr->getBBSize().y)+ "x" + QString::number(mdlPtr->getBBSize().z) + "mm");
+        ui->listWidget->addItem( "  " + QString::number(mdlPtr->getId()) + "  :  " + mdlPtr->getName() + " " + QString::number(mdlPtr->getBBSize().x) + " x " + QString::number(mdlPtr->getBBSize().y)+ " x " + QString::number(mdlPtr->getBBSize().z) + "mm");
     }
 }
 
@@ -96,13 +96,12 @@ void MainWindow::on_actionImporter_triggered()
    browseFile();
 }
 
-
 void MainWindow::on_scaleButton_clicked()
 {
     if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
         int id = this->ui->listWidget->currentRow();
         Mesh* mdlPtr = this->ui->openGLWidget->get(id);
-        ScaleDialog *dialog = new ScaleDialog(mdlPtr);
+        ScaleDialog *dialog = new ScaleDialog(mdlPtr, this);
          dialog->show();
     }
 }
@@ -135,7 +134,7 @@ void MainWindow::on_duplicateButton_clicked()
     }
 }
 
-void MainWindow::on_listWidget_itemPressed(QListWidgetItem *item)
+void MainWindow::on_listWidget_itemPressed(QListWidgetItem*)
 {
     int id = ui->listWidget->currentRow();
     ui->openGLWidget->select(id);
@@ -153,4 +152,28 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
     browseFile();
+}
+
+void MainWindow::on_moveButton_clicked()
+{
+    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
+        int id = this->ui->listWidget->currentRow();
+        Mesh* mdlPtr = this->ui->openGLWidget->get(id);
+        moveDialog *dialog = new moveDialog(mdlPtr);
+        dialog->show();
+    }
+}
+
+void MainWindow::on_sliceButton_clicked()
+{
+    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
+        triMeshSlicer(ui->openGLWidget->get(ui->listWidget->currentRow()),*ui->openGLWidget_2->getLines(), ui->layerHeightSpinBox->value());
+        int nSlice = ui->openGLWidget_2->getLines()->size();
+        ui->verticalSlider->setMaximum(nSlice);
+    }
+}
+
+void MainWindow::on_verticalSlider_valueChanged(int value)
+{
+    ui->openGLWidget_2->selectSlice(value);
 }

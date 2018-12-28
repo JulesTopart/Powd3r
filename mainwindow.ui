@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1238</width>
-    <height>601</height>
+    <width>972</width>
+    <height>532</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -61,7 +61,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideNone</enum>
@@ -142,7 +142,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QTabWidget" name="tabWidget">
+           <widget class="QTabWidget" name="tabWidget1">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -552,7 +552,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QFrame" name="">
+         <widget class="QFrame" name="frame">
           <property name="maximumSize">
            <size>
             <width>225</width>
@@ -1025,7 +1025,7 @@
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QOpenGLWidget" name="openGLWidget_2">
+         <widget class="gl2D" name="openGLWidget_2">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -1053,48 +1053,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_7">
-          <item alignment="Qt::AlignBottom">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>No Task.</string>
-            </property>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignBottom">
-           <widget class="QProgressBar" name="progressBar_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="maximum">
-             <number>100</number>
-            </property>
-            <property name="value">
-             <number>0</number>
-            </property>
-            <property name="textVisible">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="toolpathTab">
@@ -1112,7 +1070,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1238</width>
+     <width>972</width>
      <height>20</height>
     </rect>
    </property>
@@ -1170,6 +1128,11 @@
    <class>GLWidget</class>
    <extends>QOpenGLWidget</extends>
    <header>glwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>gl2D</class>
+   <extends>QOpenGLWidget</extends>
+   <header>gl2d.h</header>
   </customwidget>
  </customwidgets>
  <resources>

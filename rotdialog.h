@@ -28,6 +28,8 @@ private slots:
 
     void on_XSpinBox_valueChanged(double arg1);
 
+    void on_RotDialog_destroyed();
+
 private:
     Mesh* mdlPtr;
     QVector3D initialValue = QVector3D(0,0,0);

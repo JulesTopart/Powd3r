@@ -29,7 +29,6 @@ void GLWidget::initializeGL(){
     //glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION, 0.05f);
     //glEnable(GL_LIGHT0);      // Enable Lighting
     glEnable(GL_LIGHT1);      // Enable Lighting
-
 }
 
 void GLWidget::paintGL(){

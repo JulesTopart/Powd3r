@@ -1,108 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RotDialog</class>
- <widget class="QDialog" name="RotDialog">
+ <class>moveDialog</class>
+ <widget class="QDialog" name="moveDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>179</width>
-    <height>169</height>
+    <width>180</width>
+    <height>171</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Tourner</string>
+   <string>Dialog</string>
   </property>
   <widget class="QWidget" name="formLayoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>161</width>
-     <height>101</height>
+     <width>160</width>
+     <height>121</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
-    <item row="1" column="0">
+    <property name="verticalSpacing">
+     <number>12</number>
+    </property>
+    <item row="0" column="0">
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Axe X</string>
+       <string>On X</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QDoubleSpinBox" name="XSpinBox">
-      <property name="suffix">
-       <string>°</string>
-      </property>
-      <property name="minimum">
-       <double>-360.000000000000000</double>
-      </property>
-      <property name="maximum">
-       <double>360.000000000000000</double>
-      </property>
-      <property name="singleStep">
-       <double>45.000000000000000</double>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>On Y</string>
       </property>
      </widget>
     </item>
     <item row="2" column="0">
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="label_3">
       <property name="text">
-       <string>Axe Y</string>
+       <string>On Z</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Axe Z</string>
+    <item row="0" column="1">
+     <widget class="QDoubleSpinBox" name="XSpinBox">
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>10.000000000000000</double>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QDoubleSpinBox" name="YSpinBox">
+      <property name="minimum">
+       <double>-1000.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>1000.000000000000000</double>
+      </property>
+      <property name="singleStep">
+       <double>10.000000000000000</double>
       </property>
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QDoubleSpinBox" name="YSpinBox">
-      <property name="suffix">
-       <string>°</string>
-      </property>
+     <widget class="QDoubleSpinBox" name="ZSpinBox">
       <property name="minimum">
-       <double>-360.000000000000000</double>
+       <double>-1000.000000000000000</double>
       </property>
       <property name="maximum">
-       <double>360.000000000000000</double>
+       <double>1000.000000000000000</double>
       </property>
       <property name="singleStep">
-       <double>45.000000000000000</double>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QDoubleSpinBox" name="ZSpinBox">
-      <property name="suffix">
-       <string>°</string>
-      </property>
-      <property name="minimum">
-       <double>-360.000000000000000</double>
-      </property>
-      <property name="singleStep">
-       <double>45.000000000000000</double>
+       <double>10.000000000000000</double>
       </property>
      </widget>
     </item>
    </layout>
+   <zorder>label</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_3</zorder>
+   <zorder>YSpinBox</zorder>
+   <zorder>ZSpinBox</zorder>
+   <zorder>XSpinBox</zorder>
   </widget>
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>110</y>
+     <y>130</y>
      <width>161</width>
-     <height>51</height>
+     <height>31</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QPushButton" name="applyButton">
+     <widget class="QPushButton" name="validateButton">
       <property name="text">
        <string>Valider</string>
       </property>
