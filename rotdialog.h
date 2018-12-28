@@ -14,7 +14,7 @@ class RotDialog : public QDialog
 
 public:
     explicit RotDialog(QWidget *parent = nullptr);
-    explicit RotDialog(mesh::Model *ptr = nullptr);
+    explicit RotDialog(Mesh *ptr = nullptr);
     ~RotDialog();
 
 private slots:
@@ -29,7 +29,7 @@ private slots:
     void on_XSpinBox_valueChanged(double arg1);
 
 private:
-    mesh::Model* mdlPtr;
+    Mesh* mdlPtr;
     QVector3D initialValue = QVector3D(0,0,0);
     Ui::RotDialog *ui;
 };

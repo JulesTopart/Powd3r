@@ -41,20 +41,20 @@ void MainWindow::processFile(QString filePath){
 
 
 void MainWindow::processSTLFile(QString filePath){
-    mesh::Model model;
+    Mesh model;
     ui->progressLabel->setText("Checking STL File...");
     ui->progressBar->setValue(5);
-    mesh::FILE_FORMAT format = mesh::getFileFormat(filePath);
-    if(format == mesh::INVALID){
+    FILE_FORMAT format = getFileFormat(filePath);
+    if(format == INVALID){
         ui->progressBar->setValue(0);
         ui->progressLabel->setText("Corrupted file !");
         return;
     }else{
         ui->progressBar->setValue(10);
-        if(format == mesh::ASCII ){
+        if(format == ASCII ){
             ui->progressLabel->setText("Processing ASCII vertex...");
-            model = mesh::parseAscii(filePath, *ui->progressBar);
-            if(model.facets.size() != 0){
+            model = parseAscii(filePath, *ui->progressBar);
+            if(model.size() != 0){
                 ui->progressLabel->setText("Rendering...");
                 addModel(&model);
                 ui->progressBar->setValue(100);
@@ -63,8 +63,8 @@ void MainWindow::processSTLFile(QString filePath){
         }
         else{
             ui->progressLabel->setText("Processing Binary vertex...");
-            model = mesh::parseBinary(filePath.toStdString(), *ui->progressBar);
-            if(model.facets.size() != 0){
+            model = parseBinary(filePath.toStdString(), *ui->progressBar);
+            if(model.size() != 0){
                 ui->progressLabel->setText("Rendering...");
                 addModel(&model);
                 ui->openGLWidget->updateGL();
@@ -75,7 +75,7 @@ void MainWindow::processSTLFile(QString filePath){
     }
 }
 
-void MainWindow::addModel(mesh::Model* mdlPtr){
+void MainWindow::addModel(Mesh* mdlPtr){
     ui->openGLWidget->loadModel(mdlPtr);
     ui->openGLWidget->updateGL();
     updateList();
@@ -83,10 +83,10 @@ void MainWindow::addModel(mesh::Model* mdlPtr){
 void MainWindow::updateList(){
    int size = ui->openGLWidget->modelCount();
     ui->listWidget->clear();
-    mesh::Model* mdlPtr;
+    Mesh* mdlPtr;
     for(int i(0); i < size; i++){
         mdlPtr = this->ui->openGLWidget->get(i);
-        ui->listWidget->addItem( "  " + QString::number(mdlPtr->id) + "  :  " + mdlPtr->_name + " " + QString::number(mdlPtr->bbox.width) + "x" + QString::number(mdlPtr->bbox.height)+ "x" + QString::number(mdlPtr->bbox.depth) + "mm");
+        ui->listWidget->addItem( "  " + QString::number(mdlPtr->getId()) + "  :  " + mdlPtr->getName() + " " + QString::number(mdlPtr->getBBSize().x) + "x" + QString::number(mdlPtr->getBBSize().y)+ "x" + QString::number(mdlPtr->getBBSize().z) + "mm");
     }
 }
 
@@ -101,7 +101,7 @@ void MainWindow::on_scaleButton_clicked()
 {
     if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
         int id = this->ui->listWidget->currentRow();
-        mesh::Model* mdlPtr = this->ui->openGLWidget->get(id);
+        Mesh* mdlPtr = this->ui->openGLWidget->get(id);
         ScaleDialog *dialog = new ScaleDialog(mdlPtr);
          dialog->show();
     }
@@ -112,7 +112,7 @@ void MainWindow::on_rotateButton_clicked()
 {
     if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
         int id = this->ui->listWidget->currentRow();
-        mesh::Model* mdlPtr = this->ui->openGLWidget->get(id);
+        Mesh* mdlPtr = this->ui->openGLWidget->get(id);
         RotDialog *dialog = new RotDialog(mdlPtr);
         dialog->show();
     }
@@ -130,7 +130,7 @@ void MainWindow::on_duplicateButton_clicked()
 {
     if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
         int id = this->ui->listWidget->currentRow();
-        mesh::Model* mdlPtr = this->ui->openGLWidget->get(id);
+        Mesh* mdlPtr = this->ui->openGLWidget->get(id);
         addModel(mdlPtr);
     }
 }

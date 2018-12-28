@@ -8,7 +8,7 @@ ScaleDialog::ScaleDialog(QWidget *parent) :
     ui->setupUi(this);
 }
 
-ScaleDialog::ScaleDialog(mesh::Model *mdlPtr_) :
+ScaleDialog::ScaleDialog(Mesh *mdlPtr_) :
     QDialog(nullptr),
     ui(new Ui::ScaleDialog)
 {

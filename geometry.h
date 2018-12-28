@@ -1,100 +1,175 @@
 #ifndef GEOMETRY_H
 #define GEOMETRY_H
 
-#include <QVector3D>
 #include <QVector2D>
+#include <QVector3D>
+#include <QVector4D>
 #include <QVector>
+#include <QMatrix4x4>
 
 #define PI 3.1415926535897932384626433832795
+#define INTERRES 0.0005
 
-enum cCONTEXT{
-    c2D,
-    c3D,
-    UNDIFINED
-};
+//----------------------------------------------------------------
+//-------------------------- Vec3 class --------------------------
+//----------------------------------------------------------------
 
-
-class Point{
+class Vec3{
 public:
-    Point() :
-        x(0.0), y(0.0), z(0.0), ctx(UNDIFINED){}        // default constructor
-    Point(double x_,double y_) :
-        x(x_), y(y_), z(0.0), ctx(c2D)        {}        // Point from 2 coord is 2D
-    Point(double x_,double y_,double z_) :
-        x(x_), y(y_), z(z_), ctx(c3D){}                 // Point from 3 coord is 3D
-    Point(QVector2D a_) :
-        x(a_.x()), y(a_.y()), z(0.0), ctx(c2D){}        // Point from 2D Vector coord is 2D
-    Point(QVector3D a_) :
-        x(a_.x()), y(a_.y()), z(a_.z()), ctx(c3D){}     // Point from 3D Vector coord is 3D
-    Point(double a[]);
-    double x,y,z;
+//---------------- Constructor --------------
+    Vec3();                     //default
+    Vec3(QVector3D a_   );      // Vector from 3D Vector coord is 3D
+    Vec3(float a[3]     );      // Vector from float array
+    Vec3(float x_,              // Vector from 3 coord is 3D
+         float y_,
+         float z_       );
 
-    QVector2D asVector2D(){ return QVector2D(x,y);}     // 2D Vector for point coord
-    QVector3D asVector3D(){ return QVector3D(x,y,z);}   // 3D Vector for point coord
+//----------------- Methods ---------------
 
-    bool is2D(){ return ctx == c2D;}                    // Is 2D context ?
-    bool is3D(){ return ctx == c3D;}                    // Is 3D context ?
+    float   dotproduct  (const Vec3 &v          ) const;
+    void    transform   (const QMatrix4x4 &mat  )      ;
+    float   normalize   ()                        const;
 
-    cCONTEXT ctx;
+//---------------- Operator --------------
+
+    Vec3 &operator-=    (const Vec3 &pt);
+    Vec3 operator-      (const Vec3 &pt);
+    Vec3 operator+      (const Vec3 &pt);
+    Vec3 operator/      (float a);
+    Vec3 operator*      (float a);
+
+    operator QVector3D() const; //Cast to QVector
+
+//-------------- Attribute --------------
+    float x,y,z;
 };
-typedef QVector<Point> Points;
+
+typedef QVector<Vec3> Vec3Collection;
+Vec3 operator-(const Vec3 &a, const Vec3 &b);
+Vec3 operator+(const Vec3 &a, const Vec3 &b);
 
 
-class Line{
+//----------------------------------------------------------------
+//---------------------- LineSegment Class -----------------------
+//----------------------------------------------------------------
+
+class LineSegment{
 public:
-    Line() : a(Point()), b(Point()) {}
-    Line(Point a_, Point b_) : a(a_), b(b_) {}
-    Line(QVector2D a_, QVector2D b_) : a(a_), b(b_){}
-    Line( double ax_,
-          double ay_,
-          double az_ ,
-          double bx_,
-          double by_,
-          double bz_
-         ) : a(Point(ax_, ay_, az_)), b(Point(bx_, by_, bz_)), ctx(c2D){}
+//------------- Constructor -----------
+    LineSegment ();
+    LineSegment ( Vec3 a_     , Vec3 b_         );
+    LineSegment ( QVector3D a_, QVector3D b_    );
+    LineSegment ( float ax_,float ay_,float az_ ,
+                  float bx_,float by_,float bz_ );
 
-    Line( double ax_,
-          double ay_,
-          double bx_,
-          double by_
-         ) : a(Point(ax_, ay_)), b(Point(bx_, by_)), ctx(c2D){}
+//-------------- Operator -------------
+    Vec3& operator [](int idx);
 
-    QVector2D asVector2D(){ return QVector2D(b.x - a.x, b.y - a.y);}
-    QVector3D asVector3D(){ return QVector3D(b.x - a.x, b.y - a.y, b.z - a.z);}
+//-------------- Methods -------------
+    QVector2D asVector2D();
+    QVector3D asVector3D();
 
-    bool is2D(){ return ctx == c2D;}
-    bool is3D(){ return ctx == c3D;}
+    Vec3& A(){return v[0];}
+    Vec3& B(){return v[1];}
 
-    Point a,b;
-    cCONTEXT ctx;
+    Vec3 v[2];
 };
-typedef QVector<Line> Lines;
-bool operator==(Line const& a, Line const& b);
+//-------------- Extern Operator -------------
+typedef QVector<LineSegment> LineSegments;
+bool operator==(LineSegment const& a, LineSegment const& b);
 
 
-struct Facet {
-    Point normal;
-    Point v1;
-    Point v2;
-    Point v3;
-    Facet(QVector3D normalp, QVector3D v1p, QVector3D v2p, QVector3D v3p) :
-      normal(normalp), v1(v1p), v2(v2p), v3(v3p) {}
-    Facet(Point normalp, Point v1p, Point v2p, Point v3p) :
-      normal(normalp.asVector3D()), v1(v1p.asVector3D()), v2(v2p.asVector3D()), v3(v3p.asVector3D()) {}
-    Facet(){}
+//----------------------------------------------------------------
+//------------------------- Plane Class --------------------------
+//----------------------------------------------------------------
+
+class Plane
+{
+public:
+//------------- Constructor -----------
+    Plane() : mDistance(0) {}
+
+//-------------- Methods -------------
+    float   distance        () const;
+    float   distanceToPoint (const Vec3 &vertex ) const;
+    void    setNormal       (Vec3 normal        );
+    void    setDistance     (float distance     );
+
+protected:
+    Vec3  mNormal;      // normalized Normal-Vector of the plane
+    float mDistance;    // shortest distance from plane to Origin
+};
+
+
+class Facet {
+public:
+//------------- Constructor -----------
+    Facet();
+    Facet(QVector3D normalp,
+          QVector3D v1p,
+          QVector3D v2p,
+          QVector3D v3p );
+
+    Facet(Vec3 normalp,
+          Vec3 v1p,
+          Vec3 v2p,
+          Vec3 v3p      );
+
+//-------------- Operator -------------
+
+    Facet &operator-=(const Vec3 &pt        );
+    Facet &operator-=(const QVector3D &pt   );
+
+
+//-------------- Methods -------------
+
+    void transform      (const QMatrix4x4 &mat);
+
+    // @return -1 = all triangle is on plane back side
+    //          0 = plane intersects the triangle
+    //          1 = all triangle is on plane front side
+    //         -2 = error in function
+    int intersectPlane  (const Plane &plane, LineSegment &ls) const;
+
+
+    Vec3 normal;
+    Vec3 v[3];
+
 };
 typedef QVector<Facet> Facets;
+
+
 
 class Polygon{
 public:
     Polygon();
-    Polygon(Points points_);
-    Polygon(Lines lines_);
+    Polygon(Vec3Collection points_  );
+    Polygon(LineSegments lines_     );
 
-    Points points;
-    Lines lines;
+    Vec3Collection points;
+    LineSegments lines;
 };
 
 
+
+
+
+/*
+//Horizontale plane
+class HPlane{
+public:
+    HPlane();
+    bool intersect(Vec3 a){return !(a.z < z_coordinate - INTERRES && a.z > z_coordinate + INTERRES);}
+    bool intersect(LineSegment l){return !(l.a.z < z_coordinate - INTERRES && l.b.z > z_coordinate + INTERRES);}
+    bool intersect(LineSegments lines){
+        for(int i(0); i < lines.size(); i++)
+            if(intersect(lines[i])) return true;
+        return false;
+    }
+    
+private:
+    double z_coordinate;
+};
+*/
 
 #endif // GEOMETRY_H

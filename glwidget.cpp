@@ -62,7 +62,7 @@ void GLWidget::paintGL(){
     //glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);                       // Setup The Diffuse Light
     glLightfv(GL_LIGHT1, GL_DIFFUSE, LightAmbient);             // Setup The Diffuse Light
     int index(0);
-    for(QVector<mesh::Model>::Iterator model = models.begin(); model != models.end(); model ++, index++){
+    for(QVector<Mesh>::Iterator model = models.begin(); model != models.end(); model ++, index++){
         glPushMatrix();
         //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); //WireFrame
         glScalef(model->getScale().x(), model->getScale().y(), model->getScale().z());
@@ -174,7 +174,7 @@ void GLWidget::timeOutSlot()
     updateGL();
 }
 
-void GLWidget::loadModel(mesh::Model *mdl){
+void GLWidget::loadModel(Mesh *mdl){
     models.push_back(*mdl);
     models[models.size() - 1].setId(models.size() - 1);
 }
@@ -264,8 +264,9 @@ void GLWidget::timerEvent(QTimerEvent *)
 
 
 void GLWidget::centerOnModel(int i){
-    mesh::BBox bb = models[i].bbox;
-    position += QVector3D(bb.xmin, bb.ymin, bb.zmin) + (bb.asVector3D()/2);
+    QVector3D pos = models[i].getPosition();
+    QVector3D bb  = models[i].getBBSize();
+    position = pos + (bb / 2);
 }
 
 void GLWidget::TopView()

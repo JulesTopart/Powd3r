@@ -1,7 +1,6 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include <string>
 #include <QVector>
 #include <QMainWindow>
 #include <QFileDialog>
@@ -20,106 +19,89 @@
 
 #include "geometry.h"
 
-namespace mesh{
-
-
 enum FILE_FORMAT{
     ASCII,
     BINARY,
     INVALID
 };
 
-
-class Model;
-
-class BBox{
+class Mesh{
 public:
-    BBox() :
-        xmin(0), ymin(0), zmin(0), xmax(0), ymax(0), zmax(0), width(0), height(0), depth(0){} // default constructor
-    BBox(Model m); //BBox from mesh
-    BBox(QVector3D a_ , QVector3D b_) :
-        xmin(a_.x()),
-        ymin(a_.y()),
-        zmin(a_.z()),
-        xmax(b_.x()),
-        ymax(b_.y()),
-        zmax(b_.z()),
-        width(xmax - xmin),
-        height(ymax - ymin),
-        depth(zmax - zmin) {}
 
-    QVector3D asVector3D(){ return QVector3D(width,height,depth);}   // 3D Vector for point coord
+//----------- Constructor -----------
+    Mesh();
+    Mesh(const Mesh &copy);
 
-    float xmin,ymin,zmin,xmax,ymax,zmax;
-    float width, height, depth; // May have to be recalculated when rotated...
+//------------ Methods --------------
+
+    void        draw     ();
+    void        push_back(Facet f);
+
+//----- Transformation Methods -----
+
+    void        rotate      (float x, float y, float z  );
+    void        rotate      (Vec3 v                     );
+    void        scale       (float x, float y, float z  );
+    void        scale       (Vec3 v                     );
+    void        move        (float x, float y, float z  );
+    void        move        (Vec3 v                     );
+    void        normalize   ();                 ///move the 3D model coordinate to be center around COG(0,0,0)
+
+    //          ------ Get Methods ------
+
+    Vec3        getBBSize   ();                 ///return bounding box size
+    QVector3D   getPosition ();                 ///return relative position (self origin)
+    QVector3D   getRotation ();                 ///return rotation arround each axis in a QVector
+    QVector3D   getScale    ();                 ///return scale factor for each axis
+    QString     getName     ();                 ///return name
+    int         getId       ();                 ///return ID
+    size_t      size        ();                 ///return number of facets
+
+    Facets          &getMesh()          { return _facets; }
+    const Facets    &getMesh() const    { return _facets; }
+
+    Vec3 getBottomLeftVertex() const    { return _bottomLeftVertex; }
+    Vec3 getUpperRightVertex() const    { return _upperRightVertex; }
+
+    //          --------Set Methods---------
+
+    void        setPosition (QVector3D value);  ///set relative position (self origin)
+    void        setRotation (QVector3D value);  ///set rotation around each axis
+    void        setScale    (QVector3D value);  ///set scale factor in each direction
+    void        setName     (QString n      );  ///set name
+    void        setId       (int i          );  ///set ID
+
+//------------------------- Attribute -------------------------
+
+protected:
+    // -------- GUI purpose only --------
+    QString     _name       ;
+    int         _id         ;
+
+    //-------- Geometry --------
+    Facets      _facets     ;
+    Vec3        _bottomLeftVertex,
+                _upperRightVertex;
+
+    //-------- OpenGL --------
+    QVector3D   _position = QVector3D(0,0,0);
+    QVector3D   _rotation = QVector3D(0,0,0);
+    QVector3D   _scale    = QVector3D(1,1,1);
+
 };
 
 
-class Model{
-public:
-    Model(){}
-    Model(const Model &copy){
-        _name = copy._name;
-        id = copy.id;
-        facets = copy.facets;
-        bbox = copy.bbox;
-        _position = copy._position;
-        _rotation = copy._rotation;
-        _scale    = copy._scale;
-    }
+std::ostream& operator<<(std::ostream& out, const Vec3 p    );
+std::ostream& operator<<(std::ostream& out, const Facet& t  );
 
-    void draw();
-    void rotate(float x, float y, float z);
-    void rotate(QVector3D v);
-    void scale(float x, float y, float z);
-    void scale(QVector3D v);
-    void move(float x, float y, float z);
-    void move(QVector3D v);
-    void moveTo(float x, float y, float z);
-    void moveTo(QVector3D v);
+FILE_FORMAT getFileFormat       (const QString &path);
+FILE_FORMAT checkStlFileFormat  (const QString &path);
 
-    void calculateBBox(){bbox = BBox(*this);}
+double      parseDouble         (std::ifstream& s);
+Vec3        parseQVector        (std::ifstream& s);
 
-    //Get Methods
-    QVector3D getPosition();
-    QVector3D getRotation();
-    QVector3D getScale();
-
-    //Set Methods
-    void setName(QString n);
-    void setId(int i);
-    void setPosition(QVector3D value);
-    void setRotation(QVector3D value);
-    void setScale(QVector3D value);
-
-
-    QString _name;
-    int id;
-    Facets facets;
-    BBox bbox;
-private:
-    QVector3D _position = QVector3D(0,0,0);
-    QVector3D _rotation = QVector3D(0,0,0);
-    QVector3D _scale    = QVector3D(1,1,1);
-};
-
-
-
-
-FILE_FORMAT getFileFormat(const QString &path);
-
-std::ostream& operator<<(std::ostream& out, const Point p);
-std::ostream& operator<<(std::ostream& out, const Facet& t);
-
-double parseDouble(std::ifstream& s);
-Point parseQVector(std::ifstream& s);
-
-Model parseAscii(const QString& stl_path, QProgressBar &pBar);
-Model parseBinary(const std::string& stl_path, QProgressBar &pBar);
-
-FILE_FORMAT checkStlFileFormat(const QString &path);
-
-}
+Mesh        parseAscii          (const QString& stl_path, QProgressBar &pBar);
+Mesh        parseBinary         (const std::string& stl_path, QProgressBar &pBar);
 
 
 #endif // MESH_H

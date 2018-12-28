@@ -14,7 +14,7 @@ class ScaleDialog : public QDialog
 
 public:
     explicit ScaleDialog(QWidget *parent = nullptr);
-    explicit ScaleDialog(mesh::Model *parent = nullptr);
+    explicit ScaleDialog(Mesh *parent = nullptr);
     ~ScaleDialog();
 
 private slots:
@@ -31,7 +31,7 @@ private slots:
 private:
     Ui::ScaleDialog *ui;
     QVector3D initialScale = QVector3D(0,0,0);;
-    mesh::Model* mdlPtr;
+    Mesh* mdlPtr;
 };
 
 #endif // SCALEDIALOG_H

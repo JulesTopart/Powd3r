@@ -13,14 +13,14 @@ public:
     GLWidget(QWidget *parent = nullptr) ;
     ~GLWidget();
 
-    void loadModel(mesh::Model *mdl);
+    void loadModel(Mesh *mdl);
     void unloadModel(int id);
     int modelCount() {return models.size();}
 
     void drawAxis();
     void drawGrid(int grid_size);
 
-    mesh::Model* get(int i){return &models[i];}
+    Mesh* get(int i){return &models[i];}
     void rotate(int i, QVector3D r){ models[i].rotate(r);}
     void select(int i){ selectedModel = i;}
 
@@ -54,7 +54,7 @@ public slots:
 private:
     QTimer *t_Timer;
 
-    QVector<mesh::Model>
+    QVector<Mesh>
     models;
 
     int selectedModel = -1;

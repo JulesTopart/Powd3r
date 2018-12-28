@@ -8,7 +8,7 @@ RotDialog::RotDialog(QWidget *parent) :
     ui->setupUi(this);
 }
 
-RotDialog::RotDialog( mesh::Model *ptr) :
+RotDialog::RotDialog( Mesh *ptr) :
     QDialog(nullptr),
     ui(new Ui::RotDialog)
 {

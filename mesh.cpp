@@ -1,10 +1,169 @@
 #include "mesh.h"
 
-namespace mesh{
+//-----------------------------------------------------------------
+//-------------------------- Mesh class ---------------------------
+//-----------------------------------------------------------------
+
+//------------------------- Constructor ---------------------------
+
+    Mesh::Mesh(): _bottomLeftVertex(999999, 999999, 999999), _upperRightVertex(-999999, -999999, -999999) {}
+    Mesh::Mesh(const Mesh &copy) :    _name       (copy._name     ),
+                                _id         (copy._id       ),
+                                _facets     (copy._facets   ),
+                                _position   (copy._position ),
+                                _rotation   (copy._rotation ),
+                                _scale      (copy._scale    ){}
+
+//--------------------------- Methods -----------------------------
+
+
+void Mesh::draw(){
+    if(_facets.size() > 0){
+        GLdouble x,y,z;
+        for(Facets::Iterator facet = _facets.begin(); facet != _facets.end(); facet++){
+            glBegin(GL_TRIANGLES);
+                x = facet->normal.x;
+                y = facet->normal.y;
+                z = facet->normal.z;
+                  glNormal3d(x, y, z);
+
+              for(int i(0); i < 3; i++){
+                  x = facet->v[i].x;
+                  y = facet->v[i].y;
+                  z = facet->v[i].z;
+                    glVertex3d(x, y, z);
+              }
+
+
+            glEnd();
+        }
+    }
+}
+
+void Mesh::push_back(Facet t){
+    _facets.push_back(t);
+    for (size_t i = 0; i < 3; ++i)
+    {
+        if (t.v[i].x < _bottomLeftVertex.x)
+            _bottomLeftVertex.x = t.v[i].x;
+        if (t.v[i].y < _bottomLeftVertex.y)
+            _bottomLeftVertex.y = t.v[i].y;
+        if (t.v[i].z < _bottomLeftVertex.z)
+            _bottomLeftVertex.z = t.v[i].z;
+        if (t.v[i].x > _upperRightVertex.x)
+            _upperRightVertex.x = t.v[i].x;
+        if (t.v[i].y > _upperRightVertex.y)
+            _upperRightVertex.y = t.v[i].y;
+        if (t.v[i].z > _upperRightVertex.z)
+            _upperRightVertex.z = t.v[i].z;
+    }
+}
+
+//----------------- Transformation Methods --------------------
+
+
+void Mesh::rotate(float x, float y, float z){
+    _rotation += Vec3(x,y,z);
+}
+
+void Mesh::rotate(Vec3 v){
+    _rotation += v;
+}
+
+void Mesh::scale(float x, float y, float z){
+    _scale *= Vec3(x,y,z);
+}
+
+void Mesh::scale(Vec3 v){
+    _scale *= v;
+}
+
+void Mesh::move(float x, float y, float z){
+    _position += Vec3(x,y,z);
+}
+
+void Mesh::move(Vec3 v){
+    _position += v;
+}
+
+void Mesh::normalize(){
+    Vec3 halfBbox = (_upperRightVertex - _bottomLeftVertex) / 2.0f;
+    Vec3 start = _bottomLeftVertex + halfBbox;
+    for (size_t i = 0; i < _facets.size(); ++i)
+    {
+        Facet &facet = _facets[i];
+        facet -= start;
+    }
+    _bottomLeftVertex = halfBbox * -1.0f;
+    _upperRightVertex = halfBbox;
+}
 
 
 
-std::ostream& operator<<(std::ostream& out, const Point p) {
+//---------------------- Get Methods -------------------------
+Vec3 Mesh::getBBSize(){
+    return Vec3(_upperRightVertex.x - _bottomLeftVertex.x,
+                _upperRightVertex.y - _bottomLeftVertex.y,
+                _upperRightVertex.z - _bottomLeftVertex.z);
+}
+
+QVector3D Mesh::getPosition(){
+    return _position;
+}
+
+QVector3D Mesh::getRotation(){
+    return _rotation;
+}
+
+QVector3D Mesh::getScale(){
+    return _scale;
+}
+
+QString Mesh::getName(){
+    return _name;
+}
+
+int Mesh::getId(){
+    return _id;
+}
+
+size_t Mesh::size(){
+    return _facets.size();
+}
+
+
+//---------------------- Set Methods -------------------------
+
+void Mesh::setPosition(QVector3D value){
+    _position = value;
+}
+
+void Mesh::setRotation(QVector3D value){
+    _rotation = value;
+}
+
+void Mesh::setScale(QVector3D value){
+    _scale = value;
+}
+
+void Mesh::setName(QString n){
+    _name = n;
+}
+
+void Mesh::setId(int i){
+    _id = i;
+}
+
+
+
+//-----------------------------------------------------------------
+//----------------------- Extern function -------------------------
+//-----------------------------------------------------------------
+
+
+
+// Stream operator (for debug)
+std::ostream& operator<<(std::ostream& out, const Vec3 p) {
   out << "(" << p.x << ", " << p.y << ", " << p.z << ")" << std::endl;
   return out;
 }
@@ -12,12 +171,13 @@ std::ostream& operator<<(std::ostream& out, const Point p) {
 std::ostream& operator<<(std::ostream& out, const Facet& t) {
   out << "---- TRIANGLE ----" << std::endl;
   out << t.normal << std::endl;
-  out << t.v1 << std::endl;
-  out << t.v2 << std::endl;
-  out << t.v3 << std::endl;
+  out << t.v[0] << std::endl;
+  out << t.v[1] << std::endl;
+  out << t.v[2] << std::endl;
   return out;
 }
 
+//Useful parsing stuff
 double parseDouble(std::ifstream& s) {
   char f_buf[sizeof(double)];
   s.read(f_buf, 4);
@@ -25,14 +185,14 @@ double parseDouble(std::ifstream& s) {
   return *fptr;
 }
 
-Point parsePoint(std::ifstream& s) {
+Vec3 parsePoint(std::ifstream& s) {
   double x = parseDouble(s);
   double y = parseDouble(s);
   double z = parseDouble(s);
-  return Point(x, y, z);
+  return Vec3(x, y, z);
 }
 
-Point parseAsciiPoint(QString cBuf){
+Vec3 parseAsciiPoint(QString cBuf){
     double coord[3] = {0.0,0.0,0.0};
     for(int i(0); i < 3; i++){
         int index(0);
@@ -48,10 +208,12 @@ Point parseAsciiPoint(QString cBuf){
         index ++;
         cBuf.remove(0,index);
     }
-    return Point(coord[0], coord[1], coord[2]);
+    return Vec3(coord[0], coord[1], coord[2]);
 }
 
-Model parseAscii(const QString& stl_path, QProgressBar &pBar){
+
+//Read Ascii .stl file and return its mesh
+Mesh parseAscii(const QString& stl_path, QProgressBar &pBar){
     QFile file(stl_path);
     if (!file.open(QIODevice::ReadOnly)){
       assert(false);
@@ -60,8 +222,8 @@ Model parseAscii(const QString& stl_path, QProgressBar &pBar){
     pBar.setValue(float(float(file.pos()) / float(file.size())) * 100);
     QString name = file.readLine();
     name.chop(1);
-    Model output;
-    output._name = name;
+    Mesh output;
+    output.setName(name);
     QString cBuf;
     Facet tBuff;
     cBuf = file.readLine();
@@ -73,8 +235,8 @@ Model parseAscii(const QString& stl_path, QProgressBar &pBar){
         }
         index++;
         cBuf.remove(0,index); //Skip "facet normal"
-        Point normal = parseAsciiPoint(cBuf);
-        tBuff.normal =  normal.asVector3D();
+        Vec3 normal = parseAsciiPoint(cBuf);
+        tBuff.normal =  normal;
 
         file.readLine(); //Skip "outer loop"
         for(int i(0); i < 3; i++){
@@ -85,12 +247,12 @@ Model parseAscii(const QString& stl_path, QProgressBar &pBar){
             }
             index++;
             cBuf.remove(0,index);
-            Point v = parseAsciiPoint(cBuf);
-            if(i == 0) tBuff.v1 =  v.asVector3D();
-            if(i == 1) tBuff.v2 =  v.asVector3D();
+            Vec3 v = parseAsciiPoint(cBuf);
+            if(i == 0) tBuff.v[0]=  v;
+            if(i == 1) tBuff.v[1] =  v;
             if(i == 2){
-                tBuff.v3 =  v.asVector3D();
-                output.facets.push_back(tBuff);
+                tBuff.v[2] =  v;
+                output.push_back(tBuff);
             }
             pBar.setValue(float(float(file.pos()) / float(file.size())) * 100);
         }
@@ -104,11 +266,10 @@ Model parseAscii(const QString& stl_path, QProgressBar &pBar){
 
     }while(!cBuf.isNull());
 
-    output.calculateBBox();
     return output;
 }
 
-Model parseBinary(const std::string& stl_path, QProgressBar &pBar){
+Mesh parseBinary(const std::string& stl_path, QProgressBar &pBar){
     std::ifstream stl_file(stl_path.c_str(), std::ios::in | std::ios::binary);
     if (!stl_file) {
       assert(false);
@@ -119,7 +280,7 @@ Model parseBinary(const std::string& stl_path, QProgressBar &pBar){
     stl_file.read(header_info, 80);
     stl_file.read(n_triangles, 4);
     QString h(header_info);
-    Model model;
+    Mesh model;
     unsigned int* r = (unsigned int*) n_triangles;
     unsigned int num_triangles = *r;
     for (unsigned int i = 0; i < num_triangles; i++) {
@@ -127,12 +288,11 @@ Model parseBinary(const std::string& stl_path, QProgressBar &pBar){
       auto v1 = parsePoint(stl_file);
       auto v2 = parsePoint(stl_file);
       auto v3 = parsePoint(stl_file);
-      model.facets.push_back(Facet(normal, v1, v2, v3));
+      model.push_back(Facet(normal, v1, v2, v3));
       char dummy[2];
       stl_file.read(dummy, 2);
       pBar.setValue(pBar.value() + 4);
     }
-    model.calculateBBox();
     return model;
 }
 
@@ -238,186 +398,4 @@ FILE_FORMAT getFileFormat(const QString &path){
     printf("\n\tLast");
     return INVALID;
 }
-
-
-void Model::draw(){
-    if(facets.size() != 0){
-        GLdouble x,y,z;
-        for(Facets::Iterator facet = facets.begin(); facet != facets.end(); facet++){
-            glBegin(GL_TRIANGLES);
-                x = facet->normal.x;
-                y = facet->normal.y;
-                z = facet->normal.z;
-                  glNormal3d(x, y, z);
-
-                x = facet->v1.x;
-                y = facet->v1.y;
-                z = facet->v1.z;
-                  glVertex3d(x, y, z);
-
-                x = facet->v2.x;
-                y = facet->v2.y;
-                z = facet->v2.z;
-                  glVertex3d(x, y, z);
-
-                x = facet->v3.x;
-                y = facet->v3.y;
-                z = facet->v3.z;
-                  glVertex3d(x, y, z);
-
-            glEnd();
-        }
-    }
-}
-
-void Model::rotate(float x, float y, float z){
-    _rotation += QVector3D(x,y,z);
-}
-
-void Model::rotate(QVector3D v){
-    _rotation += v;
-}
-
-void Model::scale(float x, float y, float z){
-    _scale *= QVector3D(x,y,z);
-}
-
-void Model::scale(QVector3D v){
-    _scale *= v;
-}
-
-void Model::move(float x, float y, float z){
-    _position += QVector3D(x,y,z);
-}
-
-void Model::move(QVector3D v){
-    _position += v;
-}
-
-void Model::moveTo(float x, float y, float z){
-    _position = QVector3D(x,y,z);
-}
-
-void Model::moveTo(QVector3D v){
-    _position = v;
-}
-
-//Get Methods
-QVector3D Model::getPosition(){
-    return _position;
-}
-
-QVector3D Model::getRotation(){
-    return _rotation;
-}
-
-QVector3D Model::getScale(){
-    return _scale;
-}
-
-void Model::setName(QString n){
-    _name = n;
-}
-
-void Model::setId(int i){
-    id = i;
-}
-
-
-BBox::BBox(Model m){
-    Facets f = m.facets;
-    if(f.size() > 0){
-        xmin = f[0].v1.x;
-        xmax = f[0].v1.x;
-        ymin = f[0].v1.y;
-        ymax = f[0].v1.y;
-        zmin = f[0].v1.z;
-        zmax = f[0].v1.z;
-
-        for(Facets::Iterator facet = f.begin(); facet != f.end(); facet++){
-     // X
-            if(facet->v1.x > xmax){
-                xmax = facet->v1.x;
-            }
-            if(facet->v2.x > xmax){
-                xmax = facet->v2.x;
-            }
-            if(facet->v3.x > xmax){
-                xmax = facet->v3.x;
-            }
-
-            if(facet->v1.x < xmin){
-                xmin = facet->v1.x;
-            }
-            if(facet->v2.x < xmin){
-                xmin = facet->v2.x;
-            }
-            if(facet->v3.x < xmin){
-                xmin = facet->v3.x;
-            }
-
-     // Y
-            if(facet->v1.y > ymax){
-                ymax = facet->v1.y;
-            }
-            if(facet->v2.y > ymax){
-                ymax = facet->v2.y;
-            }
-            if(facet->v3.y > ymax){
-                ymax = facet->v3.y;
-            }
-
-            if(facet->v1.y < ymin){
-                ymin = facet->v1.y;
-            }
-            if(facet->v2.y < ymin){
-                ymin = facet->v2.y;
-            }
-            if(facet->v3.y < ymin){
-                ymin = facet->v3.y;
-            }
-
-     // Z
-            if(facet->v1.z > zmax){
-                zmax = facet->v1.z;
-            }
-            if(facet->v2.z > zmax){
-                zmax = facet->v2.z;
-            }
-            if(facet->v3.z > zmax){
-                zmax = facet->v3.z;
-            }
-
-            if(facet->v1.z < zmin){
-                zmin = facet->v1.z;
-            }
-            if(facet->v2.z < zmin){
-                zmin = facet->v2.z;
-            }
-            if(facet->v3.z < zmin){
-                zmin = facet->v3.z;
-            }
-        }
-        width = xmax - xmin;
-        height = ymax - ymin;
-        depth = zmax - zmin;
-        qDebug("yep");
-    }
-    else qDebug("nope");
-}
-
-void Model::setPosition(QVector3D value){
-    _position = value;
-}
-
-void Model::setRotation(QVector3D value){
-    _rotation = value;
-}
-
-void Model::setScale(QVector3D value){
-    _scale = value;
-}
-
-
-}//namespace
 

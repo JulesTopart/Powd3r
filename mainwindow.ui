@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1202</width>
-    <height>690</height>
+    <width>1238</width>
+    <height>601</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -42,6 +42,7 @@
       <property name="font">
        <font>
         <family>Century Gothic</family>
+        <pointsize>10</pointsize>
        </font>
       </property>
       <property name="mouseTracking">
@@ -82,7 +83,7 @@
       </property>
       <widget class="QWidget" name="mainTab">
        <attribute name="icon">
-        <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
+        <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
          <normaloff>:/ressources/frontview.png</normaloff>:/ressources/frontview.png</iconset>
        </attribute>
        <attribute name="title">
@@ -112,20 +113,21 @@
              <bool>true</bool>
             </property>
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
             <property name="minimumSize">
              <size>
-              <width>900</width>
+              <width>200</width>
               <height>0</height>
              </size>
             </property>
             <property name="font">
              <font>
               <family>Century Gothic</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="cursor">
@@ -150,6 +152,7 @@
             <property name="font">
              <font>
               <family>Century Gothic</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="tabPosition">
@@ -204,11 +207,16 @@
                   <height>33</height>
                  </size>
                 </property>
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
                 <property name="text">
                  <string> Ajouter</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/add.png</normaloff>:/ressources/add.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -245,13 +253,14 @@
                 <property name="font">
                  <font>
                   <family>Century Gothic</family>
+                  <pointsize>10</pointsize>
                  </font>
                 </property>
                 <property name="text">
                  <string> Dupliquer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/copy.png</normaloff>:/ressources/copy.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -291,6 +300,7 @@
                 <property name="font">
                  <font>
                   <family>Century Gothic</family>
+                  <pointsize>10</pointsize>
                  </font>
                 </property>
                 <property name="toolTip">
@@ -300,7 +310,7 @@
                  <string> Déplacer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/move.png</normaloff>:/ressources/move.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -340,6 +350,7 @@
                 <property name="font">
                  <font>
                   <family>Century Gothic</family>
+                  <pointsize>10</pointsize>
                  </font>
                 </property>
                 <property name="toolTip">
@@ -349,7 +360,7 @@
                  <string> Echelle</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/scale.png</normaloff>:/ressources/scale.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -389,6 +400,7 @@
                 <property name="font">
                  <font>
                   <family>Century Gothic</family>
+                  <pointsize>10</pointsize>
                  </font>
                 </property>
                 <property name="toolTip">
@@ -398,7 +410,7 @@
                  <string> Orbite</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/rotate.png</normaloff>:/ressources/rotate.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -432,13 +444,14 @@
                 <property name="font">
                  <font>
                   <family>Century Gothic</family>
+                  <pointsize>10</pointsize>
                  </font>
                 </property>
                 <property name="text">
                  <string> Centrer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/coordinate.png</normaloff>:/ressources/coordinate.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -478,6 +491,7 @@
                 <property name="font">
                  <font>
                   <family>Century Gothic</family>
+                  <pointsize>10</pointsize>
                  </font>
                 </property>
                 <property name="toolTip">
@@ -487,7 +501,7 @@
                  <string>Supprimer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/delete.png</normaloff>:/ressources/delete.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -513,6 +527,7 @@
             <property name="font">
              <font>
               <family>Century Gothic</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -537,453 +552,470 @@
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetMinimumSize</enum>
+         <widget class="QFrame" name="">
+          <property name="maximumSize">
+           <size>
+            <width>225</width>
+            <height>16777215</height>
+           </size>
           </property>
-          <property name="leftMargin">
-           <number>2</number>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
           </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QTabWidget" name="tabWidget_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>250</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Century Gothic</family>
-             </font>
-            </property>
-            <property name="currentIndex">
-             <number>0</number>
-            </property>
-            <widget class="QWidget" name="tab">
-             <attribute name="title">
-              <string>Objets</string>
-             </attribute>
-             <widget class="QListWidget" name="listWidget">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>254</width>
-                <height>170</height>
-               </rect>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>170</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>6000</width>
-                <height>200</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Century Gothic</family>
-               </font>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::NoFrame</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Plain</enum>
-              </property>
-              <property name="midLineWidth">
-               <number>0</number>
-              </property>
-              <property name="autoScroll">
-               <bool>false</bool>
-              </property>
-              <property name="autoScrollMargin">
-               <number>64</number>
-              </property>
-              <property name="alternatingRowColors">
-               <bool>true</bool>
-              </property>
-              <property name="selectionBehavior">
-               <enum>QAbstractItemView::SelectRows</enum>
-              </property>
-              <property name="textElideMode">
-               <enum>Qt::ElideNone</enum>
-              </property>
-              <property name="isWrapping" stdset="0">
-               <bool>false</bool>
-              </property>
-              <property name="resizeMode">
-               <enum>QListView::Adjust</enum>
-              </property>
-              <property name="uniformItemSizes">
-               <bool>true</bool>
-              </property>
-              <property name="wordWrap">
-               <bool>true</bool>
-              </property>
-              <property name="selectionRectVisible">
-               <bool>true</bool>
-              </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetDefaultConstraint</enum>
+           </property>
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
+            <number>1</number>
+           </property>
+           <item>
+            <widget class="QTabWidget" name="tabWidget_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>135</width>
+               <height>116</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>225</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Century Gothic</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <property name="elideMode">
+              <enum>Qt::ElideNone</enum>
+             </property>
+             <property name="documentMode">
+              <bool>false</bool>
+             </property>
+             <widget class="QWidget" name="tab">
+              <attribute name="title">
+               <string>Objets</string>
+              </attribute>
+              <widget class="QListWidget" name="listWidget">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>221</width>
+                 <height>291</height>
+                </rect>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>125</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>225</width>
+                 <height>500200</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Plain</enum>
+               </property>
+               <property name="midLineWidth">
+                <number>0</number>
+               </property>
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAsNeeded</enum>
+               </property>
+               <property name="horizontalScrollBarPolicy">
+                <enum>Qt::ScrollBarAsNeeded</enum>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+               </property>
+               <property name="autoScroll">
+                <bool>false</bool>
+               </property>
+               <property name="autoScrollMargin">
+                <number>64</number>
+               </property>
+               <property name="alternatingRowColors">
+                <bool>true</bool>
+               </property>
+               <property name="selectionBehavior">
+                <enum>QAbstractItemView::SelectRows</enum>
+               </property>
+               <property name="textElideMode">
+                <enum>Qt::ElideNone</enum>
+               </property>
+               <property name="isWrapping" stdset="0">
+                <bool>false</bool>
+               </property>
+               <property name="resizeMode">
+                <enum>QListView::Adjust</enum>
+               </property>
+               <property name="uniformItemSizes">
+                <bool>true</bool>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+               <property name="selectionRectVisible">
+                <bool>true</bool>
+               </property>
+              </widget>
              </widget>
             </widget>
-           </widget>
-          </item>
-          <item>
-           <layout class="QFormLayout" name="formLayout">
-            <property name="topMargin">
-             <number>37</number>
-            </property>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>250</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Century Gothic</family>
-               </font>
-              </property>
-              <property name="text">
-               <string>Hauteur de couche</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QDoubleSpinBox" name="layerHeightSpinBox">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>250</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Century Gothic</family>
-               </font>
-              </property>
-              <property name="suffix">
-               <string> mm</string>
-              </property>
-              <property name="decimals">
-               <number>3</number>
-              </property>
-              <property name="maximum">
-               <double>2.000000000000000</double>
-              </property>
-              <property name="value">
-               <double>0.200000000000000</double>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_4">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>250</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Century Gothic</family>
-               </font>
-              </property>
-              <property name="text">
-               <string>Interval de buses</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_5">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>250</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Century Gothic</family>
-               </font>
-              </property>
-              <property name="text">
-               <string>TextLabel</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QPushButton" name="pushButton_5">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>250</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Century Gothic</family>
-               </font>
-              </property>
-              <property name="text">
-               <string>PushButton</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <item>
-               <widget class="QSpinBox" name="firstNozzleSpinBox">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>250</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Century Gothic</family>
-                 </font>
-                </property>
-                <property name="value">
-                 <number>1</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_3">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>250</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Century Gothic</family>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>à</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSpinBox" name="lastNozzleSpinBox">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>250</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Century Gothic</family>
-                 </font>
-                </property>
-                <property name="value">
-                 <number>12</number>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QPushButton" name="sliceButton">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>250</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Century Gothic</family>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Trancher</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
-              <normaloff>:/ressources/slice.png</normaloff>:/ressources/slice.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_6">
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QLabel" name="progressLabel">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>10</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>10</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Century Gothic</family>
-               </font>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::NoFrame</enum>
-              </property>
-              <property name="text">
-               <string>No task.</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QProgressBar" name="progressBar">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>80</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>250</width>
-                <height>15</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Century Gothic</family>
-               </font>
-              </property>
-              <property name="value">
-               <number>0</number>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-              </property>
-              <property name="textVisible">
-               <bool>false</bool>
-              </property>
-              <property name="invertedAppearance">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
+           </item>
+           <item>
+            <layout class="QFormLayout" name="formLayout">
+             <property name="fieldGrowthPolicy">
+              <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+             </property>
+             <property name="topMargin">
+              <number>37</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>250</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Hauteur de couche</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QDoubleSpinBox" name="layerHeightSpinBox">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>90</width>
+                 <height>10</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="suffix">
+                <string> mm</string>
+               </property>
+               <property name="decimals">
+                <number>3</number>
+               </property>
+               <property name="maximum">
+                <double>2.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>0.200000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>250</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Interval de buses</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_7">
+               <property name="spacing">
+                <number>6</number>
+               </property>
+               <property name="sizeConstraint">
+                <enum>QLayout::SetMinimumSize</enum>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QSpinBox" name="firstNozzleSpinBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Century Gothic</family>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="value">
+                  <number>1</number>
+                 </property>
+                </widget>
+               </item>
+               <item alignment="Qt::AlignLeft">
+                <widget class="QLabel" name="label_3">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>250</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Century Gothic</family>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>à</string>
+                 </property>
+                </widget>
+               </item>
+               <item alignment="Qt::AlignLeft|Qt::AlignVCenter">
+                <widget class="QSpinBox" name="lastNozzleSpinBox">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Century Gothic</family>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="value">
+                  <number>12</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="sliceButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>225</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Century Gothic</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Trancher</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+               <normaloff>:/ressources/slice.png</normaloff>:/ressources/slice.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="progressLabel">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>10</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>10</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="text">
+                <string>No task.</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QProgressBar" name="progressBar">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>15</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>225</width>
+                 <height>15</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="value">
+                <number>0</number>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+               </property>
+               <property name="textVisible">
+                <bool>false</bool>
+               </property>
+               <property name="invertedAppearance">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -1080,7 +1112,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1202</width>
+     <width>1238</width>
      <height>20</height>
     </rect>
    </property>
@@ -1141,7 +1173,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc"/>
+  <include location="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc"/>
  </resources>
  <connections/>
 </ui>
