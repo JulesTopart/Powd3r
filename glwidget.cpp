@@ -36,7 +36,7 @@ void GLWidget::paintGL(){
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    glMatrixMode(GL_MODELVIEW);
+    //glMatrixMode(GL_MODELVIEW);
 
 
 
@@ -46,20 +46,26 @@ void GLWidget::paintGL(){
     glRotatef(rotation.y(), 0, 1, 0);
     glRotatef(rotation.z(), 0, 0, 1);
 
-
-    glScalef(scale.x(), scale.y(), scale.z());
-    //Draw axis
-    drawAxis();
-    glColor3f(0.5,0.5,0.48f);
-
     //Draw grid
+    glScalef(scale.x(), scale.y(), scale.z());
     drawGrid(200);
     glColor3f(0.5,0.5,0.48f); //retablish default color
+
+    glRotatef(-90, 1, 0, 0); //mê !
+    glRotatef(-90, 0, 0, 1); //mê !
+
+    //Draw axis
+    drawAxis();
+    glRotatef(90, 0, 0, 1); //mê !
+    glColor3f(0.5,0.5,0.48f);
+
+
 
     if (light) glEnable(GL_LIGHTING);      // Enable Lighting
     //glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);                     // Setup The Diffuse Light
     //glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);                       // Setup The Diffuse Light
     glLightfv(GL_LIGHT1, GL_DIFFUSE, LightAmbient);             // Setup The Diffuse Light
+
     int index(0);
     for(QVector<Mesh>::Iterator model = models.begin(); model != models.end(); model ++, index++){
         glPushMatrix();

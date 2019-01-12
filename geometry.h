@@ -8,7 +8,7 @@
 #include <QMatrix4x4>
 
 #define PI 3.1415926535897932384626433832795
-#define INTERRES 0.0005
+#define INTERRES 0.05
 
 //----------------------------------------------------------------
 //-------------------------- Vec3 class --------------------------
@@ -47,17 +47,27 @@ public:
 typedef QVector<Vec3> Vec3Collection;
 Vec3 operator-(const Vec3 &a, const Vec3 &b);
 Vec3 operator+(const Vec3 &a, const Vec3 &b);
-
+bool operator==(const Vec3 &a, const Vec3 &b);
+bool operator<(const QVector2D&a, const QVector2D&b);
 
 //----------------------------------------------------------------
 //---------------------- LineSegment Class -----------------------
 //----------------------------------------------------------------
+
+enum CONNECTION{
+    AA, //Connection problem need to be rearranged
+    BB, //Connection problem need to be rearranged
+    AB, //Conventionnal segment
+    BA,  //Reversed segment
+    NO_CONNECTION
+};
 
 class LineSegment{
 public:
 //------------- Constructor -----------
     LineSegment ();
     LineSegment ( Vec3 a_     , Vec3 b_         );
+    LineSegment ( QVector2D a_, QVector2D b_, float z);
     LineSegment ( QVector3D a_, QVector3D b_    );
     LineSegment ( float ax_,float ay_,float az_ ,
                   float bx_,float by_,float bz_ );
@@ -66,17 +76,68 @@ public:
     Vec3& operator [](int idx);
 
 //-------------- Methods -------------
-    QVector2D asVector2D();
     QVector3D asVector3D();
 
     Vec3& A(){return v[0];}
     Vec3& B(){return v[1];}
+
+    void invert(); //A becomes B and B becomes A
+    bool isConnectedTo(LineSegment b);
+    CONNECTION connectionType(LineSegment b);
+
+    Vec3 getMin();
+    Vec3 getMax();
+
+    float length(){ return QVector3D((v[1] - v[0])).length();}
 
     Vec3 v[2];
 };
 //-------------- Extern Operator -------------
 typedef QVector<LineSegment> LineSegments;
 bool operator==(LineSegment const& a, LineSegment const& b);
+
+
+
+//----------------------------------------------------------------
+//---------------------- LineSegment2D Class -----------------------
+//----------------------------------------------------------------
+
+class LineSegment2D{
+public:
+//------------- Constructor -----------
+    LineSegment2D ();
+    LineSegment2D ( QVector2D a_     , QVector2D b);
+    LineSegment2D ( float ax_,float ay_ ,
+                    float bx_,float by_           );
+
+//-------------- Operator -------------
+    QVector2D& operator [](int idx);
+
+//-------------- Methods -------------
+    QVector2D asVector2D();
+
+    QVector2D& A(){return v[0];}
+    QVector2D& B(){return v[1];}
+
+    bool isInSegmentRange2D(QVector2D point);
+
+    QVector2D intersect2D   (LineSegment2D b);
+    bool      isParralelTo  (LineSegment2D b);
+
+    void invert(); //A becomes B and B becomes A
+    bool isConnectedTo(LineSegment b        );
+    CONNECTION connectionType(LineSegment b );
+
+    QVector2D getMin();
+    QVector2D getMax();
+
+    float length(){ return QVector3D((v[1] - v[0])).length();}
+
+    QVector2D v[2];
+};
+//-------------- Extern Operator -------------
+typedef QVector<LineSegment2D> LineSegment2Ds;
+bool operator==(LineSegment2D const& a, LineSegment2D const& b);
 
 
 //----------------------------------------------------------------
@@ -129,7 +190,7 @@ public:
     //          0 = plane intersects the triangle
     //          1 = all triangle is on plane front side
     //         -2 = error in function
-    int intersectPlane  (const Plane &plane, LineSegment &ls) const;
+    int intersectPlane  (const Plane &plane, LineSegment2D &ls) const;
 
 
     Vec3 normal;
@@ -140,36 +201,24 @@ typedef QVector<Facet> Facets;
 
 
 
-class Polygon{
+class Slice{
 public:
-    Polygon();
-    Polygon(Vec3Collection points_  );
-    Polygon(LineSegments lines_     );
+    Slice(){}
+    Slice(LineSegment2Ds lines);
 
-    Vec3Collection points;
-    LineSegments lines;
+    LineSegment2D   get         (int i   );
+    LineSegment2Ds  asLines     ();
+    void            push        (LineSegment2D p);
+    LineSegment2Ds  subSlice    ();
+    QVector2D       getMin      ();
+    QVector2D       getMax      ();
+
+    LineSegment2Ds lines;
 };
+typedef QVector<Slice> Slices;
+
+QVector<QVector2D> sortQVector2DByX(QVector<QVector2D> array);
 
 
-
-
-
-/*
-//Horizontale plane
-class HPlane{
-public:
-    HPlane();
-    bool intersect(Vec3 a){return !(a.z < z_coordinate - INTERRES && a.z > z_coordinate + INTERRES);}
-    bool intersect(LineSegment l){return !(l.a.z < z_coordinate - INTERRES && l.b.z > z_coordinate + INTERRES);}
-    bool intersect(LineSegments lines){
-        for(int i(0); i < lines.size(); i++)
-            if(intersect(lines[i])) return true;
-        return false;
-    }
-    
-private:
-    double z_coordinate;
-};
-*/
 
 #endif // GEOMETRY_H

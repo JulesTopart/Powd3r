@@ -98,13 +98,13 @@ std::ostream& operator<<(std::ostream& out, const Facet& t  );
 FILE_FORMAT getFileFormat       (const QString &path);
 FILE_FORMAT checkStlFileFormat  (const QString &path);
 
-double      parseDouble         (std::ifstream& s);
+float      parseDouble         (std::ifstream& s);
 Vec3        parseQVector        (std::ifstream& s);
 
 Mesh        parseAscii          (const QString& stl_path, QProgressBar &pBar);
 Mesh        parseBinary         (const std::string& stl_path, QProgressBar &pBar);
 void triMeshSlicer(   const Mesh *meshPtr, // the const input mesh
-                     std::vector<std::vector<LineSegment>> &slicesWithLineSegments, float sliceSize);
+                     QVector<LineSegment2Ds> &slicesWithLineSegments, float sliceSize);
 
 
 #endif // MESH_H

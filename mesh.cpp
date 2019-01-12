@@ -185,17 +185,17 @@ std::ostream& operator<<(std::ostream& out, const Facet& t) {
 }
 
 //Useful parsing stuff
-double parseDouble(std::ifstream& s) {
-  char f_buf[sizeof(double)];
+float parseDouble(std::ifstream& s) {
+  char f_buf[sizeof(float)];
   s.read(f_buf, 4);
-  double* fptr = (double*) f_buf;
+  float* fptr = (float*) f_buf;
   return *fptr;
 }
 
 Vec3 parsePoint(std::ifstream& s) {
-  double x = parseDouble(s);
-  double y = parseDouble(s);
-  double z = parseDouble(s);
+  float x = parseDouble(s);
+  float y = parseDouble(s);
+  float z = parseDouble(s);
   return Vec3(x, y, z);
 }
 
@@ -291,6 +291,7 @@ Mesh parseBinary(const std::string& stl_path, QProgressBar &pBar){
     Mesh model;
     unsigned int* r = (unsigned int*) n_triangles;
     unsigned int num_triangles = *r;
+    pBar.setMaximum(num_triangles);
     for (unsigned int i = 0; i < num_triangles; i++) {
       auto normal = parsePoint(stl_file);
       auto v1 = parsePoint(stl_file);
@@ -299,7 +300,7 @@ Mesh parseBinary(const std::string& stl_path, QProgressBar &pBar){
       model.push_back(Facet(normal, v1, v2, v3));
       char dummy[2];
       stl_file.read(dummy, 2);
-      pBar.setValue(pBar.value() + 4);
+      pBar.setValue(i);
     }
     model.normalize();
     return model;
@@ -413,29 +414,30 @@ FILE_FORMAT getFileFormat(const QString &path){
 // each slice
 void triMeshSlicer(
     const Mesh *meshPtr, // the const input mesh
-    std::vector<std::vector<LineSegment>> &slicesWithLineSegments, const float sliceSize)
-{                                                         // slice size in 3D Model digital units
-    Plane plane;                                          // The intersection plane
+    QVector<LineSegment2Ds> &slicesWithLineSegments, const float sliceSize)
+{                                                           // slice size in 3D Model digital units
+    Plane plane;                                            // The intersection plane
     Mesh mesh = *meshPtr;
     plane.setNormal(Vec3(0, 0, 1));                         // normal does not change during slicing
-    const Vec3 aabb = mesh.getBBSize();                 // as the model for it’s 3D axis-aligned bounding-box
-    const size_t nSlices = 1 + (int)(aabb.z / sliceSize); // compute number of output slices
-    const Facets &m = mesh.getMesh();     // get a const handle to the input mesh
-    const float z0 = mesh.getBottomLeftVertex().z;       // find the minimal z coordinate of the model (z0)
+    const Vec3 aabb = mesh.getBBSize();                     // as the model for it’s 3D axis-aligned bounding-box
+    const size_t nSlices = 1 + (int)(aabb.z / sliceSize);   // compute number of output slices
+    const Facets &m = mesh.getMesh();                       // get a const handle to the input mesh
+    const float z0 = mesh.getBottomLeftVertex().z;          // find the minimal z coordinate of the model (z0)
     for (size_t i = 0; i < nSlices; ++i)
-    {                                                 // start generating slices
-        std::vector<LineSegment> linesegs;            // the linesegs vector for each slice
-        plane.setDistance(z0 + (float)i * sliceSize); // position the plane according to slice index
+    {                                                       // start generating slices
+        LineSegment2Ds linesegs;                              // the linesegs vector for each slice
+        plane.setDistance(z0 + (float)i * sliceSize);       // position the plane according to slice index
         for (size_t t = 0; t < m.size(); ++t)
-        {                                    // iterate all mesh triangles
-            const Facet &triangle = m[t]; // get a const handle to a triangle
-            LineSegment ls;
+        {                                                   // iterate all mesh triangles
+            const Facet &triangle = m[t];                   // get a const handle to a triangle
+            LineSegment2D ls;
             if (0 == triangle.intersectPlane(plane, ls))
-            {                           // the plane does intersect the triangle
-                linesegs.push_back(ls); // push a new Line Segment object to this slice
+            {                                               // the plane does intersect the triangle
+                linesegs.push_back(ls);                     // push a new Line Segment object to this slice
             }
         }
-        slicesWithLineSegments.push_back(linesegs); // push this vector to the slices vector
+        slicesWithLineSegments.push_back(linesegs);         // push this vector to the slices vector
     }
     return;
 }
+

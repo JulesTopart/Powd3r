@@ -3,6 +3,7 @@
 #include "scaledialog.h"
 #include "rotdialog.h"
 #include "movedialog.h"
+#include "sweep.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -38,7 +39,6 @@ void MainWindow::processFile(QString filePath){
         ui->progressBar->setValue(0);
     }
 }
-
 
 void MainWindow::processSTLFile(QString filePath){
     Mesh model;
@@ -166,14 +166,70 @@ void MainWindow::on_moveButton_clicked()
 
 void MainWindow::on_sliceButton_clicked()
 {
+    //check if one ore more model are loaded
     if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
-        triMeshSlicer(ui->openGLWidget->get(ui->listWidget->currentRow()),*ui->openGLWidget_2->getLines(), ui->layerHeightSpinBox->value());
-        int nSlice = ui->openGLWidget_2->getLines()->size();
+        //generate slice polygon (result of plane intersecting with mesh)
+        QVector<LineSegment2Ds> *lines;
+        lines = new  QVector<LineSegment2Ds>();
+        triMeshSlicer(ui->openGLWidget->get(ui->listWidget->currentRow()), *lines, ui->layerHeightSpinBox->value());
+
+        //generate slice from lines
+        ui->openGLWidget_2->getSlice()->clear();
+        int progress = 0;
+        for(QVector<LineSegment2Ds>::Iterator l = lines->begin(); l < lines->end(); l++, progress++){
+            Slice sliceBuf(*l);
+            ui->openGLWidget_2->getSlice()->push_back(sliceBuf);
+            this->ui->progressBar->setValue(float(float(progress) / float(lines->size())) * 20);
+        }
+
+
+        //update Gui
+        int nSlice = ui->openGLWidget_2->sliceCount();
         ui->verticalSlider->setMaximum(nSlice);
-    }
+        ui->sliceCount->setText(QString::number(nSlice));
+        ui->verticalSlider2->setMaximum(nSlice);
+        ui->sliceCount2->setText(QString::number(nSlice));
+
+        ui->openGLWidget_3->clear();
+        QVector<Slice> slices = *ui->openGLWidget_2->getSlice();
+        for(int i(0); i < nSlice; i++){
+            LineSegment2Ds subLines = slices[i].subSlice();
+            ui->openGLWidget_3->push(subLines);
+        }
+
+
+        QVector<LineSegment2Ds> subLines = *ui->openGLWidget_3->getLines();
+        for (QVector<LineSegment2Ds>::Iterator lines = subLines.begin(); lines != subLines.end(); lines++) {
+            std::vector<Line> Slines;
+            Point A, B;
+            for (LineSegment2Ds::Iterator line = lines->begin(); line != lines->end(); line++){
+                A = Point(line->A().x(), line->A().y());
+                A = Point(line->B().x(), line->B().y());
+                Slines.push_back(Line(A,B));
+            }
+            SweepCollection sweeps = SweepCollection::generateSweeps(Slines, 1, 11, 96);
+            std::string out = sweeps.toGcode(1);
+            QString cast = QString::fromStdString(out);
+            std::cout << "out :" << out << std::endl;
+            this->ui->gcode->setText(cast);
+        }
+     }
 }
 
 void MainWindow::on_verticalSlider_valueChanged(int value)
 {
     ui->openGLWidget_2->selectSlice(value);
+    ui->zeroCount->setText(QString::number(value));
+    ui->verticalSlider2->setValue(value);
+}
+
+void MainWindow::on_verticalSlider2_valueChanged(int value)
+{
+    ui->openGLWidget_3->selectSlice(value);
+    ui->zeroCount3->setText(QString::number(value));
+    ui->verticalSlider->setValue(value);
+}
+
+void MainWindow::generateGcode(){
+
 }

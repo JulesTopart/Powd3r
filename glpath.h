@@ -1,32 +1,28 @@
-#ifndef GL2D_H
-#define GL2D_H
+#ifndef GLPATH_H
+#define GLPATH_H
 
 #include <QtOpenGL>
 #include <QGLWidget>
 #include "GL/glu.h"
 #include "mesh.h"
 
-class gl2D : public QGLWidget
+class glPath : public QGLWidget
 {
     Q_OBJECT
 public:
 public:
 
-    gl2D(QWidget *parent = nullptr) ;
-    ~gl2D();
+    glPath(QWidget *parent = nullptr) ;
+    ~glPath();
 
     void drawAxis();
     void drawGrid(int grid_size);
-
-    int sliceCount(){
-        return slices.size();
-    }
-
+    QVector<LineSegment2Ds> *getLines(){ return &_subLines;}
     void selectSlice(int n){
         activeSlice = n;
     }
-
-    Slices* getSlice(){return &slices;}
+    void push(LineSegment2Ds subLines_){_subLines.push_back(subLines_);}
+    void clear(){_subLines.clear();}
 protected:
 
      void initializeGL();
@@ -42,24 +38,18 @@ public slots:
      void timeOutSlot();
 
 private:
-
-     //OpenGL
      QTimer *t_Timer;
      QVector2D
      position      = QVector2D(0,0);
      QVector2D
      scale         = QVector2D(0.5,0.5);
 
-     //Input
      QVector2D
      mousePressPosition;
      bool
      leftMousePressed = false;
 
-     //Slices
-     int activeSlice = 0;
-     Slices slices;
+     size_t activeSlice = 0;
+     QVector<LineSegment2Ds> _subLines;
 };
-
-#endif // GL2D_H
-
+#endif // GLPATH_H

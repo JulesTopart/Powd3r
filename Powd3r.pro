@@ -33,7 +33,9 @@ SOURCES += \
     rotdialog.cpp \
     scaledialog.cpp \
     movedialog.cpp \
-    gl2d.cpp
+    gl2d.cpp \
+    glpath.cpp \
+    sweep.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -43,7 +45,9 @@ HEADERS += \
     scaledialog.h \
     rotdialog.h \
     movedialog.h \
-    gl2d.h
+    gl2d.h \
+    glpath.h \
+    sweep.h
 
 
 FORMS += \

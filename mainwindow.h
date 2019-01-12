@@ -28,6 +28,7 @@ public:
     void addModel               ( Mesh*               );
     void browseFile             ();
     void updateList             ();
+    void generateGcode          ();
 
 //-------------Slots-----------
 
@@ -41,12 +42,10 @@ private slots:
     void on_duplicateButton_clicked     ();
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
-
     void on_moveButton_clicked();
-
     void on_sliceButton_clicked();
-
     void on_verticalSlider_valueChanged(int value);
+    void on_verticalSlider2_valueChanged(int value);
 
 private:
     Ui::MainWindow *ui;

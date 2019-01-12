@@ -1,7 +1,7 @@
-#include "gl2d.h"
+#include "glpath.h"
 
 
-gl2D::gl2D(QWidget *parent){
+glPath::glPath(QWidget *parent){
     int seconde = 1000; // 1 seconde = 1000 ms
     int timerInterval = seconde / 60;
     t_Timer = new QTimer(this);
@@ -9,11 +9,11 @@ gl2D::gl2D(QWidget *parent){
     t_Timer->start( timerInterval );
 }
 
-gl2D::~gl2D(){
+glPath::~glPath(){
 
 }
 
-void gl2D::drawAxis(){
+void glPath::drawAxis(){
     glEnable(GL_LINE_SMOOTH);
     glPushMatrix();
     glBegin(GL_LINES);
@@ -26,29 +26,29 @@ void gl2D::drawAxis(){
     glDisable(GL_LINE_SMOOTH);
 }
 
-void gl2D::drawGrid(int grid_size){
+void glPath::drawGrid(int grid_size){
     int HALF_GRID_SIZE = grid_size/2;
     glBegin(GL_LINES);
     glColor3f(0.5f, 0.5f, 0.5f);
     for(int i=-HALF_GRID_SIZE;i<=HALF_GRID_SIZE;i+=10)
     {
-        glVertex2f((float)i,(float)-HALF_GRID_SIZE);
-        glVertex2f((float)i,(float)HALF_GRID_SIZE);
+        glVertex3f((float)i,(float)-HALF_GRID_SIZE,0);
+        glVertex3f((float)i,(float)HALF_GRID_SIZE,0);
 
-        glVertex2f((float)-HALF_GRID_SIZE,(float)i);
-        glVertex2f((float)HALF_GRID_SIZE,(float)i);
+        glVertex3f((float)-HALF_GRID_SIZE,(float)i,0);
+        glVertex3f((float)HALF_GRID_SIZE,(float)i,0);
     }
     glEnd();
 }
 
-void gl2D::initializeGL(){
+void glPath::initializeGL(){
     glShadeModel(GL_SMOOTH);
     glClearColor(0.2f, 0.2f, 0.2f, 1);
     glClearDepth(1.0);
     glDepthFunc(GL_LEQUAL);
 }
 
-void gl2D::paintGL(){
+void glPath::paintGL(){
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -64,20 +64,20 @@ void gl2D::paintGL(){
     //drawGrid(200);
     glColor3f(0.5,0.5,0.48f); //retablish default color
 
-    if(activeSlice < slices.size() && slices.size() >= 0){
-        LineSegment2Ds lines;
-        lines = slices[activeSlice].asLines();
+
+    if(activeSlice < _subLines.size() && _subLines.size() > 0){
         glBegin(GL_LINES);
         glColor3f(0.5f, 0.5f, 0.5f);
-        for(int i(0); i < lines.size(); i++){
-            glVertex3f(lines[i].A().x(), lines[i].A().y(), 0);
-            glVertex3f(lines[i].B().x(), lines[i].B().y(), 0);
+        for(size_t i(0); i < _subLines[activeSlice].size(); i++){
+            glVertex3f(_subLines[activeSlice][i].A().x(), _subLines[activeSlice][i].A().y(), 0);
+            glVertex3f(_subLines[activeSlice][i].B().x(), _subLines[activeSlice][i].B().y(), 0);
         }
         glEnd();
     }
+
 }
 
-void gl2D::resizeGL(int width, int height){
+void glPath::resizeGL(int width, int height){
     if(height == 0)
         height = 1;
     glViewport(0, 0, width, height);
@@ -88,12 +88,12 @@ void gl2D::resizeGL(int width, int height){
     glLoadIdentity();
 }
 
-void gl2D::timeOutSlot()
+void glPath::timeOutSlot()
 {
     updateGL();
 }
 
-void gl2D::mouseMoveEvent( QMouseEvent* event){
+void glPath::mouseMoveEvent( QMouseEvent* event){
     if (leftMousePressed){
         // Mouse release position - mouse press position
         QVector2D diff = QVector2D(event->localPos()) - mousePressPosition;
@@ -110,7 +110,7 @@ void gl2D::mouseMoveEvent( QMouseEvent* event){
     event->ignore();
 }
 
-void gl2D::mousePressEvent(QMouseEvent *event){
+void glPath::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
         leftMousePressed = true;
@@ -122,7 +122,7 @@ void gl2D::mousePressEvent(QMouseEvent *event){
     event->ignore();
 }
 
-void gl2D::mouseReleaseEvent(QMouseEvent *event){
+void glPath::mouseReleaseEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
         leftMousePressed = false;
@@ -133,8 +133,13 @@ void gl2D::mouseReleaseEvent(QMouseEvent *event){
     event->ignore();
 }
 
-void gl2D::wheelEvent(QWheelEvent* event){
+void glPath::wheelEvent(QWheelEvent* event){
     float t = event->angleDelta().y() * 0.0005f;
     if((this->scale + QVector2D(t,t)).length() >= 0.1) this->scale += QVector2D(t,t);
     event->accept();
+}
+
+
+void subSlice(std::vector<std::vector<LineSegment>> lines){
+
 }
