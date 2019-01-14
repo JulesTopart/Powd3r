@@ -210,8 +210,10 @@ void MainWindow::on_sliceButton_clicked()
             SweepCollection sweeps = SweepCollection::generateSweeps(Slines, 1, 11, 96);
             std::string out = sweeps.toGcode(1);
             QString cast = QString::fromStdString(out);
+#ifdef DEBUG_SWEEP
             std::cout << "out :" << out << std::endl;
-            this->ui->gcode->setText(cast);
+#endif
+            this->ui->gcode->setPlainText(cast);
         }
      }
 }
@@ -232,4 +234,29 @@ void MainWindow::on_verticalSlider2_valueChanged(int value)
 
 void MainWindow::generateGcode(){
 
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+            tr("Export Gcode"), "",
+            tr("GCode (*.gcode);;All Files (*)"));
+
+    if (fileName.isEmpty())
+        return;
+    else {
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
+            QMessageBox::information(this, tr("Unable to open file"),
+                file.errorString());
+            return;
+        }
+
+
+        QTextStream out(&file);
+        out << this->ui->gcode->toPlainText();
+
+
+        file.close();
+    }
 }
