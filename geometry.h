@@ -37,6 +37,7 @@ public:
     Vec3 operator+      (const Vec3 &pt);
     Vec3 operator/      (float a);
     Vec3 operator*      (float a);
+    Vec3 operator*=     (Vec3 a);
 
     operator QVector3D() const; //Cast to QVector
 
@@ -192,6 +193,7 @@ public:
     //         -2 = error in function
     int intersectPlane  (const Plane &plane, LineSegment2D &ls) const;
 
+    void scale          (Vec3 sc);
 
     Vec3 normal;
     Vec3 v[3];
@@ -209,7 +211,7 @@ public:
     LineSegment2D   get         (int i   );
     LineSegment2Ds  asLines     ();
     void            push        (LineSegment2D p);
-    LineSegment2Ds  subSlice    ();
+    LineSegment2Ds  subSlice    (int DPI);
     QVector2D       getMin      ();
     QVector2D       getMax      ();
 

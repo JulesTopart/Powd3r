@@ -63,7 +63,7 @@ void Mesh::push_back(Facet t){
 
 //----------------- Transformation Methods --------------------
 
-
+//Thes methods should modify mesh
 void Mesh::rotate(float x, float y, float z){
     _rotation += Vec3(x,y,z);
 }
@@ -73,11 +73,16 @@ void Mesh::rotate(Vec3 v){
 }
 
 void Mesh::scale(float x, float y, float z){
-    _scale *= Vec3(x,y,z);
+    Vec3 value = Vec3(x,y,z);
+    for(int i(0); i < this->size(); i++){
+       _facets[i].scale(value);
+    }
 }
 
 void Mesh::scale(Vec3 v){
-    _scale *= v;
+    for(int i(0); i < this->size(); i++){
+       _facets[i].scale(v);
+    }
 }
 
 void Mesh::move(float x, float y, float z){
@@ -138,9 +143,8 @@ size_t Mesh::size(){
     return _facets.size();
 }
 
-
 //---------------------- Set Methods -------------------------
-
+//These methods shouldn't modify mesh
 void Mesh::setPosition(QVector3D value){
     _position = value;
 }
@@ -217,7 +221,6 @@ Vec3 parseAsciiPoint(QString cBuf){
     }
     return Vec3(coord[0], coord[1], coord[2]);
 }
-
 
 //Read Ascii .stl file and return its mesh
 Mesh parseAscii(const QString& stl_path, QProgressBar &pBar){
@@ -302,6 +305,8 @@ Mesh parseBinary(const std::string& stl_path, QProgressBar &pBar){
       stl_file.read(dummy, 2);
       pBar.setValue(i);
     }
+    pBar.setMaximum(100);
+    pBar.setValue(100);
     model.normalize();
     return model;
 }
@@ -414,7 +419,7 @@ FILE_FORMAT getFileFormat(const QString &path){
 // each slice
 void triMeshSlicer(
     const Mesh *meshPtr, // the const input mesh
-    QVector<LineSegment2Ds> &slicesWithLineSegments, const float sliceSize)
+    QVector<LineSegment2Ds> &slicesWithLineSegments, const float sliceSize, QProgressBar *p)
 {                                                           // slice size in 3D Model digital units
     Plane plane;                                            // The intersection plane
     Mesh mesh = *meshPtr;
@@ -424,7 +429,8 @@ void triMeshSlicer(
     const Facets &m = mesh.getMesh();                       // get a const handle to the input mesh
     const float z0 = mesh.getBottomLeftVertex().z;          // find the minimal z coordinate of the model (z0)
     for (size_t i = 0; i < nSlices; ++i)
-    {                                                       // start generating slices
+    {
+        p->setValue(float(float(i) / float(nSlices)) * 100); // start generating slices
         LineSegment2Ds linesegs;                              // the linesegs vector for each slice
         plane.setDistance(z0 + (float)i * sliceSize);       // position the plane according to slice index
         for (size_t t = 0; t < m.size(); ++t)

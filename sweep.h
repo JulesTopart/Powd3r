@@ -188,14 +188,14 @@ public:
             absoluteMode = false;
             return "G91\n";
         }
-        else return "";
+        return "";
     }
     std::string absolute() {
         if (!absoluteMode) {
             absoluteMode = true;
             return "G90\n";
         }
-        else return "";
+        return "";
     }
 
     void setNozzle(short fN, short lN) {

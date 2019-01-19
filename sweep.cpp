@@ -311,6 +311,7 @@ std::string
 Sweep::toGcode(bool dir) {
     //std::cout << "Nozzle Action size :" << nozzleActions.size() << std::endl;
     std::string out = "";
+    out += absolute();
     out += (dir) ? goToLeftPoint() : goToRightPoint();
     out += ";Sweep\n" + relative();
     if (!dir) {
@@ -323,7 +324,7 @@ Sweep::toGcode(bool dir) {
             out += nozzleActions[i].toGcode(dir);
         }
     }
-    out += absolute();
+    //out += absolute();
     out += ";End Sweep\n\n";
     return out;
 }

@@ -180,6 +180,8 @@ void GLWidget::timeOutSlot()
 }
 
 void GLWidget::loadModel(Mesh *mdl){
+    mdl->normalize();
+    mdl->move(Vec3(0, 0,(mdl->getBBSize() / 2).z));
     models.push_back(*mdl);
     models[models.size() - 1].setId(models.size() - 1);
 }

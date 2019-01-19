@@ -83,6 +83,15 @@ Vec3::operator*     (float a){
     return Vec3(x * a, y * a, z * a);
 }
 
+Vec3
+Vec3::operator*=    (Vec3 a){
+    x *= a.x;
+    y *= a.y;
+    z *= a.z;
+
+    return *this;
+}
+
 Vec3::operator QVector3D() const {
     return QVector3D(x,y,z);
 }
@@ -303,10 +312,10 @@ QVector2D LineSegment2D::getMax(){
 }
 
 bool LineSegment2D::isInSegmentRange2D(QVector2D point){
-    if( point.x() > getMin().x() &&
-        point.y() > getMin().y() &&
-        point.x() < getMax().x() &&
-        point.y() < getMax().y()) return true;
+    if( point.x() >= getMin().x() &&
+        point.y() >= getMin().y() &&
+        point.x() <= getMax().x() &&
+        point.y() <= getMax().y()) return true;
     return false;
 }
 
@@ -435,6 +444,11 @@ int Facet::intersectPlane(const Plane &plane, LineSegment2D &ls) const
     return -2;
 }
 
+void Facet::scale(Vec3 r){
+    for(int i(0); i < 3 ; i++)
+        v[i] *= r;
+}
+
 
 //----------------------------------------------------------------
 //------------------------ Slice Class ---------------------------
@@ -488,23 +502,22 @@ QVector2D Slice::getMax(){
 
 
 
-LineSegment2Ds Slice::subSlice(){
+LineSegment2Ds Slice::subSlice(int DPI){
     QVector2D min = getMin();
     QVector2D max = getMax();
     QVector2D size = getMax() - getMin();
-    float res = 25.4/96.0;
+    float res = 25.4/float(DPI);
     int n = size.y() / res;
     QVector<QVector2D> intersectionPoints;
     LineSegment2Ds insideLines;
 
     for(int k(1); k <= n; k++){
-        LineSegment2D HLine(min.x() - 10, k*res + min.y(), max.x() + 10, k*res + min.y()); //Intersection line
+        LineSegment2D HLine(min.x() - res , k*res + min.y(), max.x() + res, k*res + min.y()); //Intersection line
         for(int i(0); i < lines.size(); i++){
             if(!lines[i].isParralelTo(HLine)){
                 LineSegment2D curLine = lines[i];
                 QVector2D inter = curLine.intersect2D(HLine);
                 if(curLine.isInSegmentRange2D(inter)) intersectionPoints.push_back(inter);
-
             }
         }
         intersectionPoints = sortQVector2DByX(intersectionPoints);

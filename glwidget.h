@@ -74,7 +74,7 @@ private:
     QVector3D
     rotationSpeed = QVector3D(0,0,0);
     QVector3D
-    position      = QVector3D(0,-20,-50);
+    position      = QVector3D(0,-5,-50);
     QVector3D
     scale         = QVector3D(0.5,0.5,0.5);
 

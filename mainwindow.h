@@ -30,6 +30,12 @@ public:
     void updateList             ();
     void generateGcode          ();
 
+    void loadSettings();
+    void saveSettings();
+
+    void closeEvent             (QCloseEvent *event);
+    void reject();
+
 //-------------Slots-----------
 
 private slots:
@@ -46,11 +52,13 @@ private slots:
     void on_sliceButton_clicked();
     void on_verticalSlider_valueChanged(int value);
     void on_verticalSlider2_valueChanged(int value);
-
     void on_pushButton_3_clicked();
+    void on_pushButton_4_clicked();
 
 private:
     Ui::MainWindow *ui;
+    QString m_sSettingsFile;
+
 };
 
 #endif // MAINWINDOW_H
