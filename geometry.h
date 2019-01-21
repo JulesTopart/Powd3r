@@ -63,14 +63,14 @@ enum CONNECTION{
     NO_CONNECTION
 };
 
-class LineSegment{
+class Line3D{
 public:
 //------------- Constructor -----------
-    LineSegment ();
-    LineSegment ( Vec3 a_     , Vec3 b_         );
-    LineSegment ( QVector2D a_, QVector2D b_, float z);
-    LineSegment ( QVector3D a_, QVector3D b_    );
-    LineSegment ( float ax_,float ay_,float az_ ,
+    Line3D ();
+    Line3D ( Vec3 a_     , Vec3 b_         );
+    Line3D ( QVector2D a_, QVector2D b_, float z);
+    Line3D ( QVector3D a_, QVector3D b_    );
+    Line3D ( float ax_,float ay_,float az_ ,
                   float bx_,float by_,float bz_ );
 
 //-------------- Operator -------------
@@ -83,8 +83,8 @@ public:
     Vec3& B(){return v[1];}
 
     void invert(); //A becomes B and B becomes A
-    bool isConnectedTo(LineSegment b);
-    CONNECTION connectionType(LineSegment b);
+    bool isConnectedTo(Line3D b);
+    CONNECTION connectionType(Line3D b);
 
     Vec3 getMin();
     Vec3 getMax();
@@ -94,8 +94,8 @@ public:
     Vec3 v[2];
 };
 //-------------- Extern Operator -------------
-typedef QVector<LineSegment> LineSegments;
-bool operator==(LineSegment const& a, LineSegment const& b);
+typedef QVector<Line3D> Lines3D;
+bool operator==(Line3D const& a, Line3D const& b);
 
 
 
@@ -103,12 +103,12 @@ bool operator==(LineSegment const& a, LineSegment const& b);
 //---------------------- LineSegment2D Class -----------------------
 //----------------------------------------------------------------
 
-class LineSegment2D{
+class Line2D{
 public:
 //------------- Constructor -----------
-    LineSegment2D ();
-    LineSegment2D ( QVector2D a_     , QVector2D b);
-    LineSegment2D ( float ax_,float ay_ ,
+    Line2D ();
+    Line2D ( QVector2D a_     , QVector2D b);
+    Line2D ( float ax_,float ay_ ,
                     float bx_,float by_           );
 
 //-------------- Operator -------------
@@ -122,12 +122,12 @@ public:
 
     bool isInSegmentRange2D(QVector2D point);
 
-    QVector2D intersect2D   (LineSegment2D b);
-    bool      isParralelTo  (LineSegment2D b);
+    QVector2D intersect2D   (Line2D b);
+    bool      isParralelTo  (Line2D b);
 
     void invert(); //A becomes B and B becomes A
-    bool isConnectedTo(LineSegment b        );
-    CONNECTION connectionType(LineSegment b );
+    bool isConnectedTo(Line3D b        );
+    CONNECTION connectionType(Line3D b );
 
     QVector2D getMin();
     QVector2D getMax();
@@ -135,10 +135,13 @@ public:
     float length(){ return QVector3D((v[1] - v[0])).length();}
 
     QVector2D v[2];
+    const QVector2D &a; // Constant variable
+    const QVector2D &b;
+
 };
 //-------------- Extern Operator -------------
-typedef QVector<LineSegment2D> LineSegment2Ds;
-bool operator==(LineSegment2D const& a, LineSegment2D const& b);
+typedef QVector<Line2D> Lines2D;
+bool operator==(Line2D const& a, Line2D const& b);
 
 
 //----------------------------------------------------------------
@@ -191,7 +194,7 @@ public:
     //          0 = plane intersects the triangle
     //          1 = all triangle is on plane front side
     //         -2 = error in function
-    int intersectPlane  (const Plane &plane, LineSegment2D &ls) const;
+    int intersectPlane  (const Plane &plane, Line2D &ls) const;
 
     void scale          (Vec3 sc);
 
@@ -206,16 +209,16 @@ typedef QVector<Facet> Facets;
 class Slice{
 public:
     Slice(){}
-    Slice(LineSegment2Ds lines);
+    Slice(Lines2D lines);
 
-    LineSegment2D   get         (int i   );
-    LineSegment2Ds  asLines     ();
-    void            push        (LineSegment2D p);
-    LineSegment2Ds  subSlice    (int DPI);
+    Line2D   get         (int i   );
+    Lines2D  asLines     ();
+    void            push        (Line2D p);
+    Lines2D  subSlice    (int DPI);
     QVector2D       getMin      ();
     QVector2D       getMax      ();
 
-    LineSegment2Ds lines;
+    Lines2D lines;
 };
 typedef QVector<Slice> Slices;
 

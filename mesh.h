@@ -104,7 +104,7 @@ Vec3        parseQVector        (std::ifstream& s);
 Mesh        parseAscii          (const QString& stl_path, QProgressBar &pBar);
 Mesh        parseBinary         (const std::string& stl_path, QProgressBar &pBar);
 void triMeshSlicer(   const Mesh *meshPtr, // the const input mesh
-                     QVector<LineSegment2Ds> &slicesWithLineSegments,
+                     QVector<Lines2D> &slicesWithLineSegments,
                       float sliceSize,
                       QProgressBar* p);
 

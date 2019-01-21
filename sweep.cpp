@@ -1,73 +1,73 @@
 #include "sweep.h"
 
 
-float getMin(std::vector<Line> lines) {
+float getMin(std::vector<Line2D> lines) {
     float x_min;
     float x_max;
     if (lines.size() != 0) {
-        x_min = lines[0].a.x;
-        x_max = lines[0].a.x;
+        x_min = lines[0].a.x();
+        x_max = lines[0].a.x();
 
         for (int k(0); k < lines.size(); k++) {
-            Line line = lines[k];
-            if (line.a.x < x_min) x_min = line.a.x;
-            if (line.a.x > x_max) x_max = line.a.x;
-            if (line.b.x < x_min) x_min = line.b.x;
-            if (line.b.x > x_max) x_max = line.b.x;
+            Line2D line = lines[k];
+            if (line.a.x() < x_min) x_min = line.a.x();
+            if (line.a.x() > x_max) x_max = line.a.x();
+            if (line.b.x() < x_min) x_min = line.b.x();
+            if (line.b.x() > x_max) x_max = line.b.x();
         }
     }
     return x_min;
 }
 
-float getMinY(std::vector<Line> lines) {
+float getMinY(std::vector<Line2D> lines) {
     float x_min;
     float x_max;
     if (lines.size() != 0) {
-        x_min = lines[0].a.y;
-        x_max = lines[0].a.y;
+        x_min = lines[0].a.y();
+        x_max = lines[0].a.y();
 
         for (int k(0); k < lines.size(); k++) {
-            Line line = lines[k];
-            if (line.a.y < x_min) x_min = line.a.y;
-            if (line.a.y > x_max) x_max = line.a.y;
-            if (line.b.y < x_min) x_min = line.b.y;
-            if (line.b.y > x_max) x_max = line.b.y;
+            Line2D line = lines[k];
+            if (line.a.y() < x_min) x_min = line.a.y();
+            if (line.a.y() > x_max) x_max = line.a.y();
+            if (line.b.y() < x_min) x_min = line.b.y();
+            if (line.b.y() > x_max) x_max = line.b.y();
         }
     }
     return x_min;
 }
 
-float getMax(std::vector<Line> lines) {
+float getMax(std::vector<Line2D> lines) {
     float x_min;
     float x_max;
     if (lines.size() != 0) {
-        x_min = lines[0].a.x;
-        x_max = lines[0].a.x;
+        x_min = lines[0].a.x();
+        x_max = lines[0].a.x();
 
         for (int k(0); k < lines.size(); k++) {
-            Line line = lines[k];
-            if (line.a.x < x_min) x_min = line.a.x;
-            if (line.a.x > x_max) x_max = line.a.x;
-            if (line.b.x < x_min) x_min = line.b.x;
-            if (line.b.x > x_max) x_max = line.b.x;
+            Line2D line = lines[k];
+            if (line.a.x() < x_min) x_min = line.a.x();
+            if (line.a.x() > x_max) x_max = line.a.x();
+            if (line.b.x() < x_min) x_min = line.b.x();
+            if (line.b.x() > x_max) x_max = line.b.x();
         }
     }
     return x_min;
 }
 
-float getMaxY(std::vector<Line> lines) {
+float getMaxY(std::vector<Line2D> lines) {
     float x_min;
     float x_max;
     if (lines.size() != 0) {
-        x_min = lines[0].a.y;
-        x_max = lines[0].a.y;
+        x_min = lines[0].a.y();
+        x_max = lines[0].a.y();
 
         for (int k(0); k < lines.size(); k++) {
-            Line line = lines[k];
-            if (line.a.y < x_min) x_min = line.a.y;
-            if (line.a.y > x_max) x_max = line.a.y;
-            if (line.b.y < x_min) x_min = line.b.y;
-            if (line.b.y > x_max) x_max = line.b.y;
+            Line2D line = lines[k];
+            if (line.a.y() < x_min) x_min = line.a.y();
+            if (line.a.y() > x_max) x_max = line.a.y();
+            if (line.b.y() < x_min) x_min = line.b.y();
+            if (line.b.y() > x_max) x_max = line.b.y();
         }
     }
     return x_max;
@@ -114,7 +114,7 @@ void NozzleLine::drawLine() {
         for (float xpos = 0.0; xpos < 50.0; xpos += spacing) {
             bool active = false;
             for (int j(0); j < line_coll.size(); j++) {
-                if (xpos >= line_coll[j].a.x && xpos <= line_coll[j].b.x || xpos >= line_coll[j].b.x && xpos <= line_coll[j].a.x) {
+                if (xpos >= line_coll[j].a.x() && xpos <= line_coll[j].b.x() || xpos >= line_coll[j].b.x() && xpos <= line_coll[j].a.x()) {
                     if (!active) std::cout << "0";
                     active = true;
                 }
@@ -130,14 +130,14 @@ NozzleLine::calcMinMax() {
     float x_min;
     float x_max;
     if (line_coll.size() != 0) {
-        x_min = line_coll[0].a.x;
-        x_max = line_coll[0].a.x;
+        x_min = line_coll[0].a.x();
+        x_max = line_coll[0].a.x();
         for (int k(0); k < line_coll.size(); k++) {
-            Line line = line_coll[k];
-            if (line.a.x < x_min) x_min = line.a.x;
-            if (line.a.x > x_max) x_max = line.a.x;
-            if (line.b.x < x_min) x_min = line.b.x;
-            if (line.b.x > x_max) x_max = line.b.x;
+            Line2D line = line_coll[k];
+            if (line.a.x() < x_min) x_min = line.a.x();
+            if (line.a.x() > x_max) x_max = line.a.x();
+            if (line.b.x() < x_min) x_min = line.b.x();
+            if (line.b.x() > x_max) x_max = line.b.x();
         }
 #ifdef DEBUG_SWEEP
         std::cout << "Xmin : " << xmin << " | Xmax : " << xmax << std::endl;
@@ -182,16 +182,16 @@ Sweep::calcXMinMax() {
     float x_max;
     if (nozzleLines.size() != 0) {
         if (nozzleLines[0].size() != 0) {
-            x_min = nozzleLines[0].get(0).a.x;
-            x_max = nozzleLines[0].get(0).a.x;
+            x_min = nozzleLines[0].get(0).a.x();
+            x_max = nozzleLines[0].get(0).a.x();
             for (int j(0); j < nozzleLines.size(); j++) {
                 NozzleLine curNLine = nozzleLines[j]; //Collection of line on the same Y
                 for (int k(0); k < curNLine.size(); k++) {
-                    Line line = curNLine.get(k);
-                    if (line.a.x < x_min) x_min = line.a.x;
-                    if (line.a.x > x_max) x_max = line.a.x;
-                    if (line.b.x < x_min) x_min = line.b.x;
-                    if (line.b.x > x_max) x_max = line.b.x;
+                    Line2D line = curNLine.get(k);
+                    if (line.a.x() < x_min) x_min = line.a.x();
+                    if (line.a.x() > x_max) x_max = line.a.x();
+                    if (line.b.x() < x_min) x_min = line.b.x();
+                    if (line.b.x() > x_max) x_max = line.b.x();
                 }
             }
             xmin = x_min;
@@ -207,16 +207,16 @@ Sweep::calcYMinMax() {
     float y_max;
     if (nozzleLines.size() != 0) {
         if (nozzleLines[0].size() != 0) {
-            y_min = nozzleLines[0].get(0).a.y;
-            y_max = nozzleLines[0].get(0).a.y;
+            y_min = nozzleLines[0].get(0).a.y();
+            y_max = nozzleLines[0].get(0).a.y();
             for (int j(0); j < nozzleLines.size(); j++) {
                 NozzleLine curNLine = nozzleLines[j]; //Collection of line on the same Y
                 for (int k(0); k < curNLine.size(); k++) {
-                    Line line = curNLine.get(k);
-                    if (line.a.y < y_min) y_min = line.a.y;
-                    if (line.a.y > y_max) y_max = line.a.y;
-                    if (line.b.y < y_min) y_min = line.b.y;
-                    if (line.b.y > y_max) y_max = line.b.y;
+                    Line2D line = curNLine.get(k);
+                    if (line.a.y() < y_min) y_min = line.a.y();
+                    if (line.a.y() > y_max) y_max = line.a.y();
+                    if (line.b.y() < y_min) y_min = line.b.y();
+                    if (line.b.y() > y_max) y_max = line.b.y();
                 }
             }
             ymin = y_min;
@@ -243,9 +243,9 @@ Sweep::getNextX(float boundX) {
             for (int j(0); j < nozzleLines.size(); j++) {
                 NozzleLine curNLine = nozzleLines[j]; //Collection of line on the same Y
                 for (int k(0); k < curNLine.size(); k++) {
-                    Line line = curNLine.get(k);
-                    if (line.a.x < last_min && line.a.x > boundX) last_min = line.a.x;
-                    if (line.b.x < last_min && line.b.x > boundX) last_min = line.b.x;
+                    Line2D line = curNLine.get(k);
+                    if (line.a.x() < last_min && line.a.x() > boundX) last_min = line.a.x();
+                    if (line.b.x() < last_min && line.b.x() > boundX) last_min = line.b.x();
                 }
             }
             return last_min;
@@ -294,10 +294,10 @@ Sweep::isNozzleOn(int nozzleN, float X) {
             if (nozzleN < nozzleLines.size()) {
                 NozzleLine curNLine = nozzleLines[nozzleN]; //Collection of line on the same Y
                 for (int k(0); k < curNLine.size(); k++) {
-                    Line line = curNLine.get(k);
-                    if (line.a.x <= X && line.b.x > X) // -
+                    Line2D line = curNLine.get(k);
+                    if (line.a.x() <= X && line.b.x() > X) // -
                         return true;				   //   -
-                    if (line.b.x <= X && line.a.x > X) //   -
+                    if (line.b.x() <= X && line.a.x() > X) //   -
                         return true;				   //	 - Avoid zero length line
                 }
             }
@@ -366,16 +366,16 @@ SweepCollection::toGcode(short nPass) {
 
 
 SweepCollection
-SweepCollection::generateSweeps(std::vector<Line> lines, short firstNozzle, short lastNozzle, short dpi) {
+SweepCollection::generateSweeps(std::vector<Line2D> lines, short firstNozzle, short lastNozzle, short dpi) {
 
     SweepCollection sweeps;
 
     float spacing = 25.4 / (float)dpi;
-    std::vector<Line> sortedLines;
+    std::vector<Line2D> sortedLines;
 
     { //Ignore non horizontal lines
-        std::vector<Line> unsortedLines;
-        for (std::vector<Line>::const_iterator line = lines.begin(); line != lines.end(); line++) {
+        std::vector<Line2D> unsortedLines;
+        for (std::vector<Line2D>::const_iterator line = lines.begin(); line != lines.end(); line++) {
             //if (line->a.y == line->b.y)
                 unsortedLines.push_back(*line);
         }
@@ -408,13 +408,13 @@ SweepCollection::generateSweeps(std::vector<Line> lines, short firstNozzle, shor
     float y = min;
     while(y <= max){
         nozzleLine.clear();
-        while(sortedLines[index].a.y < y + (spacing / 2.0) && sortedLines[index].a.y >= y - (spacing / 2.0)) {
+        while(sortedLines[index].a.y() < y + (spacing / 2.0) && sortedLines[index].a.y() >= y - (spacing / 2.0)) {
             nozzleLine.push(sortedLines[index]);
             index++;
             if (index >= sortedLines.size()) break;
         }
         if (nozzleLine.size() != 0) sweep.push(nozzleLine);
-        else sweep.push(NozzleLine(Line(Point(0.0, y), Point(0.0, y))));
+        else sweep.push(NozzleLine(Line2D(Point(0.0, y), Point(0.0, y))));
         if (sweep.size() == (lastNozzle+1 - firstNozzle)) {
             sweep.setNozzle(firstNozzle, lastNozzle);
             sweeps.push(sweep);

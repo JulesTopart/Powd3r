@@ -419,7 +419,7 @@ FILE_FORMAT getFileFormat(const QString &path){
 // each slice
 void triMeshSlicer(
     const Mesh *meshPtr, // the const input mesh
-    QVector<LineSegment2Ds> &slicesWithLineSegments, const float sliceSize, QProgressBar *p)
+    QVector<Lines2D> &slicesWithLineSegments, const float sliceSize, QProgressBar *p)
 {                                                           // slice size in 3D Model digital units
     Plane plane;                                            // The intersection plane
     Mesh mesh = *meshPtr;
@@ -431,12 +431,12 @@ void triMeshSlicer(
     for (size_t i = 0; i < nSlices; ++i)
     {
         p->setValue(float(float(i) / float(nSlices)) * 100); // start generating slices
-        LineSegment2Ds linesegs;                              // the linesegs vector for each slice
+        Lines2D linesegs;                              // the linesegs vector for each slice
         plane.setDistance(z0 + (float)i * sliceSize);       // position the plane according to slice index
         for (size_t t = 0; t < m.size(); ++t)
         {                                                   // iterate all mesh triangles
             const Facet &triangle = m[t];                   // get a const handle to a triangle
-            LineSegment2D ls;
+            Line2D ls;
             if (0 == triangle.intersectPlane(plane, ls))
             {                                               // the plane does intersect the triangle
                 linesegs.push_back(ls);                     // push a new Line Segment object to this slice

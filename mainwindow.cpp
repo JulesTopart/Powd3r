@@ -127,47 +127,47 @@ void MainWindow::browseFile(){
 }
 
 void MainWindow::processFile(QString filePath){
-    ui->progressLabel->setText("processing File...");
+    ui->progressLabel->setText("Traitement du fichier...");
     QFileInfo fi(filePath);
     QString ext = fi.suffix();
     if(ext == "stl"){
         processSTLFile(filePath);
     }else {
-        ui->progressLabel->setText("Invalide file extension !");
+        ui->progressLabel->setText(" Fichier invalide");
         ui->progressBar->setValue(0);
     }
 }
 
 void MainWindow::processSTLFile(QString filePath){
     Mesh model;
-    ui->progressLabel->setText("Checking STL File...");
+    ui->progressLabel->setText("Vérification du fichier STL...");
     ui->progressBar->setValue(5);
     FILE_FORMAT format = getFileFormat(filePath);
     if(format == INVALID){
         ui->progressBar->setValue(0);
-        ui->progressLabel->setText("Corrupted file !");
+        ui->progressLabel->setText("Fichier  corrompu !");
         return;
     }else{
         ui->progressBar->setValue(10);
         if(format == ASCII ){
-            ui->progressLabel->setText("Processing ASCII vertex...");
+            ui->progressLabel->setText("Traitement des points 3D ASCII...");
             model = parseAscii(filePath, *ui->progressBar);
             if(model.size() != 0){
-                ui->progressLabel->setText("Rendering...");
+                ui->progressLabel->setText("Rendu OpenGL...");
                 addModel(&model);
                 ui->progressBar->setValue(100);
-                ui->progressLabel->setText("Done.");
+                ui->progressLabel->setText("Fait.");
             }
         }
         else{
-            ui->progressLabel->setText("Processing Binary vertex...");
+            ui->progressLabel->setText("Traitement des points 3D Binaire...");
             model = parseBinary(filePath.toStdString(), *ui->progressBar);
             if(model.size() != 0){
-                ui->progressLabel->setText("Rendering...");
+                ui->progressLabel->setText("Rendu OpenGL...");
                 addModel(&model);
                 ui->openGLWidget->updateGL();
                 ui->progressBar->setValue(100);
-                ui->progressLabel->setText("Done.");
+                ui->progressLabel->setText("Fait.");
             }
         }
     }
@@ -265,26 +265,26 @@ void MainWindow::on_moveButton_clicked()
 void MainWindow::on_sliceButton_clicked()
 {
     //check if one ore more model are loaded
-    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
+    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1 && ui->layerHeightSpinBox->value() > 0.001){
         //generate slice polygon (result of plane intersecting with mesh)
-        QVector<LineSegment2Ds> *lines;
-        lines = new  QVector<LineSegment2Ds>();
+        QVector<Lines2D> *lines;
+        lines = new  QVector<Lines2D>();
 
-        ui->progressLabel->setText("Slicing polygon...");
+        ui->progressLabel->setText("Traitements des polygon...");
 
         triMeshSlicer(ui->openGLWidget->get(ui->listWidget->currentRow()), *lines, ui->layerHeightSpinBox->value(), ui->progressBar);
 
         //generate slice from lines
-        ui->progressLabel->setText("Generating slice...");
+        ui->progressLabel->setText("Géneration des tranches...");
 
         ui->openGLWidget_2->getSlice()->clear();
         int progress = 0;
-        for(QVector<LineSegment2Ds>::Iterator l = lines->begin(); l < lines->end(); l++, progress++){
+        for(QVector<Lines2D>::Iterator l = lines->begin(); l < lines->end(); l++, progress++){
             Slice sliceBuf(*l);
             ui->openGLWidget_2->getSlice()->push_back(sliceBuf);
             ui->progressBar->setValue(float(float(progress) / float(lines->size())) * 100);
         }
-        ui->progressLabel->setText("Done.");
+        ui->progressLabel->setText("Fait.");
         ui->progressBar->setValue(100);
         ui->openGLWidget_2->getSlice()->remove(0);
         //ui->openGLWidget_2->getSlice()->remove(ui->openGLWidget_2->sliceCount() - 1);
@@ -299,16 +299,23 @@ void MainWindow::on_sliceButton_clicked()
 
 
         //SubSlicing
-        ui->progressLabel->setText("Generating Sub-slice...");
+        ui->progressLabel->setText("Géneration des sous-stanches...");
 
         QVector<Slice> slices = *ui->openGLWidget_2->getSlice();
         for(int i(0); i < nSlice; i++){
             this->ui->progressBar->setValue(float(float(i) / float(nSlice) * 100));
-            LineSegment2Ds subLines = slices[i].subSlice(96);
+            Lines2D subLines = slices[i].subSlice(96);
             ui->openGLWidget_3->push(subLines);
         }
         this->ui->progressBar->setValue(100);
-        ui->progressLabel->setText("Done.");
+        ui->progressLabel->setText("Fait.");
+        ui->tabWidget->setCurrentIndex(1);
+    }else{
+        if(!(ui->layerHeightSpinBox->value() > 0.001)){
+            ui->progressLabel->setText("Hauteur de couche invalide");
+        }else{
+            ui->progressLabel->setText("Sélectionnez un modèle !");
+        }
     }
 }
 
@@ -319,35 +326,36 @@ void MainWindow::generateGcode(){
     //update Gui
     int nSlice = ui->openGLWidget_2->sliceCount();
     ui->gcodePBar->setMaximum(100);
-    ui->progressLabel->setText("Generating Gcode...");
-    QVector<LineSegment2Ds> subLines = *ui->openGLWidget_3->getLines();
-    int i(0);
-    for (QVector<LineSegment2Ds>::Iterator lines = subLines.begin(); lines != subLines.end(); lines++, i++) {
+    ui->progressLabel->setText("Géneration du Gcode...");
+    QVector<Lines2D> subLines = *ui->openGLWidget_3->getLines();
+    int progress(0);
+    for (QVector<Lines2D>::Iterator lines = subLines.begin(); lines != subLines.end(); lines++, progress++) { //For each slice
 
-        this->ui->gcodePBar->setValue(float(float(i) / float(lines->size() * 2) * 100));
+        this->ui->gcodePBar->setValue(float(float(progress) / float(lines->size() * 2) * 100));
 
-        std::vector<Line> Slines;
+        std::vector<Line3D> Slines; //Convert LineSegment to Line (I need to unify these class)
         Point A, B;
-        for (LineSegment2Ds::Iterator line = lines->begin(); line != lines->end(); line++, i++){
+        for (Lines2D::Iterator line = lines->begin(); line != lines->end(); line++, progress++){
             A = Point(line->A().x(), line->A().y());
             B = Point(line->B().x(), line->B().y());
-            Slines.push_back(Line(A,B));
+            Slines.push_back(Line3D(A,B));
         }
 
-        i++;
-        this->ui->gcodePBar->setValue(float(float(i) / float(lines->size() * 2) * 100));
+        progress++;
+        this->ui->gcodePBar->setValue(float(float(progress) / float(lines->size() * 2) * 100));
 
-        SweepCollection sweeps = SweepCollection::generateSweeps(Slines, ui->firstNozzleSpinBox->value(), ui->lastNozzleSpinBox->value() - 1, 96);
-        std::string out = sweeps.toGcode(1);
+        SweepCollection sweeps = SweepCollection::generateSweeps(Slines, ui->firstNozzleSpinBox->value() - 1, ui->lastNozzleSpinBox->value() - 1, 96); //Generate slice sweeps
+        std::string out = sweeps.toGcode(1); //number of pass
         QString cast = QString::fromStdString(out);
 
         this->ui->gcode->append(cast);
+
         this->ui->gcode->append(this->ui->BLGcode->toPlainText());
-        this->ui->gcode->append("G1 Y" +  QString::number(ui->layerHeightSpinBox->value()));
+        this->ui->gcode->append("G1 Y" +  QString::number(ui->layerHeightSpinBox->value())); //Move to next layer
         this->ui->gcode->append(this->ui->ALGcode->toPlainText());
     }
      ui->gcode->append(this->ui->EGcode->toPlainText());
-     ui->progressLabel->setText("Done.");
+     ui->progressLabel->setText("Fait.");
      ui->gcodePBar->setValue(100);
  }
 

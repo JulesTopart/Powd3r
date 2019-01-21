@@ -83,7 +83,7 @@
       </property>
       <widget class="QWidget" name="mainTab">
        <attribute name="icon">
-        <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+        <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
          <normaloff>:/ressources/frontview.png</normaloff>:/ressources/frontview.png</iconset>
        </attribute>
        <attribute name="title">
@@ -216,7 +216,7 @@
                  <string> Ajouter</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/add.png</normaloff>:/ressources/add.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -260,7 +260,7 @@
                  <string> Dupliquer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/copy.png</normaloff>:/ressources/copy.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -310,7 +310,7 @@
                  <string> Déplacer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/move.png</normaloff>:/ressources/move.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -360,7 +360,7 @@
                  <string> Echelle</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/scale.png</normaloff>:/ressources/scale.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -410,7 +410,7 @@
                  <string> Orbite</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/rotate.png</normaloff>:/ressources/rotate.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -451,7 +451,7 @@
                  <string> Centrer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/coordinate.png</normaloff>:/ressources/coordinate.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -501,7 +501,7 @@
                  <string>Supprimer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/delete.png</normaloff>:/ressources/delete.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -991,7 +991,7 @@
               <string>Trancher</string>
              </property>
              <property name="icon">
-              <iconset resource="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+              <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
                <normaloff>:/ressources/slice.png</normaloff>:/ressources/slice.png</iconset>
              </property>
              <property name="iconSize">
@@ -1040,7 +1040,7 @@
                 <enum>QFrame::NoFrame</enum>
                </property>
                <property name="text">
-                <string>No task.</string>
+                <string>Aucune tâche.</string>
                </property>
               </widget>
              </item>
@@ -1092,6 +1092,10 @@
        </layout>
       </widget>
       <widget class="QWidget" name="sliceTab">
+       <attribute name="icon">
+        <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
+         <normaloff>:/ressources/slice.png</normaloff>:/ressources/slice.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>2D Slice</string>
        </attribute>
@@ -1155,6 +1159,10 @@
        </layout>
       </widget>
       <widget class="QWidget" name="toolpathTab">
+       <attribute name="icon">
+        <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
+         <normaloff>:/ressources/main.png</normaloff>:/ressources/main.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>Toolpath</string>
        </attribute>
@@ -1227,6 +1235,10 @@
        </layout>
       </widget>
       <widget class="QWidget" name="GcodeTab">
+       <attribute name="icon">
+        <iconset resource="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc">
+         <normaloff>:/ressources/copy.png</normaloff>:/ressources/copy.png</iconset>
+       </attribute>
        <attribute name="title">
         <string>G-Code</string>
        </attribute>
@@ -1561,7 +1573,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Debug/debug/qmake_qmake_immediate.qrc"/>
+  <include location="../../build-Powd3r-Desktop_Qt_5_11_2_MinGW_32bit-Release/release/qmake_qmake_immediate.qrc"/>
  </resources>
  <connections/>
 </ui>

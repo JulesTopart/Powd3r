@@ -122,10 +122,10 @@ bool operator==(const Vec3 &a, const Vec3 &b){
 //----------------------------------------------------------------
 
 //              ----------- Constructor ----------
-LineSegment::LineSegment ()                            : v{Vec3(), Vec3()} {}
-LineSegment::LineSegment (Vec3 a_, Vec3 b_           ) : v{a_    , b_    } {}
-LineSegment::LineSegment (QVector3D a_, QVector3D b_ ) : v{a_    , b_    } {}
-LineSegment::LineSegment( float ax_,
+Line3D::Line3D ()                            : v{Vec3(), Vec3()} {}
+Line3D::Line3D (Vec3 a_, Vec3 b_           ) : v{a_    , b_    } {}
+Line3D::Line3D (QVector3D a_, QVector3D b_ ) : v{a_    , b_    } {}
+Line3D::Line3D( float ax_,
       float ay_,
       float az_ ,
       float bx_,
@@ -133,34 +133,34 @@ LineSegment::LineSegment( float ax_,
       float bz_
      ) : v{Vec3(ax_, ay_, az_), Vec3(bx_, by_, bz_)}{}
 
-LineSegment::LineSegment (QVector2D a_, QVector2D b_, float z){
-    *this = LineSegment(a_.x(), z, a_.y(), b_.x(), z, b_.y());
+Line3D::Line3D (QVector2D a_, QVector2D b_, float z){
+    *this = Line3D(a_.x(), z, a_.y(), b_.x(), z, b_.y());
 }
 
 
 //               ------------- Operator -----------
 
-bool operator==(LineSegment const& a, LineSegment const& b)
+bool operator==(Line3D const& a, Line3D const& b)
 {
     if ((a.v[0] == b.v[0] && a.v[1] == b.v[1]) || (a.v[1] == b.v[0] && a.v[0] == b.v[1])) return true;
     return false;
 }
 
-Vec3& LineSegment::operator [](int idx) {
+Vec3& Line3D::operator [](int idx) {
     return v[idx];
 }
 
 //               ------------- Methods -----------
 
 QVector3D
-LineSegment::asVector3D(){ return QVector3D(v[1].x - v[0].x, v[1].y - v[0].y, v[1].z - v[0].z);}
+Line3D::asVector3D(){ return QVector3D(v[1].x - v[0].x, v[1].y - v[0].y, v[1].z - v[0].z);}
 
-bool LineSegment::isConnectedTo(LineSegment b){
+bool Line3D::isConnectedTo(Line3D b){
     if(b.A() == v[0] || b.B() == v[0] || b.A() == v[1] || b.B() == v[1]) return true;
     return false;
 }
 
-CONNECTION LineSegment::connectionType(LineSegment b){
+CONNECTION Line3D::connectionType(Line3D b){
     if( b.A() == v[0] ){
         return AA;
     }else if(b.B() == v[0]){
@@ -175,7 +175,7 @@ CONNECTION LineSegment::connectionType(LineSegment b){
 }
 
 
-Vec3 LineSegment::getMin(){
+Vec3 Line3D::getMin(){
     float xmin = A().x, ymin = A().y, zmin = A().z;
     if(B().x < xmin) xmin = B().x;
     if(B().y < ymin) ymin = B().y;
@@ -183,7 +183,7 @@ Vec3 LineSegment::getMin(){
     return Vec3(xmin, ymin, zmin);
 }
 
-Vec3 LineSegment::getMax(){
+Vec3 Line3D::getMax(){
     float xmax = A().x, ymax = A().y, zmax = A().z;
     if(B().x < xmax) xmax = B().x;
     if(B().y < ymax) ymax = B().y;
@@ -191,7 +191,7 @@ Vec3 LineSegment::getMax(){
     return Vec3(xmax, ymax, zmax);
 }
 
-void LineSegment::invert(){
+void Line3D::invert(){
     Vec3 buf = v[0];
     v[0] = v[1];
     v[1] = buf;
@@ -204,38 +204,38 @@ void LineSegment::invert(){
 //----------------------------------------------------------------
 
 //              ----------- Constructor ----------
-LineSegment2D::LineSegment2D (): v{QVector2D(), QVector2D()} {}
-LineSegment2D::LineSegment2D (QVector2D a_, QVector2D b_) : v{a_, b_} {}
-LineSegment2D::LineSegment2D( float ax_,
+Line2D::Line2D ()                           : v{QVector2D(), QVector2D()}, a(v[0]), b(v[0]){}
+Line2D::Line2D (QVector2D a_, QVector2D b_) : v{a_, b_}, a(v[0]), b(v[0]){}
+Line2D::Line2D( float ax_,
       float ay_,
       float bx_,
       float by_
-     ) : v{QVector2D(ax_, ay_), QVector2D(bx_, by_)}{}
+     ): v{QVector2D(ax_, ay_), QVector2D(bx_, by_)}, a(v[0]), b(v[0]){}
 
 //               ------------- Operator -----------
 
-bool operator==(LineSegment2D const& a, LineSegment2D const& b)
+bool operator==(Line2D const& a, Line2D const& b)
 {
     if ((a.v[0] == b.v[0] && a.v[1] == b.v[1]) || (a.v[1] == b.v[0] && a.v[0] == b.v[1])) return true;
     return false;
 }
 
-QVector2D& LineSegment2D::operator [](int idx) {
+QVector2D& Line2D::operator [](int idx) {
     return v[idx];
 }
 
 //               ------------- Methods -----------
 
 QVector2D
-LineSegment2D::asVector2D(){ return QVector2D(v[1].x() - v[0].x(), v[1].y() - v[0].y());}
+Line2D::asVector2D(){ return QVector2D(v[1].x() - v[0].x(), v[1].y() - v[0].y());}
 
 
-bool LineSegment2D::isConnectedTo(LineSegment b){
+bool Line2D::isConnectedTo(Line3D b){
     if(b.A() == v[0] || b.B() == v[0] || b.A() == v[1] || b.B() == v[1]) return true;
     return false;
 }
 
-CONNECTION LineSegment2D::connectionType(LineSegment b){
+CONNECTION Line2D::connectionType(Line3D b){
     if( b.A() == v[0] ){
         return AA;
     }else if(b.B() == v[0]){
@@ -249,7 +249,7 @@ CONNECTION LineSegment2D::connectionType(LineSegment b){
     }
 }
 
-QVector2D LineSegment2D::intersect2D(LineSegment2D b)
+QVector2D Line2D::intersect2D(Line2D b)
 {
 
     // Line AB represented as a1x + b1y = c1
@@ -276,16 +276,14 @@ QVector2D LineSegment2D::intersect2D(LineSegment2D b)
     }
 }
 
-bool LineSegment2D::isParralelTo(LineSegment2D b){
+bool Line2D::isParralelTo(Line2D b){
     // Line AB represented as a1x + b1y = c1
     double a1 = B().y() - A().y();
     double b1 = A().x()- B().x();
-    double c1 = a1*(A().x()) + b1*(A().y());
 
     // Line CD represented as a2x + b2y = c2
     double a2 = b.B().y() - b.A().y();
     double b2 = b.A().x() - b.B().x();
-    double c2 = a2*(b.A().x())+ b2*(b.A().y());
 
     double determinant = a1*b2 - a2*b1;
 
@@ -297,21 +295,21 @@ bool LineSegment2D::isParralelTo(LineSegment2D b){
     return false;
 }
 
-QVector2D LineSegment2D::getMin(){
+QVector2D Line2D::getMin(){
     float xmin = A().x(), ymin = A().y();
     if(B().x() < xmin) xmin = B().x();
     if(B().y() < ymin) ymin = B().y();
     return QVector2D(xmin, ymin);
 }
 
-QVector2D LineSegment2D::getMax(){
+QVector2D Line2D::getMax(){
     float xmax = A().x(), ymax = A().y();
     if(B().x() > xmax) xmax = B().x();
     if(B().y() > ymax) ymax = B().y();
     return QVector2D(xmax, ymax);
 }
 
-bool LineSegment2D::isInSegmentRange2D(QVector2D point){
+bool Line2D::isInSegmentRange2D(QVector2D point){
     if( point.x() >= getMin().x() &&
         point.y() >= getMin().y() &&
         point.x() <= getMax().x() &&
@@ -319,7 +317,7 @@ bool LineSegment2D::isInSegmentRange2D(QVector2D point){
     return false;
 }
 
-void LineSegment2D::invert(){
+void Line2D::invert(){
     QVector2D buf = v[0];
     v[0] = v[1];
     v[1] = buf;
@@ -389,7 +387,7 @@ void Facet::transform(const QMatrix4x4 &mat)
 //          0 = plane intersects the triangle
 //          1 = all triangle is on plane front side
 //         -2 = error in function
-int Facet::intersectPlane(const Plane &plane, LineSegment2D &ls) const
+int Facet::intersectPlane(const Plane &plane, Line2D &ls) const
 {
     // a triangle has 3 vertices that construct 3 line segments
     size_t cntFront = 0, cntBack = 0;
@@ -454,20 +452,20 @@ void Facet::scale(Vec3 r){
 //------------------------ Slice Class ---------------------------
 //----------------------------------------------------------------
 
-Slice::Slice( LineSegment2Ds lines_ ){
+Slice::Slice( Lines2D lines_ ){
     lines = lines_;
 }
 
-LineSegment2D Slice::get(int i){
+Line2D Slice::get(int i){
     if(i < lines.size() && i > 0) return lines[i];
-    return LineSegment2D();
+    return Line2D();
 }
 
-void Slice::push(LineSegment2D p){
+void Slice::push(Line2D p){
     lines.push_back(p);
 }
 
-LineSegment2Ds Slice::asLines(){
+Lines2D Slice::asLines(){
     return lines;
 }
 
@@ -502,20 +500,20 @@ QVector2D Slice::getMax(){
 
 
 
-LineSegment2Ds Slice::subSlice(int DPI){
+Lines2D Slice::subSlice(int DPI){
     QVector2D min = getMin();
     QVector2D max = getMax();
     QVector2D size = getMax() - getMin();
     float res = 25.4/float(DPI);
     int n = size.y() / res;
     QVector<QVector2D> intersectionPoints;
-    LineSegment2Ds insideLines;
+    Lines2D insideLines;
 
     for(int k(1); k <= n; k++){
-        LineSegment2D HLine(min.x() - res , k*res + min.y(), max.x() + res, k*res + min.y()); //Intersection line
+        Line2D HLine(min.x() - res , k*res + min.y(), max.x() + res, k*res + min.y()); //Intersection line
         for(int i(0); i < lines.size(); i++){
             if(!lines[i].isParralelTo(HLine)){
-                LineSegment2D curLine = lines[i];
+                Line2D curLine = lines[i];
                 QVector2D inter = curLine.intersect2D(HLine);
                 if(curLine.isInSegmentRange2D(inter)) intersectionPoints.push_back(inter);
             }
@@ -525,7 +523,7 @@ LineSegment2Ds Slice::subSlice(int DPI){
         for(QVector<QVector2D>::Iterator point = intersectionPoints.begin(); point != intersectionPoints.end(); point++){
             buf.push_back(*point);
             if(buf.size() == 2){
-                insideLines.push_back(LineSegment2D(buf[0], buf[1]));
+                insideLines.push_back(Line2D(buf[0], buf[1]));
                 buf.clear();
             }
         }

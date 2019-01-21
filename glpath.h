@@ -17,11 +17,11 @@ public:
 
     void drawAxis();
     void drawGrid(int grid_size);
-    QVector<LineSegment2Ds> *getLines(){ return &_subLines;}
+    QVector<Lines2D> *getLines(){ return &_subLines;}
     void selectSlice(int n){
         activeSlice = n;
     }
-    void push(LineSegment2Ds subLines_){_subLines.push_back(subLines_);}
+    void push(Lines2D subLines_){_subLines.push_back(subLines_);}
     void clear(){_subLines.clear();}
 protected:
 
@@ -50,6 +50,7 @@ private:
      leftMousePressed = false;
 
      size_t activeSlice = 0;
-     QVector<LineSegment2Ds> _subLines;
+     QVector<Lines2D> _subLines;
+
 };
 #endif // GLPATH_H

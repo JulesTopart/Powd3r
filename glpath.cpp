@@ -140,6 +140,6 @@ void glPath::wheelEvent(QWheelEvent* event){
 }
 
 
-void subSlice(std::vector<std::vector<LineSegment>> lines){
+void subSlice(std::vector<std::vector<Line3D>> lines){
 
 }

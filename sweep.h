@@ -1,37 +1,20 @@
 #ifndef SWEEP_H
 #define SWEEP_H
-#pragma once
+
 #include <vector>
 #include <string>
 #include <iostream>
 #include <algorithm>    // std::sort
+#include "geometry.h"
 //#define DEBUG_SWEEP
-//#include "Geometry.hpp"
 
+typedef QVector2D Point;
+typedef QVector<QVector2D> Points;
 
-class Point
-{
-public:
-    float x;
-    float y;
-    constexpr Point(float _x = 0, float _y = 0) : x(_x), y(_y) {};
-
-};
-
-class Line
-{
-public:
-    Point a;
-    Point b;
-    Line() {};
-    explicit Line(Point _a, Point _b) : a(_a), b(_b) {};
-
-};
-
-float getMin(std::vector<Line> lines);
-float getMinY(std::vector<Line> lines);
-float getMax(std::vector<Line> lines);
-float getMaxY(std::vector<Line> lines);
+float getMin(std::vector<Line2D> lines);
+float getMinY(std::vector<Line2D> lines);
+float getMax(std::vector<Line2D> lines);
+float getMaxY(std::vector<Line2D> lines);
 
 class NozzleLine;
 bool operator>(NozzleLine const &a, NozzleLine const& b);
@@ -39,24 +22,24 @@ bool operator<(NozzleLine const &a, NozzleLine const& b);
 
 class NozzleLine {
 public:
-    NozzleLine() {};
-    NozzleLine(Line l) { line_coll.push_back(l); y = l.a.y; };
+    NozzleLine() {}
+    NozzleLine(Line2D l) { line_coll.push_back(l); y = l.a.y(); }
 
-    void push(Line l) {
+    void push(Line2D l) {
         line_coll.push_back(l);
-        y = l.a.y;
+        y = l.a.y();
     }
 
-    void push(std::vector<Line>::iterator l) {
+    void push(std::vector<Line2D>::iterator l) {
         line_coll.push_back(*l);
-        y = l->a.y;
+        y = l->a.y();
     }
 
     int size() {
         return line_coll.size();
     }
 
-    Line get(int i) {
+    Line2D get(int i) {
         return line_coll[i];
     }
 
@@ -75,7 +58,7 @@ public:
     static bool getGreater(NozzleLine a, NozzleLine b) { return a.getY() > b.getY(); };
 
 private:
-    std::vector<Line> line_coll;
+    std::vector<Line2D> line_coll;
     float xmin, xmax, y;
 };
 
@@ -241,7 +224,7 @@ public:
 
     std::string toGcode(short nPass = 1);
 
-    static SweepCollection generateSweeps(std::vector<Line> lines, short firstNozzle,short lastNozzle, short dpi);
+    static SweepCollection generateSweeps(std::vector<Line2D> lines, short firstNozzle,short lastNozzle, short dpi);
 
 private:
 

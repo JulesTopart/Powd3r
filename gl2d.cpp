@@ -65,7 +65,7 @@ void gl2D::paintGL(){
     glColor3f(0.5,0.5,0.48f); //retablish default color
 
     if(activeSlice < slices.size() && slices.size() > 0){
-        LineSegment2Ds lines;
+        Lines2D lines;
         lines = slices[activeSlice].asLines();
         glBegin(GL_LINES);
         glColor3f(0.5f, 0.5f, 0.5f);
