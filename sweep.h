@@ -23,16 +23,16 @@ bool operator<(NozzleLine const &a, NozzleLine const& b);
 class NozzleLine {
 public:
     NozzleLine() {}
-    NozzleLine(Line2D l) { line_coll.push_back(l); y = l.a.y(); }
+    NozzleLine(Line2D l) { line_coll.push_back(l); y = l[0].y(); }
 
     void push(Line2D l) {
         line_coll.push_back(l);
-        y = l.a.y();
+        y = l[0].y();
     }
 
     void push(std::vector<Line2D>::iterator l) {
         line_coll.push_back(*l);
-        y = l->a.y();
+        y = l->v[0].y();
     }
 
     int size() {
@@ -72,7 +72,7 @@ public:
     NozzleAction(float _x, float _length, int _code) : x(_x), length(_length), code(_code), dpiconst(25.4f / 96.0f) {};
     NozzleAction(float _x, float _length, int _code, int dpi) : x(_x), length(_length), code(_code), dpiconst(25.4f / (float)dpi) {};
 
-    std::string toGcode(bool dir);
+    std::string toGcode(bool dir, QVector2D Offset);
 
     void addToLength(float _x) {
         length += _x;
@@ -162,9 +162,9 @@ public:
         nozzleActions.push_back(n);
     }
 
-    std::string toGcode(bool dir);
-    std::string goToLeftPoint();
-    std::string goToRightPoint();
+    std::string toGcode(bool dir, QVector2D offset);
+    std::string goToLeftPoint(QVector2D offset);
+    std::string goToRightPoint(QVector2D offset);
 
     std::string relative() {
         if (absoluteMode) {
@@ -222,7 +222,7 @@ public:
     }
 
 
-    std::string toGcode(short nPass = 1);
+    std::string toGcode(short nPass = 1, QVector2D offset = QVector2D(0,0));
 
     static SweepCollection generateSweeps(std::vector<Line2D> lines, short firstNozzle,short lastNozzle, short dpi);
 

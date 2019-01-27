@@ -26,20 +26,26 @@ void glPath::drawAxis(){
     glDisable(GL_LINE_SMOOTH);
 }
 
-void glPath::drawGrid(int grid_size){
-    int HALF_GRID_SIZE = grid_size/2;
-    glBegin(GL_LINES);
-    glColor3f(0.5f, 0.5f, 0.5f);
-    for(int i=-HALF_GRID_SIZE;i<=HALF_GRID_SIZE;i+=10)
-    {
-        glVertex3f((float)i,(float)-HALF_GRID_SIZE,0);
-        glVertex3f((float)i,(float)HALF_GRID_SIZE,0);
+void glPath::drawGrid(QVector2D size)
+{
+    float HALF_GRID_X = size.y()/2;
+    float HALF_GRID_Y = size.x()/2;
 
-        glVertex3f((float)-HALF_GRID_SIZE,(float)i,0);
-        glVertex3f((float)HALF_GRID_SIZE,(float)i,0);
+    glBegin(GL_LINES);
+    for(int i =- HALF_GRID_Y; i <= HALF_GRID_Y; i += 40 )
+    {
+        glVertex2f((float)i,(float)-HALF_GRID_X);
+        glVertex2f((float)i,(float)HALF_GRID_X);
     }
+
+    for(int i=-HALF_GRID_X;i<=HALF_GRID_X;i += 40){
+        glVertex2f((float)-HALF_GRID_Y,(float)i);
+        glVertex2f((float)HALF_GRID_Y,(float)i);
+    }
+
     glEnd();
 }
+
 
 void glPath::initializeGL(){
     glShadeModel(GL_SMOOTH);
@@ -57,8 +63,15 @@ void glPath::paintGL(){
     glTranslatef(position.x(), position.y(), -25);
     glScalef(scale.x(), scale.y(), 0);
     //Draw axis
+
+    glPushMatrix();
+    glTranslatef(originOffset.x() - plateDim.x()/2, originOffset.y() - plateDim.y()/2, 0);
     drawAxis();
-    glColor3f(0.5,0.5,0.48f);
+    glPopMatrix();
+
+    glColor3f(0.3f,0.3f,0.28f);
+    drawGrid(plateDim);
+
 
     //Draw grid
     //drawGrid(200);
@@ -67,8 +80,11 @@ void glPath::paintGL(){
 
     if(activeSlice < _subLines.size() && _subLines.size() > 0){
         glBegin(GL_LINES);
-        glColor3f(0.5f, 0.5f, 0.5f);
+
+
         for(size_t i(0); i < _subLines[activeSlice].size(); i++){
+            if((i / nozzleCount) % 2 == 0) glColor3f(0.7f, 1, 0.7f);
+            else glColor3f(1, 0.7f, 0.7f);
             glVertex3f(_subLines[activeSlice][i].A().x(), _subLines[activeSlice][i].A().y(), 0);
             glVertex3f(_subLines[activeSlice][i].B().x(), _subLines[activeSlice][i].B().y(), 0);
         }

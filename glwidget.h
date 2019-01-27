@@ -18,7 +18,7 @@ public:
     int modelCount() {return models.size();}
 
     void drawAxis();
-    void drawGrid(int grid_size);
+    void drawGrid(QVector3D size);
 
     Mesh* get(int i){return &models[i];}
     void rotate(int i, QVector3D r){ models[i].rotate(r);}
@@ -33,6 +33,12 @@ public:
     void AxonView();
 
     void centerOnModel(int i);
+
+    QVector3D
+    plateDim      = QVector3D(200,200,200);
+
+    QVector3D
+    originOffset = QVector3D(0,0,0);
 
 protected:
      void initializeGL();
@@ -78,11 +84,12 @@ private:
     QVector3D
     scale         = QVector3D(0.5,0.5,0.5);
 
+
     BOOL
     light = true;
 
     GLfloat
-    LightAmbient[4]  = { 0.3f, 0.3f, 0.3f, 1.0f };
+    LightAmbient[4]  = { 0.5f, 0.5f, 0.5f, 1.0f };
 
     GLfloat
     LightDiffuse[4]  = { 0.01f, 0.01f, 0.01f, 1.0f };

@@ -55,6 +55,22 @@ private slots:
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
 
+    void on_firstNozzleSpinBox_valueChanged(int arg1);
+
+    void on_lastNozzleSpinBox_valueChanged(int arg1);
+
+    void on_doubleSpinBox_valueChanged(double arg1);
+
+    void on_doubleSpinBox_2_valueChanged(double arg1);
+
+    void on_doubleSpinBox_3_valueChanged(double arg1);
+
+    void on_X_OffsetSpinBox_valueChanged(double arg1);
+
+    void on_Y_OffsetSpinBox_valueChanged(double arg1);
+
+    void on_Z_OffsetSpinBox_valueChanged(double arg1);
+
 private:
     Ui::MainWindow *ui;
     QString m_sSettingsFile;

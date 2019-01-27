@@ -24,6 +24,7 @@ void GLWidget::initializeGL(){
     //glEnable(GL_CULL_FACE);
     glDepthFunc(GL_LEQUAL);
     glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_DEPTH_CLAMP);
     //glEnable(GL_LINE_SMOOTH);
     //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     //glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION, 0.05f);
@@ -33,12 +34,10 @@ void GLWidget::initializeGL(){
 
 void GLWidget::paintGL(){
     glDisable(GL_LIGHTING);     // Disable Lighting
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_NORMALIZE);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     //glMatrixMode(GL_MODELVIEW);
-
-
 
     glTranslatef(position.x(), position.y(), position.z());
     //glRotatef(rotation.length(), rotation.normalized().x(), rotation.normalized().y(), rotation.normalized().z());
@@ -48,19 +47,22 @@ void GLWidget::paintGL(){
 
     //Draw grid
     glScalef(scale.x(), scale.y(), scale.z());
-    drawGrid(200);
+    drawGrid(plateDim);
     glColor3f(0.5,0.5,0.48f); //retablish default color
 
     glRotatef(-90, 1, 0, 0); //mê !
-    glRotatef(-90, 0, 0, 1); //mê !
+    //glRotatef(-90, 0, 0, 1); //mê !
 
     //Draw axis
+
+    //glRotatef(90, 0, 0, 1); //mê !
+
+    glPushMatrix();
+    glTranslatef(originOffset.x() - plateDim.x()/2, originOffset.y() - plateDim.y()/2, originOffset.z());
     drawAxis();
-    glRotatef(90, 0, 0, 1); //mê !
+    glPopMatrix();
+
     glColor3f(0.5,0.5,0.48f);
-
-
-
     if (light) glEnable(GL_LIGHTING);      // Enable Lighting
     //glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);                     // Setup The Diffuse Light
     //glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);                       // Setup The Diffuse Light
@@ -75,8 +77,8 @@ void GLWidget::paintGL(){
         glRotatef(model->getRotation().x(), 1, 0, 0);
         glRotatef(model->getRotation().y(), 0, 1, 0);
         glRotatef(model->getRotation().z(), 0, 0, 1);
-        if(index == selectedModel) glColor3f(0.5,0.8,0.48f);
-        else glColor3f(0.5,0.5,0.48f);
+        if(index == selectedModel) glColor3f(0.7,1,0.68f);
+        else glColor3f(0.8,0.8,0.78f);
         model->draw();
         glPopMatrix();
     }
@@ -84,19 +86,51 @@ void GLWidget::paintGL(){
     rotation += rotationSpeed;     // Add speed To rotation
 }
 
-void GLWidget::drawGrid(int grid_size)
+void GLWidget::drawGrid(QVector3D size)
 {
-    int HALF_GRID_SIZE = grid_size/2;
-    glBegin(GL_LINES);
-    glColor3f(0.75f, 0.75f, 0.75f);
-    for(int i=-HALF_GRID_SIZE;i<=HALF_GRID_SIZE;i+=10)
-    {
-        glVertex3f((float)i,0,(float)-HALF_GRID_SIZE);
-        glVertex3f((float)i,0,(float)HALF_GRID_SIZE);
+    float HALF_GRID_X = size.y()/2;
+    float HALF_GRID_Y = size.x()/2;
+    float GRID_Z = size.z();
 
-        glVertex3f((float)-HALF_GRID_SIZE,0,(float)i);
-        glVertex3f((float)HALF_GRID_SIZE,0,(float)i);
+    glBegin(GL_LINES);
+    glColor3f(0.65f, 0.65f, 0.65f);
+
+    for(int i=-HALF_GRID_Y;i<=HALF_GRID_Y;i+=10)
+    {
+        glVertex3f((float)i,0,(float)-HALF_GRID_X);
+        glVertex3f((float)i,0,(float)HALF_GRID_X);
     }
+    for(int i=-HALF_GRID_X;i<=HALF_GRID_X;i+=10){
+        glVertex3f((float)-HALF_GRID_Y,0,(float)i);
+        glVertex3f((float)HALF_GRID_Y,0,(float)i);
+    }
+
+    glVertex3f(HALF_GRID_Y,0,HALF_GRID_X);
+    glVertex3f(HALF_GRID_Y,GRID_Z,HALF_GRID_X);
+
+    glVertex3f(-HALF_GRID_Y,0,HALF_GRID_X);
+    glVertex3f(-HALF_GRID_Y,GRID_Z,HALF_GRID_X);
+
+    glVertex3f(HALF_GRID_Y,0,-HALF_GRID_X);
+    glVertex3f(HALF_GRID_Y,GRID_Z,-HALF_GRID_X);
+
+    glVertex3f(-HALF_GRID_Y,0,-HALF_GRID_X);
+    glVertex3f(-HALF_GRID_Y,GRID_Z,-HALF_GRID_X);
+
+    //Square :
+    glVertex3f(HALF_GRID_Y,GRID_Z,HALF_GRID_X);
+    glVertex3f(HALF_GRID_Y,GRID_Z,-HALF_GRID_X);
+
+    glVertex3f(-HALF_GRID_Y,GRID_Z,HALF_GRID_X);
+    glVertex3f(-HALF_GRID_Y,GRID_Z,-HALF_GRID_X);
+
+    glVertex3f(HALF_GRID_Y,GRID_Z,HALF_GRID_X);
+    glVertex3f(-HALF_GRID_Y,GRID_Z,HALF_GRID_X);
+
+    glVertex3f(HALF_GRID_Y,GRID_Z,-HALF_GRID_X);
+    glVertex3f(-HALF_GRID_Y,GRID_Z,-HALF_GRID_X);
+
+
     glEnd();
 }
 
@@ -106,11 +140,11 @@ void GLWidget::drawAxis(){
     glTranslatef(0,0.06f,0);
     glBegin(GL_LINES);
       glColor3f(1,0,0);
-      glVertex2i(0,0);glVertex2i(0,10);
+      glVertex2i(0,0);glVertex2i(20,0);
       glColor3f(0,1,0);
-      glVertex2i(0,0);glVertex2i(10,0);
+      glVertex2i(0,0);glVertex2i(0,20);
       glColor3f(0,0,1);
-      glVertex2i(0,0);glVertex3i(0,0,10);
+      glVertex2i(0,0);glVertex3i(0,0,20);
     glEnd();
     glPopMatrix();
     glDisable(GL_LINE_SMOOTH);

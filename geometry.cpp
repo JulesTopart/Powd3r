@@ -204,13 +204,13 @@ void Line3D::invert(){
 //----------------------------------------------------------------
 
 //              ----------- Constructor ----------
-Line2D::Line2D ()                           : v{QVector2D(), QVector2D()}, a(v[0]), b(v[0]){}
-Line2D::Line2D (QVector2D a_, QVector2D b_) : v{a_, b_}, a(v[0]), b(v[0]){}
+Line2D::Line2D ()                           : v{QVector2D(), QVector2D()}{}
+Line2D::Line2D (QVector2D a_, QVector2D b_) : v{a_, b_}{}
 Line2D::Line2D( float ax_,
       float ay_,
       float bx_,
       float by_
-     ): v{QVector2D(ax_, ay_), QVector2D(bx_, by_)}, a(v[0]), b(v[0]){}
+     ): v{QVector2D(ax_, ay_), QVector2D(bx_, by_)}{}
 
 //               ------------- Operator -----------
 

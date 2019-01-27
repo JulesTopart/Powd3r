@@ -16,7 +16,7 @@ public:
     ~gl2D();
 
     void drawAxis();
-    void drawGrid(int grid_size);
+    void drawGrid(QVector2D grid_size);
 
     int sliceCount(){
         return slices.size();
@@ -27,6 +27,13 @@ public:
     }
 
     Slices* getSlice(){return &slices;}
+
+    QVector2D
+    originOffset = QVector2D(0,0);
+
+    QVector2D
+    plateDim      = QVector2D(200,200);
+
 protected:
 
      void initializeGL();

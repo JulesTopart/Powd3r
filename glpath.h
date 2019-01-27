@@ -10,19 +10,27 @@ class glPath : public QGLWidget
 {
     Q_OBJECT
 public:
-public:
 
     glPath(QWidget *parent = nullptr) ;
     ~glPath();
 
     void drawAxis();
-    void drawGrid(int grid_size);
+    void drawGrid(QVector2D grid_size);
     QVector<Lines2D> *getLines(){ return &_subLines;}
     void selectSlice(int n){
         activeSlice = n;
     }
     void push(Lines2D subLines_){_subLines.push_back(subLines_);}
     void clear(){_subLines.clear();}
+
+     int nozzleCount = 12;
+
+     QVector2D
+     originOffset = QVector2D(0,0);
+
+     QVector2D
+     plateDim      = QVector2D(200,200);
+
 protected:
 
      void initializeGL();
@@ -33,6 +41,8 @@ protected:
      void mousePressEvent(QMouseEvent *e);
      void mouseReleaseEvent(QMouseEvent *e);
      void wheelEvent( QWheelEvent* );
+
+
 
 public slots:
      void timeOutSlot();

@@ -135,8 +135,8 @@ public:
     float length(){ return QVector3D((v[1] - v[0])).length();}
 
     QVector2D v[2];
-    const QVector2D &a; // Constant variable
-    const QVector2D &b;
+
+    //♥
 
 };
 //-------------- Extern Operator -------------

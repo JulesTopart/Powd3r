@@ -26,20 +26,27 @@ void gl2D::drawAxis(){
     glDisable(GL_LINE_SMOOTH);
 }
 
-void gl2D::drawGrid(int grid_size){
-    int HALF_GRID_SIZE = grid_size/2;
-    glBegin(GL_LINES);
-    glColor3f(0.5f, 0.5f, 0.5f);
-    for(int i=-HALF_GRID_SIZE;i<=HALF_GRID_SIZE;i+=10)
-    {
-        glVertex2f((float)i,(float)-HALF_GRID_SIZE);
-        glVertex2f((float)i,(float)HALF_GRID_SIZE);
+void gl2D::drawGrid(QVector2D size)
+{
+    float HALF_GRID_X = size.y()/2;
+    float HALF_GRID_Y = size.x()/2;
 
-        glVertex2f((float)-HALF_GRID_SIZE,(float)i);
-        glVertex2f((float)HALF_GRID_SIZE,(float)i);
+    glBegin(GL_LINES);
+    for(int i =- HALF_GRID_Y; i <= HALF_GRID_Y; i += 40 )
+    {
+        glVertex2f((float)i,(float)-HALF_GRID_X);
+        glVertex2f((float)i,(float)HALF_GRID_X);
     }
+
+    for(int i =- HALF_GRID_X; i <= HALF_GRID_X; i += 40){
+        glVertex2f((float)-HALF_GRID_Y,(float)i);
+        glVertex2f((float)HALF_GRID_Y,(float)i);
+    }
+
     glEnd();
 }
+
+
 
 void gl2D::initializeGL(){
     glShadeModel(GL_SMOOTH);
@@ -57,11 +64,15 @@ void gl2D::paintGL(){
     glTranslatef(position.x(), position.y(), -25);
     glScalef(scale.x(), scale.y(), 0);
     //Draw axis
-    drawAxis();
-    glColor3f(0.5,0.5,0.48f);
 
+    glPushMatrix();
+    glTranslatef(originOffset.x() - plateDim.x()/2, originOffset.y() - plateDim.y()/2, 0);
+    drawAxis();
+    glPopMatrix();
+
+    glColor3f(0.3f,0.3f,0.28f);
     //Draw grid
-    //drawGrid(200);
+    drawGrid(plateDim);
     glColor3f(0.5,0.5,0.48f); //retablish default color
 
     if(activeSlice < slices.size() && slices.size() > 0){
