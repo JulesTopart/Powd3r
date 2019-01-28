@@ -172,7 +172,7 @@ void MainWindow::processFile(QString filePath){
     ui->progressLabel->setText("Traitement du fichier...");
     QFileInfo fi(filePath);
     QString ext = fi.suffix();
-    if(ext == "stl"){
+    if(ext == "stl" || ext == "STL"){
         processSTLFile(filePath);
     }else {
         ui->progressLabel->setText(" Fichier invalide");
@@ -388,11 +388,8 @@ void MainWindow::generateGcode(){
     int progress(0);                                                              //TODO modify this progress handling
 
 
-    long max(0);
+    long max(subLines.size());
 
-    for (QVector<Lines2D>::Iterator lines = subLines.begin(); lines != subLines.end(); lines++) { //For each slice
-        max += lines->size();
-    }
     ui->gcodePBar->setMaximum(max);
 
     for (QVector<Lines2D>::Iterator lines = subLines.begin(); lines != subLines.end(); lines++, progress++) { //For each slice

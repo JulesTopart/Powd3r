@@ -18,14 +18,14 @@ GLWidget::GLWidget(QWidget *parent) :
 
 void GLWidget::initializeGL(){
     glShadeModel(GL_SMOOTH);
-    glClearColor(0.2f, 0.2f, 0.2f, 1);
+    glClearColor(0.9f, 0.9f, 0.9f, 1);
     glClearDepth(1.0);
     glEnable(GL_DEPTH_TEST);
     //glEnable(GL_CULL_FACE);
     glDepthFunc(GL_LEQUAL);
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_DEPTH_CLAMP);
-    //glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_LINE_SMOOTH);
     //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     //glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION, 0.05f);
     //glEnable(GL_LIGHT0);      // Enable Lighting
@@ -105,6 +105,7 @@ void GLWidget::drawGrid(QVector3D size)
         glVertex3f((float)HALF_GRID_Y,0,(float)i);
     }
 
+    glColor3f(0.5f, 0.8f, 1.0f);
     glVertex3f(HALF_GRID_Y,0,HALF_GRID_X);
     glVertex3f(HALF_GRID_Y,GRID_Z,HALF_GRID_X);
 
@@ -135,9 +136,9 @@ void GLWidget::drawGrid(QVector3D size)
 }
 
 void GLWidget::drawAxis(){
-    glEnable(GL_LINE_SMOOTH);
     glPushMatrix();
-    glTranslatef(0,0.06f,0);
+    glLineWidth(2.2);
+    //glTranslatef(0.1f,0.1f,0.1f);
     glBegin(GL_LINES);
       glColor3f(1,0,0);
       glVertex2i(0,0);glVertex2i(20,0);
@@ -146,8 +147,8 @@ void GLWidget::drawAxis(){
       glColor3f(0,0,1);
       glVertex2i(0,0);glVertex3i(0,0,20);
     glEnd();
+    glLineWidth(1);
     glPopMatrix();
-    glDisable(GL_LINE_SMOOTH);
 }
 
 void GLWidget::resizeGL(int width, int height){
