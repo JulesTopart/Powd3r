@@ -27,27 +27,27 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    glwidget.cpp \
-    mesh.cpp \
-    geometry.cpp \
-    rotdialog.cpp \
-    scaledialog.cpp \
-    movedialog.cpp \
-    gl2d.cpp \
-    glpath.cpp \
-    sweep.cpp
+        glwidget.cpp \
+        mesh.cpp \
+        geometry.cpp \
+        rotdialog.cpp \
+        scaledialog.cpp \
+        movedialog.cpp \
+        gl2d.cpp \
+        glpath.cpp \
+        sweep.cpp
 
 HEADERS += \
         mainwindow.h \
-    glwidget.h \
-    mesh.h \
-    geometry.h \
-    scaledialog.h \
-    rotdialog.h \
-    movedialog.h \
-    gl2d.h \
-    glpath.h \
-    sweep.h
+        glwidget.h \
+        mesh.h \
+        geometry.h \
+        scaledialog.h \
+        rotdialog.h \
+        movedialog.h \
+        gl2d.h \
+        glpath.h \
+        sweep.h
 
 
 FORMS += \

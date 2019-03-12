@@ -89,7 +89,14 @@ void MainWindow::loadSettings()
     float buildZ = settings.value("build_z","").toFloat();
     if (ui->doubleSpinBox) ui->doubleSpinBox_2->setValue(buildZ);
 
+    float offbuildX = settings.value("offbuild_x", "").toFloat();
+    if (ui->X_OffsetSpinBox) ui->X_OffsetSpinBox->setValue(offbuildX);
 
+    float offbuildY = settings.value("offbuild_y", "").toFloat();
+    if (ui->Y_OffsetSpinBox) ui->Y_OffsetSpinBox->setValue(offbuildY);
+
+    float offbuildZ = settings.value("offbuild_z", "").toFloat();
+    if (ui->Z_OffsetSpinBox) ui->Z_OffsetSpinBox->setValue(offbuildZ);
 }
 
 void MainWindow::saveSettings()
@@ -136,23 +143,23 @@ void MainWindow::saveSettings()
     settings.setValue("pass_count", pass_count);
     if (ui->InkFlowSpinBox) ui->InkFlowSpinBox->setValue(pass_count);
 
-    float buildX = (ui->doubleSpinBox) ? ui->doubleSpinBox->value() : 200.0f;
+    float buildX = (ui->doubleSpinBox) ? ui->doubleSpinBox->value() : 100.0f;
     settings.setValue("build_x", buildX);
     if (ui->doubleSpinBox) ui->doubleSpinBox->setValue(buildX);
 
-    float buildY = (ui->doubleSpinBox_3) ? ui->doubleSpinBox_3->value() : 200.0f;
+    float buildY = (ui->doubleSpinBox_3) ? ui->doubleSpinBox_3->value() : 100.0f;
     settings.setValue("build_y", buildY);
     if (ui->doubleSpinBox_3) ui->doubleSpinBox_3->setValue(buildY);
 
-    float buildZ = (ui->doubleSpinBox_2) ? ui->doubleSpinBox_2->value() : 200.0f;
+    float buildZ = (ui->doubleSpinBox_2) ? ui->doubleSpinBox_2->value() : 100.0f;
     settings.setValue("build_z", buildZ);
     if (ui->doubleSpinBox_2) ui->doubleSpinBox_2->setValue(buildZ);
 
-    float offbuildX = (ui->X_OffsetSpinBox) ? ui->X_OffsetSpinBox->value() : 0.0f;
+    float offbuildX = (ui->X_OffsetSpinBox) ? ui->X_OffsetSpinBox->value() : -110.0f;
     settings.setValue("offbuild_x", offbuildX);
     if (ui->X_OffsetSpinBox) ui->X_OffsetSpinBox->setValue(offbuildX);
 
-    float offbuildY = (ui->Y_OffsetSpinBox) ? ui->Y_OffsetSpinBox->value() : 0.0f;
+    float offbuildY = (ui->Y_OffsetSpinBox) ? ui->Y_OffsetSpinBox->value() : 10.0f;
     settings.setValue("offbuild_y", offbuildY);
     if (ui->Y_OffsetSpinBox) ui->Y_OffsetSpinBox->setValue(offbuildY);
 
@@ -376,7 +383,7 @@ void MainWindow::generateGcode(){
 
     //initialisation
     this->ui->gcode->setPlainText(this->ui->SGcode->toPlainText());               //Start Gcode
-    QVector2D offset(ui->X_OffsetSpinBox->value(), ui->Y_OffsetSpinBox->value()); //Store origin offset
+    QVector2D offset(-ui->X_OffsetSpinBox->value(), -ui->Y_OffsetSpinBox->value()); //Store origin offset
     int id = this->ui->listWidget->currentRow();
     Mesh* mdlPtr = this->ui->openGLWidget->get(id);
     //offset += QVector2D(mdlPtr->getBBSize().x, mdlPtr->getBBSize().y) / 2;        //Move to model bottom left corner
@@ -405,7 +412,7 @@ void MainWindow::generateGcode(){
 
         this->ui->gcode->append(this->ui->BLGcode->toPlainText());
         this->ui->gcode->append(";Switching to layer " + QString::number(progress + 1));
-        this->ui->gcode->append("G1 Y" +  QString::number(ui->layerHeightSpinBox->value())); //Move to next layer
+        this->ui->gcode->append("G1 Z" +  QString::number(ui->layerHeightSpinBox->value())); //Move to next layer
         this->ui->gcode->append(this->ui->ALGcode->toPlainText());
     }
      ui->gcode->append(this->ui->EGcode->toPlainText());

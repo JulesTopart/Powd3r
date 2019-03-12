@@ -72,7 +72,7 @@ public:
     NozzleAction(float _x, float _length, int _code) : x(_x), length(_length), code(_code), dpiconst(25.4f / 96.0f) {};
     NozzleAction(float _x, float _length, int _code, int dpi) : x(_x), length(_length), code(_code), dpiconst(25.4f / (float)dpi) {};
 
-    std::string toGcode(bool dir, QVector2D *Offset);
+    std::string toGcode(bool dir, float xOffset);
 
     void addToLength(float _x) {
         length += _x;

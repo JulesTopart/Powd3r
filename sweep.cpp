@@ -20,21 +20,17 @@ float getMin(std::vector<Line2D> lines) {
 }
 
 float getMinY(std::vector<Line2D> lines) {
-    float x_min;
-    float x_max;
+    float y_min(0);
     if (lines.size() != 0) {
-        x_min = lines[0][0].y();
-        x_max = lines[0][0].y();
+        y_min = lines[0][0].y();
 
         for (int k(0); k < lines.size(); k++) {
             Line2D line = lines[k];
-            if (line[0].y() < x_min) x_min = line[0].y();
-            if (line[0].y() > x_max) x_max = line[0].y();
-            if (line[1].y() < x_min) x_min = line[1].y();
-            if (line[1].y() > x_max) x_max = line[1].y();
+            if (line[0].y() < y_min) y_min = line[0].y();
+            if (line[1].y() < y_min) y_min = line[1].y();
         }
     }
-    return x_min;
+    return y_min;
 }
 
 float getMax(std::vector<Line2D> lines) {
@@ -56,21 +52,17 @@ float getMax(std::vector<Line2D> lines) {
 }
 
 float getMaxY(std::vector<Line2D> lines) {
-    float x_min;
-    float x_max;
+    float y_max(0);
     if (lines.size() != 0) {
-        x_min = lines[0][0].y();
-        x_max = lines[0][0].y();
+        y_max = lines[0][0].y();
 
         for (int k(0); k < lines.size(); k++) {
             Line2D line = lines[k];
-            if (line[0].y() < x_min) x_min = line[0].y();
-            if (line[0].y() > x_max) x_max = line[0].y();
-            if (line[1].y() < x_min) x_min = line[1].y();
-            if (line[1].y() > x_max) x_max = line[1].y();
+            if (line[0].y() > y_max) y_max = line[0].y();
+            if (line[1].y() > y_max) y_max = line[1].y();
         }
     }
-    return x_max;
+    return y_max;
 }
 
 
@@ -153,14 +145,12 @@ NozzleLine::calcMinMax() {
 /*						*/
 /************************/
 
-std::string NozzleAction::toGcode(bool dir, QVector2D *offset) {
+std::string NozzleAction::toGcode(bool dir, float xOffset ) {
     std::string out = "G1 X";
-    if(dir){
-       *offset -= QVector2D(length,0);
-    }else{
-       *offset += QVector2D(length,0);
-    }
-    out += std::to_string(float(offset->x()));
+
+    float xPos = xOffset + this->length;
+
+    out += std::to_string(xPos);
     out += " E";
     out += std::to_string(length/float(dpiconst));
     out += " S" + std::to_string(code);
@@ -317,31 +307,39 @@ Sweep::toGcode(bool dir, QVector2D *offset) {
     std::string out = "";
     //out += absolute();
     out += (dir) ? goToLeftPoint(*offset) : goToRightPoint(*offset);
-    out += ";Sweep\n";// + relative();
-    if (!dir) {
+    //out += ";Sweep\n";// + relative();
+    if (dir) {
+        float totalLength = 0.0f;
+        *offset += QVector2D(xmin, 0);
         for (int i(0); i < nozzleActions.size(); i++) {
-            *offset += QVector2D(xmin, ymin);
-            out += nozzleActions[i].toGcode(dir, offset);
+
+            out += nozzleActions[i].toGcode(dir, offset->x() + totalLength);
+            totalLength += nozzleActions[i].length;
         }
+        *offset -= QVector2D(xmin, 0);
     }
     else {
+        float totalLength = 0.0f;
+        *offset += QVector2D(xmax, 0);
         for (int i(nozzleActions.size() - 1); i > -1; i--) {
-            *offset += QVector2D(xmax, xmin);
-            out += nozzleActions[i].toGcode(dir, offset);
+
+            out += nozzleActions[i].toGcode(dir, offset->x() - totalLength);
+            totalLength += nozzleActions[i].length;
         }
+        *offset -= QVector2D(xmax, 0);
     }
     //out += absolute();
-    out += ";End Sweep\n\n";
+   // out += ";End Sweep\n\n";
     return out;
 }
 
 
 std::string Sweep::goToRightPoint(QVector2D offset) {
-    return "G1 X" + std::to_string(xmin + offset.x()) + " Y" + std::to_string(ymin + offset.y()) + "; Sweep Origin\n";
+    return "G1 X" + std::to_string(xmax + offset.x()) + " Y" + std::to_string(ymin + offset.y()) + "\n";
 }
 
 std::string Sweep::goToLeftPoint(QVector2D offset) {
-    return "G1 X" + std::to_string(xmax + offset.x()) + " Y" + std::to_string(ymin + offset.y()) + "; Sweep Origin\n";
+    return "G1 X" + std::to_string(xmin + offset.x()) + " Y" + std::to_string(ymin + offset.y()) + "\n";
 }
 
 
@@ -351,7 +349,9 @@ std::string Sweep::goToLeftPoint(QVector2D offset) {
 /*						*/
 /************************/
 
-SweepCollection::SweepCollection() {}
+SweepCollection::SweepCollection() {
+    lastDir = true;
+}
 
 std::string
 SweepCollection::toGcode(short nPass, QVector2D offset) {
@@ -361,8 +361,8 @@ SweepCollection::toGcode(short nPass, QVector2D offset) {
 #endif
     for (int i(0); i < sweeps.size(); i++) {
         for (int j(0); j < nPass; j++) {
-            lastDir = !lastDir;
             out += sweeps[i].toGcode(lastDir, &offset);
+            //lastDir = !lastDir;
         }
     }
     return out;
@@ -382,7 +382,7 @@ SweepCollection::generateSweeps(std::vector<Line2D> lines, short firstNozzle, sh
     { //Ignore non horizontal lines
         std::vector<Line2D> unsortedLines;
         for (std::vector<Line2D>::const_iterator line = lines.begin(); line != lines.end(); line++) {
-            //if (line->a.y == line->b.y)
+            //if (line->v[0].y() == line->v[1].y())
                 unsortedLines.push_back(*line);
         }
 
@@ -390,9 +390,9 @@ SweepCollection::generateSweeps(std::vector<Line2D> lines, short firstNozzle, sh
 #ifdef DEBUG_SWEEP
         std::cout << "Sorting Line...";
 #endif
-        std::sort(unsortedLines.begin(), unsortedLines.end());
+        //std::sort(unsortedLines.begin(), unsortedLines.end());
         sortedLines = unsortedLines;
-        if (sortedLines.size() == 0) return sweeps; // Is this really neccessary ?
+        //if (sortedLines.size() == 0) return sweeps; // Is this really neccessary ?
 #ifdef DEBUG_SWEEP
         std::cout << "Done" << std::endl;
 #endif
@@ -448,7 +448,7 @@ SweepCollection::generateSweeps(std::vector<Line2D> lines, short firstNozzle, sh
         std::cout << std::endl << "New Sweep : " << "Min: " << sweep->getXMin() << " | Max: " << sweep->getXMax() << std::endl;
 #endif
         float curX = sweep->getXMin();
-        float nextX = sweep->getNextX(curX);
+        float nextX = sweep->getNextX(curX+(spacing/2.0f));
 
         int lastCode = 0;
         while (curX != sweep->getXMax()) {
@@ -466,11 +466,11 @@ SweepCollection::generateSweeps(std::vector<Line2D> lines, short firstNozzle, sh
             }
 
             float lastX = curX;
-            curX = sweep->getNextX(curX);
-            while((curX - lastX) <= spacing && curX != sweep->getXMax()){
-                curX = sweep->getNextX(curX);
-            }
-            nextX = sweep->getNextX(curX);
+            curX = sweep->getNextX(curX+(spacing/2.0f));
+            //while((curX - lastX) <= spacing && curX != sweep->getXMax()){
+            //    curX = sweep->getNextX(curX);
+            //}
+            nextX = sweep->getNextX(curX+(spacing/2.0f));
         }
     }
 

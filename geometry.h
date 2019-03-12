@@ -7,6 +7,10 @@
 #include <QVector>
 #include <QMatrix4x4>
 
+
+#include <math.h>
+
+
 #define PI 3.1415926535897932384626433832795
 #define INTERRES 0.05
 
