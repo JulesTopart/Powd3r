@@ -37,6 +37,7 @@ public:
 //---------------- Operator --------------
 
     Vec3 &operator-=    (const Vec3 &pt);
+    Vec3 &operator+=    (const Vec3 &pt);
     Vec3 operator-      (const Vec3 &pt);
     Vec3 operator+      (const Vec3 &pt);
     Vec3 operator/      (float a);
@@ -188,7 +189,8 @@ public:
 
     Facet &operator-=(const Vec3 &pt        );
     Facet &operator-=(const QVector3D &pt   );
-
+    Facet &operator+=(const Vec3 &pt        );
+    Facet &operator+=(const QVector3D &pt   );
 
 //-------------- Methods -------------
 

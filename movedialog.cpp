@@ -29,6 +29,7 @@ void moveDialog::on_validateButton_clicked()
 {
     QVector3D pos(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
     mdlPtr->setPosition(pos);
+    mdlPtr->applyTransform();
     this->close();
     delete this;
 }
@@ -36,6 +37,7 @@ void moveDialog::on_validateButton_clicked()
 void moveDialog::on_cancelButton_clicked()
 {
     mdlPtr->setPosition(initialPos);
+    mdlPtr->applyTransform();
     this->close();
     delete this;
 }
@@ -47,6 +49,7 @@ void moveDialog::on_XSpinBox_valueChanged(double)
     active = true;
     QVector3D pos(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
     mdlPtr->setPosition(pos);
+    mdlPtr->applyTransform();
     active = false;
 }
 
@@ -56,6 +59,7 @@ void moveDialog::on_YSpinBox_valueChanged(double)
     active = true;
     QVector3D pos(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
     mdlPtr->setPosition(pos);
+    mdlPtr->applyTransform();
     active = false;
 }
 
@@ -65,5 +69,6 @@ void moveDialog::on_ZSpinBox_valueChanged(double)
     active = true;
     QVector3D pos(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
     mdlPtr->setPosition(pos);
+    mdlPtr->applyTransform();
     active = false;
 }

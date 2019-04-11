@@ -36,6 +36,7 @@ public:
 
     void        draw     ();
     void        push_back(Facet f);
+    void        calculateBB();
 
 //----- Transformation Methods -----
 
@@ -47,6 +48,9 @@ public:
     void        move        (Vec3 v                     );
     void        normalize   ();                 ///move the 3D model coordinate to be center around COG(0,0,0)
     void        transform   (QMatrix4x4 mat);
+    void        applyTransform();
+    void        resetTransform();
+    void        putOnPlate    ();
 
     //          ------ Get Methods ------
 
@@ -89,6 +93,7 @@ protected:
     QVector3D   _rotation = QVector3D(0,0,0);
     QVector3D   _scale    = QVector3D(1,1,1);
 
+    QVector<QMatrix4x4> history;
 };
 
 

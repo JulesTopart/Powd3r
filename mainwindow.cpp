@@ -247,8 +247,8 @@ void MainWindow::on_actionImporter_triggered()
 
 void MainWindow::on_scaleButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
-        int id = this->ui->listWidget->currentRow();
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLWidget->getSelected() != -1){
+        int id = ui->openGLWidget->getSelected();
         Mesh* mdlPtr = this->ui->openGLWidget->get(id);
         ScaleDialog *dialog = new ScaleDialog(mdlPtr, this);
          dialog->show();
@@ -258,8 +258,8 @@ void MainWindow::on_scaleButton_clicked()
 
 void MainWindow::on_rotateButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
-        int id = this->ui->listWidget->currentRow();
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLWidget->getSelected() != -1){
+        int id = ui->openGLWidget->getSelected();
         Mesh* mdlPtr = this->ui->openGLWidget->get(id);
         RotDialog *dialog = new RotDialog(mdlPtr);
         dialog->show();
@@ -268,16 +268,17 @@ void MainWindow::on_rotateButton_clicked()
 
 void MainWindow::on_deleteButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
-        this->ui->openGLWidget->unloadModel(this->ui->listWidget->currentRow());
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLWidget->getSelected() != -1){
+        this->ui->openGLWidget->unloadModel(ui->openGLWidget->getSelected());
+        ui->openGLWidget->select(-1);
         updateList();
     }
 }
 
 void MainWindow::on_duplicateButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
-        int id = this->ui->listWidget->currentRow();
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLWidget->getSelected() != -1){
+        int id = ui->openGLWidget->getSelected();
         Mesh* mdlPtr = this->ui->openGLWidget->get(id);
         addModel(mdlPtr);
     }
@@ -305,8 +306,8 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_moveButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1){
-        int id = this->ui->listWidget->currentRow();
+    if(this->ui->listWidget->count() > 0 && ui->openGLWidget->getSelected() != -1){
+        int id = ui->openGLWidget->getSelected();
         Mesh* mdlPtr = this->ui->openGLWidget->get(id);
         moveDialog *dialog = new moveDialog(mdlPtr);
         dialog->show();
@@ -317,14 +318,14 @@ void MainWindow::on_sliceButton_clicked()
 {
     this->setCursor(QCursor(Qt::WaitCursor));
     //check if one ore more model are loaded
-    if(this->ui->listWidget->count() > 0 &&  ui->listWidget->currentRow() != -1 && ui->layerHeightSpinBox->value() > 0.001){
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLWidget->getSelected() != -1 && ui->layerHeightSpinBox->value() > 0.001){
         //generate slice polygon (result of plane intersecting with mesh)
         QVector<Lines2D> *lines;
         lines = new  QVector<Lines2D>();
 
         ui->progressLabel->setText("Traitements des polygon...");
 
-        triMeshSlicer(ui->openGLWidget->get(ui->listWidget->currentRow()), *lines, ui->layerHeightSpinBox->value(), ui->progressBar);
+        triMeshSlicer(ui->openGLWidget->get(ui->openGLWidget->getSelected()), *lines, ui->layerHeightSpinBox->value(), ui->progressBar);
 
         //generate slice from lines
         ui->progressLabel->setText("Géneration des tranches...");

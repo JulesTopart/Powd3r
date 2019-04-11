@@ -32,13 +32,13 @@ void glPath::drawGrid(QVector2D size)
     float HALF_GRID_Y = size.x()/2;
 
     glBegin(GL_LINES);
-    for(int i =- HALF_GRID_Y; i <= HALF_GRID_Y; i += 40 )
+    for(int i =- HALF_GRID_Y; i <= HALF_GRID_Y; i += 10 )
     {
         glVertex2f((float)i,(float)-HALF_GRID_X);
         glVertex2f((float)i,(float)HALF_GRID_X);
     }
 
-    for(int i=-HALF_GRID_X;i<=HALF_GRID_X;i += 40){
+    for(int i=-HALF_GRID_X;i<=HALF_GRID_X;i += 10){
         glVertex2f((float)-HALF_GRID_Y,(float)i);
         glVertex2f((float)HALF_GRID_Y,(float)i);
     }

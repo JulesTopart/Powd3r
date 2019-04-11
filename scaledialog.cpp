@@ -15,6 +15,7 @@ ScaleDialog::ScaleDialog(Mesh *mdlPtr_, MainWindow *mainWindow) :
     mdlPtr = mdlPtr_;
     mw = mainWindow;
     ui->setupUi(this);
+
     initialScale = mdlPtr->getScale();
     this->intialDim = mdlPtr->getBBSize();
     this->ui->widthSpin->setValue( initialScale.x);
@@ -38,6 +39,7 @@ void ScaleDialog::on_applyButton_clicked()
         mdlPtr->setScale(scl3D);
     }
     mw->updateList();
+    mdlPtr->applyTransform();
     this->close();
     delete this;
 }
@@ -45,6 +47,7 @@ void ScaleDialog::on_applyButton_clicked()
 void ScaleDialog::on_cancelButton_clicked()
 {
     mdlPtr->setScale(initialScale);
+    mdlPtr->applyTransform();
     mw->updateList();
     this->close();
     delete this;
@@ -72,6 +75,7 @@ void ScaleDialog::on_widthSpin_valueChanged(double)
         mdlPtr->setScale(scl3D);
     }
     running = false;
+    mdlPtr->applyTransform();
 }
 
 void ScaleDialog::on_heightSpin_valueChanged(double)
@@ -96,6 +100,7 @@ void ScaleDialog::on_heightSpin_valueChanged(double)
         mdlPtr->setScale(scl3D);
     }
     running = false;
+    mdlPtr->applyTransform();
 }
 
 void ScaleDialog::on_depthSpin_valueChanged(double)
@@ -120,6 +125,7 @@ void ScaleDialog::on_depthSpin_valueChanged(double)
         mdlPtr->setScale(scl3D);
     }
     running = false;
+    mdlPtr->applyTransform();
 }
 
 
@@ -143,9 +149,11 @@ void ScaleDialog::on_fromBBCheckBox_stateChanged(int)
         ui->heightSpin->setSuffix("");
         ui->depthSpin->setSuffix("");
     }
+
 }
 
 void ScaleDialog::on_ScaleDialog_destroyed()
 {
     mdlPtr->setScale(initialScale);
+    mdlPtr->applyTransform();
 }

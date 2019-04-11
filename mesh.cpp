@@ -6,15 +6,15 @@
 
 //------------------------- Constructor ---------------------------
 
-    Mesh::Mesh(): _bottomLeftVertex(999999, 999999, 999999), _upperRightVertex(-999999, -999999, -999999) {}
-    Mesh::Mesh(const Mesh &copy) :  _name               (copy._name                 ),
-                                    _id                 (copy._id                   ),
-                                    _facets             (copy._facets               ),
-                                    _bottomLeftVertex   (copy._bottomLeftVertex     ),
-                                    _upperRightVertex   (copy._upperRightVertex     ),
-                                    _position           (copy._position             ),
-                                    _rotation           (copy._rotation             ),
-                                    _scale              (copy._scale                ){}
+Mesh::Mesh(): _bottomLeftVertex(999999, 999999, 999999), _upperRightVertex(-999999, -999999, -999999) {}
+Mesh::Mesh(const Mesh &copy) :  _name               (copy._name                 ),
+                                _id                 (copy._id                   ),
+                                _facets             (copy._facets               ),
+                                _bottomLeftVertex   (copy._bottomLeftVertex     ),
+                                _upperRightVertex   (copy._upperRightVertex     ),
+                                _position           (copy._position             ),
+                                _rotation           (copy._rotation             ),
+                                _scale              (copy._scale                ){}
 
 //--------------------------- Methods -----------------------------
 
@@ -61,6 +61,30 @@ void Mesh::push_back(Facet t){
     }
 }
 
+void Mesh::calculateBB(){
+    _bottomLeftVertex = Vec3(0,0,0);
+    _upperRightVertex = Vec3(0,0,0);
+
+    for(int k(0); k < this->_facets.size(); k++){
+        Facet t = _facets[k];
+        for (size_t i = 0; i < 3; ++i)
+        {
+            if (t.v[i].x < _bottomLeftVertex.x)
+                _bottomLeftVertex.x = t.v[i].x;
+            if (t.v[i].y < _bottomLeftVertex.y)
+                _bottomLeftVertex.y = t.v[i].y;
+            if (t.v[i].z < _bottomLeftVertex.z)
+                _bottomLeftVertex.z = t.v[i].z;
+            if (t.v[i].x > _upperRightVertex.x)
+                _upperRightVertex.x = t.v[i].x;
+            if (t.v[i].y > _upperRightVertex.y)
+                _upperRightVertex.y = t.v[i].y;
+            if (t.v[i].z > _upperRightVertex.z)
+                _upperRightVertex.z = t.v[i].z;
+        }
+    }
+}
+
 //----------------- Transformation Methods --------------------
 
 //Thes methods should modify mesh
@@ -104,6 +128,24 @@ void Mesh::normalize(){
     _upperRightVertex = halfBbox;
 }
 
+void Mesh::putOnPlate(){
+    calculateBB();
+    _position.setZ((this->getBBSize() / 2).z);
+
+    QMatrix4x4 trans;
+
+    trans.scale(_scale);
+    trans.rotate(_rotation.x(), 1, 0, 0);
+    trans.rotate(_rotation.y(), 0, 1, 0);
+    trans.rotate(_rotation.z(), 0, 0, 1);
+    trans.translate(_position);
+
+    //Draw grid
+
+    this->transform(trans);
+    _position.setZ(0);
+}
+
 void Mesh::transform (QMatrix4x4 mat){
     for (size_t i = 0; i < size(); ++i)
     {
@@ -112,11 +154,38 @@ void Mesh::transform (QMatrix4x4 mat){
     }
 }
 
+//Thes methods should modify mesh
+void Mesh::applyTransform(){
+    resetTransform();
+    QMatrix4x4 trans;
+
+    trans.scale(_scale);
+    trans.rotate(_rotation.x(), 1, 0, 0);
+    trans.rotate(_rotation.y(), 0, 1, 0);
+    trans.rotate(_rotation.z(), 0, 0, 1);
+    trans.translate(_position);
+
+    //Draw grid
+
+    this->transform(trans);
+    this->history.push_back(trans);
+    calculateBB();
+}
+
+
+void Mesh::resetTransform(){
+    //cancel previous change
+    for(int i(0); i < this->history.size(); i++){
+        this->transform(history[i].inverted());
+    }
+    this->history.clear();
+}
+
 //---------------------- Get Methods -------------------------
 Vec3 Mesh::getBBSize(){
     return Vec3(_upperRightVertex.x - _bottomLeftVertex.x,
                 _upperRightVertex.y - _bottomLeftVertex.y,
-                _upperRightVertex.z - _bottomLeftVertex.z) * _scale;
+                _upperRightVertex.z - _bottomLeftVertex.z);
 }
 
 QVector3D Mesh::getPosition(){

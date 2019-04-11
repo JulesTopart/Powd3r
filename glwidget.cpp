@@ -72,11 +72,11 @@ void GLWidget::paintGL(){
     for(QVector<Mesh>::Iterator model = models.begin(); model != models.end(); model ++, index++){
         glPushMatrix();
         //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); //WireFrame
-        glScalef(model->getScale().x(), model->getScale().y(), model->getScale().z());
-        glTranslatef(model->getPosition().x(), model->getPosition().y(), model->getPosition().z());
-        glRotatef(model->getRotation().x(), 1, 0, 0);
-        glRotatef(model->getRotation().y(), 0, 1, 0);
-        glRotatef(model->getRotation().z(), 0, 0, 1);
+        //glScalef(model->getScale().x(), model->getScale().y(), model->getScale().z());
+        //glTranslatef(model->getPosition().x(), model->getPosition().y(), model->getPosition().z());
+        //glRotatef(model->getRotation().x(), 1, 0, 0);
+        //glRotatef(model->getRotation().y(), 0, 1, 0);
+        //glRotatef(model->getRotation().z(), 0, 0, 1);
         if(index == selectedModel) glColor3f(0.7,1,0.68f);
         else glColor3f(0.8,0.8,0.78f);
         model->draw();
@@ -203,7 +203,7 @@ void GLWidget::keyPressEvent(QKeyEvent *keyEvent)
 
 
 void GLWidget::wheelEvent( QWheelEvent *event){
-    float t = event->angleDelta().y() * 0.0005f;
+    float t = event->angleDelta().y() * 0.0002f;
     if((this->scale + QVector3D(t,t,t)).length() >= 0.1) this->scale += QVector3D(t,t,t);
     event->accept();
 }
@@ -216,7 +216,8 @@ void GLWidget::timeOutSlot()
 
 void GLWidget::loadModel(Mesh *mdl){
     mdl->normalize();
-    mdl->move(Vec3(0, 0,(mdl->getBBSize() / 2).z));
+    mdl->putOnPlate();
+    mdl->applyTransform();
     models.push_back(*mdl);
     models[models.size() - 1].setId(models.size() - 1);
 }

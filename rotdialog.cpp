@@ -30,6 +30,7 @@ void RotDialog::on_applyButton_clicked()
 {
     QVector3D rot(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
     mdlPtr->setRotation(rot);
+    mdlPtr->applyTransform();
     this->close();
     delete this;
 }
@@ -37,6 +38,7 @@ void RotDialog::on_applyButton_clicked()
 void RotDialog::on_cancelButton_clicked()
 {
     mdlPtr->setRotation(initialValue);
+    mdlPtr->applyTransform();
     this->close();
     delete this;
 }
@@ -45,21 +47,25 @@ void RotDialog::on_ZSpinBox_valueChanged(double arg1)
 {
     QVector3D rot(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
     mdlPtr->setRotation(rot);
+    mdlPtr->applyTransform();
 }
 
 void RotDialog::on_YSpinBox_valueChanged(double arg1)
 {
     QVector3D rot(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
     mdlPtr->setRotation(rot);
+    mdlPtr->applyTransform();
 }
 
 void RotDialog::on_XSpinBox_valueChanged(double arg1)
 {
     QVector3D rot(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
     mdlPtr->setRotation(rot);
+    mdlPtr->applyTransform();
 }
 
 void RotDialog::on_RotDialog_destroyed()
 {
     mdlPtr->setRotation(initialValue);
+    mdlPtr->applyTransform();
 }

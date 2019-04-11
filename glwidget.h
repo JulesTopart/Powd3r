@@ -23,6 +23,7 @@ public:
     Mesh* get(int i){return &models[i];}
     void rotate(int i, QVector3D r){ models[i].rotate(r);}
     void select(int i){ selectedModel = i;}
+    int getSelected(){ return this->selectedModel;}
 
     void TopView();
     void BottomView();
@@ -80,7 +81,7 @@ private:
     QVector3D
     rotationSpeed = QVector3D(0,0,0);
     QVector3D
-    position      = QVector3D(0,-5,-50);
+    position      = QVector3D(0,-10,-50);
     QVector3D
     scale         = QVector3D(0.5,0.5,0.5);
 

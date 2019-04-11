@@ -64,6 +64,16 @@ Vec3
 }
 
 Vec3
+&Vec3::operator+=   (const Vec3 &pt)
+{
+    x += pt.x;
+    y += pt.y;
+    z += pt.z;
+
+    return *this;
+}
+
+Vec3
 Vec3::operator-     (const Vec3 &pt){
     return Vec3(x - pt.x, y - pt.y, z - pt.z);
 }
@@ -373,6 +383,22 @@ Facet &Facet::operator-=(const QVector3D &pt)
     v[0] -= pt;
     v[1] -= pt;
     v[2] -= pt;
+    return *this;
+}
+
+Facet &Facet::operator+=(const Vec3 &pt)
+{
+    v[0] += pt;
+    v[1] += pt;
+    v[2] += pt;
+    return *this;
+}
+
+Facet &Facet::operator+=(const QVector3D &pt)
+{
+    v[0] += pt;
+    v[1] += pt;
+    v[2] += pt;
     return *this;
 }
 
