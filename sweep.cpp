@@ -140,6 +140,16 @@ NozzleLine::calcMinMax() {
 }
 
 
+
+template <typename T>
+std::string to_string_with_precision(const T a_value, const int n = 6)
+{
+    std::ostringstream out;
+    out.precision(n);
+    out << std::fixed << a_value;
+    return out.str();
+}
+
 /************************/
 /*	   NozzleAction 	*/
 /*						*/
@@ -150,9 +160,9 @@ std::string NozzleAction::toGcode(bool dir, float xOffset ) {
 
     float xPos = xOffset + this->length;
 
-    out += std::to_string(xPos);
+    out += to_string_with_precision(xPos,5);
     out += " E";
-    out += std::to_string(length/float(dpiconst));
+    out += to_string_with_precision(length, 3); /// length/float(dpiconst) ?
     out += " S" + std::to_string(code);
     out += "\n";
     return out;
@@ -303,17 +313,17 @@ Sweep::isNozzleOn(int nozzleN, float X) {
 
 
 std::string
-Sweep::toGcode(bool dir, QVector2D *offset) {
+Sweep::toGcode(bool dir, QVector2D *offset, float speed) {
     //std::cout << "Nozzle Action size :" << nozzleActions.size() << std::endl;
     std::string out = "";
     //out += absolute();
+    out += ("G1 F" + QString::number(speed)).toStdString() + "\n";
     out += (dir) ? goToLeftPoint(*offset) : goToRightPoint(*offset);
     //out += ";Sweep\n";// + relative();
     if (dir) {
         float totalLength = 0.0f;
         *offset += QVector2D(xmin, 0);
         for (int i(0); i < nozzleActions.size(); i++) {
-
             out += nozzleActions[i].toGcode(dir, offset->x() + totalLength);
             totalLength += nozzleActions[i].length;
         }
@@ -323,7 +333,6 @@ Sweep::toGcode(bool dir, QVector2D *offset) {
         float totalLength = 0.0f;
         *offset += QVector2D(xmax, 0);
         for (int i(nozzleActions.size() - 1); i > -1; i--) {
-
             out += nozzleActions[i].toGcode(dir, offset->x() - totalLength);
             totalLength += nozzleActions[i].length;
         }
@@ -336,11 +345,11 @@ Sweep::toGcode(bool dir, QVector2D *offset) {
 
 
 std::string Sweep::goToRightPoint(QVector2D offset) {
-    return "G1 X" + std::to_string(xmax + offset.x()) + " Y" + std::to_string(ymin + offset.y()) + "\n";
+    return "G1 X" + to_string_with_precision(xmax + offset.x(), 4) + " Y" + to_string_with_precision(ymin + offset.y(),4) + "\n";
 }
 
 std::string Sweep::goToLeftPoint(QVector2D offset) {
-    return "G1 X" + std::to_string(xmin + offset.x()) + " Y" + std::to_string(ymin + offset.y()) + "\n";
+    return "G1 X" + to_string_with_precision(xmin + offset.x(), 4) + " Y" + to_string_with_precision(ymin + offset.y(),4) + "\n";
 }
 
 
@@ -355,14 +364,14 @@ SweepCollection::SweepCollection() {
 }
 
 std::string
-SweepCollection::toGcode(short nPass, QVector2D offset) {
+SweepCollection::toGcode(short nPass, QVector2D offset, float speed) {
     std::string out = "";
 #ifdef DEBUG_SWEEP
     std::cout << std::endl << "Number of sweep : " << sweeps.size() << std::endl;
 #endif
     for (int i(0); i < sweeps.size(); i++) {
         for (int j(0); j < nPass; j++) {
-            out += sweeps[i].toGcode(lastDir, &offset);
+            out += sweeps[i].toGcode(lastDir, &offset, speed);
             //lastDir = !lastDir;
         }
     }

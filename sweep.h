@@ -5,6 +5,8 @@
 #include <string>
 #include <iostream>
 #include <algorithm>    // std::sort
+#include <sstream>      //Float precision in string
+
 #include "geometry.h"
 //#define DEBUG_SWEEP
 
@@ -162,7 +164,7 @@ public:
         nozzleActions.push_back(n);
     }
 
-    std::string toGcode(bool dir, QVector2D *offset);
+    std::string toGcode(bool dir, QVector2D *offset, float speed);
     std::string goToLeftPoint(QVector2D offset);
     std::string goToRightPoint(QVector2D offset);
 
@@ -222,7 +224,7 @@ public:
     }
 
 
-    std::string toGcode(short nPass = 1, QVector2D offset = QVector2D(0,0));
+    std::string toGcode(short nPass = 1, QVector2D offset = QVector2D(0,0), float speed = 5000);
 
     static SweepCollection generateSweeps(std::vector<Line2D> lines, short firstNozzle,short lastNozzle, short dpi);
 

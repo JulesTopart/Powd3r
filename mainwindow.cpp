@@ -97,6 +97,24 @@ void MainWindow::loadSettings()
 
     float offbuildZ = settings.value("offbuild_z", "").toFloat();
     if (ui->Z_OffsetSpinBox) ui->Z_OffsetSpinBox->setValue(offbuildZ);
+
+    ui->openGLWidget->originOffset.setX(offbuildX);
+    ui->openGLWidget->originOffset.setY(offbuildY);
+    ui->openGLWidget->originOffset.setZ(offbuildZ);
+    ui->openGLWidget->plateDim.setX(buildX);
+    ui->openGLWidget->plateDim.setY(buildY);
+    ui->openGLWidget->plateDim.setZ(buildZ);
+
+    ui->openGLWidget_2->originOffset.setX(offbuildX);
+    ui->openGLWidget_2->originOffset.setY(offbuildY);
+    ui->openGLWidget_2->plateDim.setX(buildX);
+    ui->openGLWidget_2->plateDim.setY(buildY);
+
+
+    ui->openGLWidget_3->originOffset.setX(offbuildX);
+    ui->openGLWidget_3->originOffset.setY(offbuildY);
+    ui->openGLWidget_3->plateDim.setX(buildX);
+    ui->openGLWidget_3->plateDim.setY(buildY);
 }
 
 void MainWindow::saveSettings()
@@ -405,16 +423,17 @@ void MainWindow::generateGcode(){
         qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
         this->ui->gcodePBar->setValue(progress);
 
+        this->ui->gcode->append(this->ui->BLGcode->toPlainText());
+        this->ui->gcode->append(";Switching to layer " + QString::number(progress + 1));
+        this->ui->gcode->append("G1 Z" +  QString::number(ui->layerHeightSpinBox->value()) + " F" + QString::number(ui->verticalSpeedSpinBox->value())); //Move to next layer
+        this->ui->gcode->append("G1 F" +  QString::number(ui->horizontalSpeedSpinBox->value())); //Move to next layer
+        this->ui->gcode->append(this->ui->ALGcode->toPlainText());
+
         SweepCollection sweeps = SweepCollection::generateSweeps(lines->toStdVector(), ui->firstNozzleSpinBox->value() - 1, ui->lastNozzleSpinBox->value() - 1, 96); //Generate slice sweeps
-        std::string out = sweeps.toGcode(pass, offset); //number of pass
+        std::string out = sweeps.toGcode(pass, offset,ui->sweepSpeedSpinBox->value()); //number of pass
         QString cast = QString::fromStdString(out);
 
         this->ui->gcode->append(cast);
-
-        this->ui->gcode->append(this->ui->BLGcode->toPlainText());
-        this->ui->gcode->append(";Switching to layer " + QString::number(progress + 1));
-        this->ui->gcode->append("G1 Z" +  QString::number(ui->layerHeightSpinBox->value())); //Move to next layer
-        this->ui->gcode->append(this->ui->ALGcode->toPlainText());
     }
      ui->gcode->append(this->ui->EGcode->toPlainText());
      ui->progressLabel->setText("Fait.");

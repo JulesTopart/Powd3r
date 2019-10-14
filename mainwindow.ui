@@ -23,7 +23,7 @@
    <string>Powd3r</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+   <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
     <normaloff>:/ressources/main.png</normaloff>:/ressources/main.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -86,7 +86,7 @@
       </property>
       <widget class="QWidget" name="mainTab">
        <attribute name="icon">
-        <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+        <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
          <normaloff>:/ressources/frontview.png</normaloff>:/ressources/frontview.png</iconset>
        </attribute>
        <attribute name="title">
@@ -219,7 +219,7 @@
                  <string> Ajouter</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/add.png</normaloff>:/ressources/add.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -263,7 +263,7 @@
                  <string> Dupliquer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/copy.png</normaloff>:/ressources/copy.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -313,7 +313,7 @@
                  <string> Déplacer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/move.png</normaloff>:/ressources/move.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -363,7 +363,7 @@
                  <string> Echelle</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/scale.png</normaloff>:/ressources/scale.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -413,7 +413,7 @@
                  <string> Orbite</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/rotate.png</normaloff>:/ressources/rotate.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -454,7 +454,7 @@
                  <string> Centrer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/coordinate.png</normaloff>:/ressources/coordinate.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -504,7 +504,7 @@
                  <string>Supprimer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/delete.png</normaloff>:/ressources/delete.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -708,7 +708,90 @@
              <property name="topMargin">
               <number>0</number>
              </property>
-             <item row="1" column="1">
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>Nombre de passes</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QDoubleSpinBox" name="SpreadRateSpinBox">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>250</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Interval de buses : </string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>250</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Hauteur de couche : </string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QSpinBox" name="passSpinBox">
+               <property name="minimum">
+                <number>1</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
               <layout class="QHBoxLayout" name="horizontalLayout_7">
                <property name="spacing">
                 <number>6</number>
@@ -805,7 +888,7 @@
                </item>
               </layout>
              </item>
-             <item row="3" column="1">
+             <item row="5" column="1">
               <widget class="QDoubleSpinBox" name="InkFlowSpinBox">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -830,24 +913,11 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="1">
-              <widget class="QDoubleSpinBox" name="SpreadRateSpinBox">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
+             <item row="6" column="0">
               <widget class="QLabel" name="label_2">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -859,7 +929,7 @@
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
+             <item row="5" column="0">
               <widget class="QLabel" name="label_5">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -869,56 +939,6 @@
                </property>
                <property name="text">
                 <string>Flux d'encre : </string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>250</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Century Gothic</family>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Interval de buses : </string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>250</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Century Gothic</family>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Hauteur de couche : </string>
                </property>
               </widget>
              </item>
@@ -962,15 +982,31 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_6">
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_13">
                <property name="text">
-                <string>Nombre de passes</string>
+                <string>Vitesse de passage</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QSpinBox" name="passSpinBox"/>
+             <item row="3" column="1">
+              <widget class="QDoubleSpinBox" name="sweepSpeedSpinBox">
+               <property name="suffix">
+                <string> mm/min</string>
+               </property>
+               <property name="decimals">
+                <number>0</number>
+               </property>
+               <property name="minimum">
+                <double>1.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>8000.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>8000.000000000000000</double>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -1004,7 +1040,7 @@
               <string>Trancher</string>
              </property>
              <property name="icon">
-              <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+              <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
                <normaloff>:/ressources/slice.png</normaloff>:/ressources/slice.png</iconset>
              </property>
              <property name="iconSize">
@@ -1106,7 +1142,7 @@
       </widget>
       <widget class="QWidget" name="sliceTab">
        <attribute name="icon">
-        <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+        <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
          <normaloff>:/ressources/slice.png</normaloff>:/ressources/slice.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1199,7 +1235,7 @@
       </widget>
       <widget class="QWidget" name="toolpathTab">
        <attribute name="icon">
-        <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+        <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
          <normaloff>:/ressources/main.png</normaloff>:/ressources/main.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1295,7 +1331,7 @@
       </widget>
       <widget class="QWidget" name="GcodeTab">
        <attribute name="icon">
-        <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+        <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
          <normaloff>:/ressources/copy.png</normaloff>:/ressources/copy.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1326,6 +1362,13 @@
               <widget class="QPlainTextEdit" name="SGcode">
                <property name="frameShape">
                 <enum>QFrame::Box</enum>
+               </property>
+               <property name="plainText">
+                <string>;Start print
+G28 X Y
+G92 Z0
+T0
+M83</string>
                </property>
                <property name="placeholderText">
                 <string>;Start print</string>
@@ -1466,6 +1509,18 @@
                <property name="frameShape">
                 <enum>QFrame::Box</enum>
                </property>
+               <property name="plainText">
+                <string>G28 X
+T1
+G92 E0
+M82
+G1 E5300 F10000
+M400
+T1
+G92 E0
+T0
+M83</string>
+               </property>
                <property name="placeholderText">
                 <string>;After layer change</string>
                </property>
@@ -1560,7 +1615,7 @@
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="icon">
-        <iconset resource="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc">
+        <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc">
          <normaloff>:/ressources/settings.png</normaloff>:/ressources/settings.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1569,7 +1624,7 @@
        <widget class="QWidget" name="formLayoutWidget">
         <property name="geometry">
          <rect>
-          <x>0</x>
+          <x>10</x>
           <y>0</y>
           <width>231</width>
           <height>128</height>
@@ -1597,11 +1652,14 @@
          </item>
          <item row="0" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox">
+           <property name="suffix">
+            <string> mm</string>
+           </property>
            <property name="maximum">
             <double>5000.000000000000000</double>
            </property>
            <property name="value">
-            <double>200.000000000000000</double>
+            <double>100.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -1614,21 +1672,14 @@
          </item>
          <item row="1" column="1">
           <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+           <property name="suffix">
+            <string> mm</string>
+           </property>
            <property name="maximum">
             <double>5000.000000000000000</double>
            </property>
            <property name="value">
-            <double>200.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
-           <property name="maximum">
-            <double>5000.000000000000000</double>
-           </property>
-           <property name="value">
-            <double>200.000000000000000</double>
+            <double>100.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -1639,12 +1690,25 @@
            </property>
           </widget>
          </item>
+         <item row="2" column="1">
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+           <property name="suffix">
+            <string> mm</string>
+           </property>
+           <property name="maximum">
+            <double>5000.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>100.000000000000000</double>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="formLayoutWidget_2">
         <property name="geometry">
          <rect>
-          <x>230</x>
+          <x>240</x>
           <y>0</y>
           <width>221</width>
           <height>128</height>
@@ -1672,6 +1736,9 @@
          </item>
          <item row="0" column="1">
           <widget class="QDoubleSpinBox" name="X_OffsetSpinBox">
+           <property name="suffix">
+            <string> mm</string>
+           </property>
            <property name="minimum">
             <double>-5000.000000000000000</double>
            </property>
@@ -1679,7 +1746,7 @@
             <double>5000.000000000000000</double>
            </property>
            <property name="value">
-            <double>0.000000000000000</double>
+            <double>-100.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -1692,6 +1759,9 @@
          </item>
          <item row="1" column="1">
           <widget class="QDoubleSpinBox" name="Y_OffsetSpinBox">
+           <property name="suffix">
+            <string> mm</string>
+           </property>
            <property name="minimum">
             <double>-5000.000000000000000</double>
            </property>
@@ -1699,7 +1769,7 @@
             <double>5000.000000000000000</double>
            </property>
            <property name="value">
-            <double>0.000000000000000</double>
+            <double>10.000000000000000</double>
            </property>
           </widget>
          </item>
@@ -1712,6 +1782,9 @@
          </item>
          <item row="2" column="1">
           <widget class="QDoubleSpinBox" name="Z_OffsetSpinBox">
+           <property name="suffix">
+            <string> mm</string>
+           </property>
            <property name="minimum">
             <double>-5000.000000000000000</double>
            </property>
@@ -1720,6 +1793,158 @@
            </property>
            <property name="value">
             <double>0.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="formLayoutWidget_3">
+        <property name="geometry">
+         <rect>
+          <x>460</x>
+          <y>0</y>
+          <width>330</width>
+          <height>169</height>
+         </rect>
+        </property>
+        <layout class="QFormLayout" name="formLayout_3">
+         <property name="leftMargin">
+          <number>12</number>
+         </property>
+         <property name="topMargin">
+          <number>12</number>
+         </property>
+         <property name="rightMargin">
+          <number>12</number>
+         </property>
+         <property name="bottomMargin">
+          <number>12</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_14">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Vitesse origine</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDoubleSpinBox" name="homingSpeedSpinBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="suffix">
+            <string> mm/min</string>
+           </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="minimum">
+            <double>0.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>9999999.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>100.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>8000.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_15">
+           <property name="text">
+            <string>Vitesse de déplacement</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QDoubleSpinBox" name="horizontalSpeedSpinBox">
+           <property name="suffix">
+            <string> mm/min</string>
+           </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="minimum">
+            <double>0.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>999999.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>100.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>6000.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_16">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Vitesse du rouleau</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QDoubleSpinBox" name="rollSpeedSpinBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="suffix">
+            <string> mm/min</string>
+           </property>
+           <property name="decimals">
+            <number>0</number>
+           </property>
+           <property name="minimum">
+            <double>0.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>9999999.000000000000000</double>
+           </property>
+           <property name="singleStep">
+            <double>100.000000000000000</double>
+           </property>
+           <property name="value">
+            <double>10000.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_17">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>Vitesse Z</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="verticalSpeedSpinBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="suffix">
+            <string> mm/min</string>
+           </property>
+           <property name="maximum">
+            <number>10000</number>
+           </property>
+           <property name="singleStep">
+            <number>100</number>
+           </property>
+           <property name="value">
+            <number>1000</number>
            </property>
           </widget>
          </item>
@@ -1800,7 +2025,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Powd3r-releasex64/release/qmake_qmake_immediate.qrc"/>
+  <include location="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Debug/debug/qmake_qmake_immediate.qrc"/>
  </resources>
  <connections/>
 </ui>

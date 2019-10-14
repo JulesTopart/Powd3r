@@ -21,6 +21,7 @@ void GLWidget::initializeGL(){
     glClearColor(0.9f, 0.9f, 0.9f, 1);
     glClearDepth(1.0);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
     //glEnable(GL_CULL_FACE);
     glDepthFunc(GL_LEQUAL);
     glEnable(GL_COLOR_MATERIAL);
