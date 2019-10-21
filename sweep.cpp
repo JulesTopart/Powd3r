@@ -155,14 +155,14 @@ std::string to_string_with_precision(const T a_value, const int n = 6)
 /*						*/
 /************************/
 
-std::string NozzleAction::toGcode(bool dir, float xOffset ) {
+std::string NozzleAction::toGcode(bool dir, float xOffset, float inkQuantity) {
     std::string out = "G1 X";
 
     float xPos = xOffset + this->length;
 
     out += to_string_with_precision(xPos,5);
     out += " E";
-    out += to_string_with_precision(length, 3); /// length/float(dpiconst) ?
+    out += to_string_with_precision(length * inkQuantity, 3); /// length/float(dpiconst) ?
     out += " S" + std::to_string(code);
     out += "\n";
     return out;
@@ -313,7 +313,7 @@ Sweep::isNozzleOn(int nozzleN, float X) {
 
 
 std::string
-Sweep::toGcode(bool dir, QVector2D *offset, float speed) {
+Sweep::toGcode(bool dir, QVector2D *offset, float speed, float inkQuantity) {
     //std::cout << "Nozzle Action size :" << nozzleActions.size() << std::endl;
     std::string out = "";
     //out += absolute();
@@ -324,7 +324,7 @@ Sweep::toGcode(bool dir, QVector2D *offset, float speed) {
         float totalLength = 0.0f;
         *offset += QVector2D(xmin, 0);
         for (int i(0); i < nozzleActions.size(); i++) {
-            out += nozzleActions[i].toGcode(dir, offset->x() + totalLength);
+            out += nozzleActions[i].toGcode(dir, offset->x() + totalLength, inkQuantity);
             totalLength += nozzleActions[i].length;
         }
         *offset -= QVector2D(xmin, 0);
@@ -333,7 +333,7 @@ Sweep::toGcode(bool dir, QVector2D *offset, float speed) {
         float totalLength = 0.0f;
         *offset += QVector2D(xmax, 0);
         for (int i(nozzleActions.size() - 1); i > -1; i--) {
-            out += nozzleActions[i].toGcode(dir, offset->x() - totalLength);
+            out += nozzleActions[i].toGcode(dir, offset->x() - totalLength, inkQuantity);
             totalLength += nozzleActions[i].length;
         }
         *offset -= QVector2D(xmax, 0);
@@ -364,14 +364,14 @@ SweepCollection::SweepCollection() {
 }
 
 std::string
-SweepCollection::toGcode(short nPass, QVector2D offset, float speed) {
+SweepCollection::toGcode(short nPass, QVector2D offset, float speed,float inkQuantity) {
     std::string out = "";
 #ifdef DEBUG_SWEEP
     std::cout << std::endl << "Number of sweep : " << sweeps.size() << std::endl;
 #endif
     for (int i(0); i < sweeps.size(); i++) {
         for (int j(0); j < nPass; j++) {
-            out += sweeps[i].toGcode(lastDir, &offset, speed);
+            out += sweeps[i].toGcode(lastDir, &offset, speed, inkQuantity);
             //lastDir = !lastDir;
         }
     }

@@ -74,7 +74,7 @@ public:
     NozzleAction(float _x, float _length, int _code) : x(_x), length(_length), code(_code), dpiconst(25.4f / 96.0f) {};
     NozzleAction(float _x, float _length, int _code, int dpi) : x(_x), length(_length), code(_code), dpiconst(25.4f / (float)dpi) {};
 
-    std::string toGcode(bool dir, float xOffset);
+    std::string toGcode(bool dir, float xOffset, float inkQuantity);
 
     void addToLength(float _x) {
         length += _x;
@@ -164,7 +164,7 @@ public:
         nozzleActions.push_back(n);
     }
 
-    std::string toGcode(bool dir, QVector2D *offset, float speed);
+    std::string toGcode(bool dir, QVector2D *offset, float speed,float inkQuantity);
     std::string goToLeftPoint(QVector2D offset);
     std::string goToRightPoint(QVector2D offset);
 
@@ -224,7 +224,7 @@ public:
     }
 
 
-    std::string toGcode(short nPass = 1, QVector2D offset = QVector2D(0,0), float speed = 5000);
+    std::string toGcode(short nPass = 1, QVector2D offset = QVector2D(0,0), float speed = 5000, float inkQuantity = 1);
 
     static SweepCollection generateSweeps(std::vector<Line2D> lines, short firstNozzle,short lastNozzle, short dpi);
 

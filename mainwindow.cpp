@@ -430,7 +430,7 @@ void MainWindow::generateGcode(){
         this->ui->gcode->append(this->ui->ALGcode->toPlainText());
 
         SweepCollection sweeps = SweepCollection::generateSweeps(lines->toStdVector(), ui->firstNozzleSpinBox->value() - 1, ui->lastNozzleSpinBox->value() - 1, 96); //Generate slice sweeps
-        std::string out = sweeps.toGcode(pass, offset,ui->sweepSpeedSpinBox->value()); //number of pass
+        std::string out = sweeps.toGcode(pass, offset,ui->sweepSpeedSpinBox->value(), ui->InkFlowSpinBox->value() / 100.0); //number of pass
         QString cast = QString::fromStdString(out);
 
         this->ui->gcode->append(cast);
