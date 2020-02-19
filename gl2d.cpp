@@ -1,7 +1,7 @@
 #include "gl2d.h"
 
 
-gl2D::gl2D(QWidget *parent){
+GL2D::GL2D(QWidget *parent){
     int seconde = 1000; // 1 seconde = 1000 ms
     int timerInterval = seconde / 60;
     t_Timer = new QTimer(this);
@@ -9,11 +9,11 @@ gl2D::gl2D(QWidget *parent){
     t_Timer->start( timerInterval );
 }
 
-gl2D::~gl2D(){
+GL2D::~GL2D(){
 
 }
 
-void gl2D::drawAxis(){
+void GL2D::drawAxis(){
     glEnable(GL_LINE_SMOOTH);
     glPushMatrix();
     glBegin(GL_LINES);
@@ -26,7 +26,7 @@ void gl2D::drawAxis(){
     glDisable(GL_LINE_SMOOTH);
 }
 
-void gl2D::drawGrid(QVector2D size)
+void GL2D::drawGrid(QVector2D size)
 {
     float HALF_GRID_X = size.y()/2;
     float HALF_GRID_Y = size.x()/2;
@@ -48,14 +48,14 @@ void gl2D::drawGrid(QVector2D size)
 
 
 
-void gl2D::initializeGL(){
+void GL2D::initializeGL(){
     glShadeModel(GL_SMOOTH);
     glClearColor(0.2f, 0.2f, 0.2f, 1);
     glClearDepth(1.0);
     glDepthFunc(GL_LEQUAL);
 }
 
-void gl2D::paintGL(){
+void GL2D::paintGL(){
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -88,7 +88,7 @@ void gl2D::paintGL(){
     }
 }
 
-void gl2D::resizeGL(int width, int height){
+void GL2D::resizeGL(int width, int height){
     if(height == 0)
         height = 1;
     glViewport(0, 0, width, height);
@@ -99,12 +99,12 @@ void gl2D::resizeGL(int width, int height){
     glLoadIdentity();
 }
 
-void gl2D::timeOutSlot()
+void GL2D::timeOutSlot()
 {
     updateGL();
 }
 
-void gl2D::mouseMoveEvent( QMouseEvent* event){
+void GL2D::mouseMoveEvent( QMouseEvent* event){
     if (leftMousePressed){
         // Mouse release position - mouse press position
         QVector2D diff = QVector2D(event->localPos()) - mousePressPosition;
@@ -121,7 +121,7 @@ void gl2D::mouseMoveEvent( QMouseEvent* event){
     event->ignore();
 }
 
-void gl2D::mousePressEvent(QMouseEvent *event){
+void GL2D::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
         leftMousePressed = true;
@@ -133,7 +133,7 @@ void gl2D::mousePressEvent(QMouseEvent *event){
     event->ignore();
 }
 
-void gl2D::mouseReleaseEvent(QMouseEvent *event){
+void GL2D::mouseReleaseEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
         leftMousePressed = false;
@@ -144,7 +144,7 @@ void gl2D::mouseReleaseEvent(QMouseEvent *event){
     event->ignore();
 }
 
-void gl2D::wheelEvent(QWheelEvent* event){
+void GL2D::wheelEvent(QWheelEvent* event){
     float t = event->angleDelta().y() * 0.0005f;
     if((this->scale + QVector2D(t,t)).length() >= 0.1) this->scale += QVector2D(t,t);
     event->accept();

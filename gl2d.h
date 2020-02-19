@@ -6,14 +6,14 @@
 #include "GL/glu.h"
 #include "mesh.h"
 
-class gl2D : public QGLWidget
+class GL2D : public QGLWidget
 {
     Q_OBJECT
 public:
 public:
 
-    gl2D(QWidget *parent = nullptr) ;
-    ~gl2D();
+    GL2D(QWidget *parent = nullptr) ;
+    ~GL2D();
 
     void drawAxis();
     void drawGrid(QVector2D grid_size);

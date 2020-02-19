@@ -6,12 +6,12 @@
 #include "GL/glu.h"
 #include "mesh.h"
 
-class GLWidget : public QGLWidget
+class GLModel : public QGLWidget
 {
     Q_OBJECT
 public:
-    GLWidget(QWidget *parent = nullptr) ;
-    ~GLWidget();
+    GLModel(QWidget *parent = nullptr) ;
+    ~GLModel();
 
     void loadModel(Mesh *mdl);
     void unloadModel(int id);
@@ -90,13 +90,13 @@ private:
     light = true;
 
     GLfloat
-    LightAmbient[4]  = { 0.5f, 0.5f, 0.5f, 1.0f };
+    LightAmbient[4]  = { 0.7f, 0.7f, 0.7f, 1.0f };
 
     GLfloat
-    LightDiffuse[4]  = { 0.01f, 0.01f, 0.01f, 1.0f };
+    LightDiffuse[4]  = { 0.4f, 0.4f, 0.4f, 1.0f };
 
     GLfloat
-    LightPosition[4] = { 5.0f, 5.0f, 5.0f, 1.0f };
+    LightPosition[4] = { 8.0f, 8.0f, 8.0f, 1.0f };
 
     GLfloat
     selectedEmission[4] = { 1.0, 1.0, 1.0, 1.0 };

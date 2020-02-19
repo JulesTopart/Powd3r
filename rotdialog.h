@@ -2,7 +2,9 @@
 #define ROTDIALOG_H
 
 #include <QDialog>
+#include <QString>
 #include "mesh.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class RotDialog;
@@ -13,8 +15,8 @@ class RotDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit RotDialog(QWidget *parent = nullptr);
-    explicit RotDialog(Mesh *ptr = nullptr);
+    explicit RotDialog(QWidget *parent = nullptr, MainWindow *mainWindow = nullptr);
+    explicit RotDialog(Mesh *ptr = nullptr , MainWindow *mainWindow = nullptr);
     ~RotDialog();
 
 private slots:
@@ -32,6 +34,7 @@ private slots:
 
 private:
     Mesh* mdlPtr;
+    MainWindow *mw;
     QVector3D initialValue = QVector3D(0,0,0);
     Ui::RotDialog *ui;
 };

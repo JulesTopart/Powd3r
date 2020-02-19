@@ -1,7 +1,7 @@
-#include "glpath.h"
+#include "glPath.h"
 
 
-glPath::glPath(QWidget *parent){
+GLPath::GLPath(QWidget *parent){
     int seconde = 1000; // 1 seconde = 1000 ms
     int timerInterval = seconde / 60;
     t_Timer = new QTimer(this);
@@ -9,11 +9,11 @@ glPath::glPath(QWidget *parent){
     t_Timer->start( timerInterval );
 }
 
-glPath::~glPath(){
+GLPath::~GLPath(){
 
 }
 
-void glPath::drawAxis(){
+void GLPath::drawAxis(){
     glEnable(GL_LINE_SMOOTH);
     glPushMatrix();
     glBegin(GL_LINES);
@@ -26,7 +26,7 @@ void glPath::drawAxis(){
     glDisable(GL_LINE_SMOOTH);
 }
 
-void glPath::drawGrid(QVector2D size)
+void GLPath::drawGrid(QVector2D size)
 {
     float HALF_GRID_X = size.y()/2;
     float HALF_GRID_Y = size.x()/2;
@@ -47,14 +47,14 @@ void glPath::drawGrid(QVector2D size)
 }
 
 
-void glPath::initializeGL(){
+void GLPath::initializeGL(){
     glShadeModel(GL_SMOOTH);
     glClearColor(0.2f, 0.2f, 0.2f, 1);
     glClearDepth(1.0);
     glDepthFunc(GL_LEQUAL);
 }
 
-void glPath::paintGL(){
+void GLPath::paintGL(){
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -92,7 +92,7 @@ void glPath::paintGL(){
 
 }
 
-void glPath::resizeGL(int width, int height){
+void GLPath::resizeGL(int width, int height){
     if(height == 0)
         height = 1;
     glViewport(0, 0, width, height);
@@ -103,12 +103,12 @@ void glPath::resizeGL(int width, int height){
     glLoadIdentity();
 }
 
-void glPath::timeOutSlot()
+void GLPath::timeOutSlot()
 {
     updateGL();
 }
 
-void glPath::mouseMoveEvent( QMouseEvent* event){
+void GLPath::mouseMoveEvent( QMouseEvent* event){
     if (leftMousePressed){
         // Mouse release position - mouse press position
         QVector2D diff = QVector2D(event->localPos()) - mousePressPosition;
@@ -125,7 +125,7 @@ void glPath::mouseMoveEvent( QMouseEvent* event){
     event->ignore();
 }
 
-void glPath::mousePressEvent(QMouseEvent *event){
+void GLPath::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
         leftMousePressed = true;
@@ -137,7 +137,7 @@ void glPath::mousePressEvent(QMouseEvent *event){
     event->ignore();
 }
 
-void glPath::mouseReleaseEvent(QMouseEvent *event){
+void GLPath::mouseReleaseEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
         leftMousePressed = false;
@@ -148,7 +148,7 @@ void glPath::mouseReleaseEvent(QMouseEvent *event){
     event->ignore();
 }
 
-void glPath::wheelEvent(QWheelEvent* event){
+void GLPath::wheelEvent(QWheelEvent* event){
     float t = event->angleDelta().y() * 0.0005f;
     if((this->scale + QVector2D(t,t)).length() >= 0.1) this->scale += QVector2D(t,t);
     event->accept();

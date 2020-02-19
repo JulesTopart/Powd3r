@@ -14,17 +14,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_sSettingsFile = QApplication::applicationDirPath() + "/settings.ini";
     loadSettings();
+
+    //Scrollbar synchronization
+    connect(ui->gcode->verticalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->lineNumber->verticalScrollBar(), SLOT(setValue(int)));
+    connect(ui->lineNumber->verticalScrollBar(), SIGNAL(valueChanged(int)),
+            ui->gcode->verticalScrollBar(), SLOT(setValue(int)));
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+MainWindow::~MainWindow(){ delete ui; }
 
-void MainWindow::on_actionClose_triggered()
-{
-    this->close();
-}
+void MainWindow::on_actionClose_triggered(){ this->close(); }
 
 
 void MainWindow::closeEvent (QCloseEvent *event)
@@ -81,13 +81,13 @@ void MainWindow::loadSettings()
     if (ui->InkFlowSpinBox) ui->passSpinBox->setValue(pass);
 
     float buildX = settings.value("build_x","").toFloat();
-    if (ui->doubleSpinBox) ui->doubleSpinBox->setValue(buildX);
+    if (ui->widthSpinBox) ui->widthSpinBox->setValue(buildX);
 
     float buildY = settings.value("build_y","").toFloat();
-    if (ui->doubleSpinBox) ui->doubleSpinBox_3->setValue(buildY);
+    if (ui->widthSpinBox) ui->heightSpinBox->setValue(buildY);
 
     float buildZ = settings.value("build_z","").toFloat();
-    if (ui->doubleSpinBox) ui->doubleSpinBox_2->setValue(buildZ);
+    if (ui->widthSpinBox) ui->depthSpinBox->setValue(buildZ);
 
     float offbuildX = settings.value("offbuild_x", "").toFloat();
     if (ui->X_OffsetSpinBox) ui->X_OffsetSpinBox->setValue(offbuildX);
@@ -98,23 +98,23 @@ void MainWindow::loadSettings()
     float offbuildZ = settings.value("offbuild_z", "").toFloat();
     if (ui->Z_OffsetSpinBox) ui->Z_OffsetSpinBox->setValue(offbuildZ);
 
-    ui->openGLWidget->originOffset.setX(offbuildX);
-    ui->openGLWidget->originOffset.setY(offbuildY);
-    ui->openGLWidget->originOffset.setZ(offbuildZ);
-    ui->openGLWidget->plateDim.setX(buildX);
-    ui->openGLWidget->plateDim.setY(buildY);
-    ui->openGLWidget->plateDim.setZ(buildZ);
+    ui->openGLModel->originOffset.setX(offbuildX);
+    ui->openGLModel->originOffset.setY(offbuildY);
+    ui->openGLModel->originOffset.setZ(offbuildZ);
+    ui->openGLModel->plateDim.setX(buildX);
+    ui->openGLModel->plateDim.setY(buildY);
+    ui->openGLModel->plateDim.setZ(buildZ);
 
-    ui->openGLWidget_2->originOffset.setX(offbuildX);
-    ui->openGLWidget_2->originOffset.setY(offbuildY);
-    ui->openGLWidget_2->plateDim.setX(buildX);
-    ui->openGLWidget_2->plateDim.setY(buildY);
+    ui->openGLSlice->originOffset.setX(offbuildX);
+    ui->openGLSlice->originOffset.setY(offbuildY);
+    ui->openGLSlice->plateDim.setX(buildX);
+    ui->openGLSlice->plateDim.setY(buildY);
 
 
-    ui->openGLWidget_3->originOffset.setX(offbuildX);
-    ui->openGLWidget_3->originOffset.setY(offbuildY);
-    ui->openGLWidget_3->plateDim.setX(buildX);
-    ui->openGLWidget_3->plateDim.setY(buildY);
+    ui->openGLToolpath->originOffset.setX(offbuildX);
+    ui->openGLToolpath->originOffset.setY(offbuildY);
+    ui->openGLToolpath->plateDim.setX(buildX);
+    ui->openGLToolpath->plateDim.setY(buildY);
 }
 
 void MainWindow::saveSettings()
@@ -161,17 +161,17 @@ void MainWindow::saveSettings()
     settings.setValue("pass_count", pass_count);
     if (ui->InkFlowSpinBox) ui->InkFlowSpinBox->setValue(pass_count);
 
-    float buildX = (ui->doubleSpinBox) ? ui->doubleSpinBox->value() : 100.0f;
+    float buildX = (ui->widthSpinBox) ? ui->widthSpinBox->value() : 100.0f;
     settings.setValue("build_x", buildX);
-    if (ui->doubleSpinBox) ui->doubleSpinBox->setValue(buildX);
+    if (ui->widthSpinBox) ui->widthSpinBox->setValue(buildX);
 
-    float buildY = (ui->doubleSpinBox_3) ? ui->doubleSpinBox_3->value() : 100.0f;
+    float buildY = (ui->heightSpinBox) ? ui->heightSpinBox->value() : 100.0f;
     settings.setValue("build_y", buildY);
-    if (ui->doubleSpinBox_3) ui->doubleSpinBox_3->setValue(buildY);
+    if (ui->heightSpinBox) ui->heightSpinBox->setValue(buildY);
 
-    float buildZ = (ui->doubleSpinBox_2) ? ui->doubleSpinBox_2->value() : 100.0f;
+    float buildZ = (ui->depthSpinBox) ? ui->depthSpinBox->value() : 100.0f;
     settings.setValue("build_z", buildZ);
-    if (ui->doubleSpinBox_2) ui->doubleSpinBox_2->setValue(buildZ);
+    if (ui->depthSpinBox) ui->depthSpinBox->setValue(buildZ);
 
     float offbuildX = (ui->X_OffsetSpinBox) ? ui->X_OffsetSpinBox->value() : -110.0f;
     settings.setValue("offbuild_x", offbuildX);
@@ -184,6 +184,12 @@ void MainWindow::saveSettings()
     float offbuildZ = (ui->Z_OffsetSpinBox) ? ui->Z_OffsetSpinBox->value() : 0.0f;
     settings.setValue("offbuild_z", offbuildZ);
     if (ui->Z_OffsetSpinBox) ui->Z_OffsetSpinBox->setValue(offbuildZ);
+}
+
+
+void MainWindow::resetSettings(){
+    QSettings settings("Machinerie", "Powd3r");
+    settings.clear();
 }
 
 
@@ -233,7 +239,7 @@ void MainWindow::processSTLFile(QString filePath){
             if(model.size() != 0){
                 ui->progressLabel->setText("Rendu OpenGL...");
                 addModel(&model);
-                ui->openGLWidget->updateGL();
+                ui->openGLModel->updateGL();
                 ui->progressBar->setValue(100);
                 ui->progressLabel->setText("Fait.");
             }
@@ -243,31 +249,50 @@ void MainWindow::processSTLFile(QString filePath){
 }
 
 void MainWindow::addModel(Mesh* mdlPtr){
-    ui->openGLWidget->loadModel(mdlPtr);
-    ui->openGLWidget->updateGL();
+    ui->openGLModel->loadModel(mdlPtr);
+    ui->openGLModel->updateGL();
     updateList();
 }
+
 void MainWindow::updateList(){
-   int size = ui->openGLWidget->modelCount();
+   int size = ui->openGLModel->modelCount();
     ui->listWidget->clear();
     Mesh* mdlPtr;
     for(int i(0); i < size; i++){
-        mdlPtr = this->ui->openGLWidget->get(i);
+        mdlPtr = this->ui->openGLModel->get(i);
         ui->listWidget->addItem( "  " + QString::number(mdlPtr->getId()) + "  :  " + mdlPtr->getName() + " " + QString::number(mdlPtr->getBBSize().x) + " x " + QString::number(mdlPtr->getBBSize().y)+ " x " + QString::number(mdlPtr->getBBSize().z) + "mm");
     }
+    selectModel();
 }
 
+void MainWindow::selectModel(int i){
+    if(i >= 0 && i < ui->openGLModel->modelCount()){
+        ui->openGLModel->select(i);
+        ui->listWidget->setCurrentRow(i);
+    }
+    else{
+        i = ui->openGLModel->modelCount() - 1;
+        ui->openGLModel->select(i);
+        ui->listWidget->setCurrentRow(i);
+    }
+}
 
 void MainWindow::on_actionImporter_triggered()
 {
    browseFile();
 }
 
+
+void MainWindow::on_actionOption_triggered(){
+    ui->tabWidget->setCurrentIndex(4);
+}
+
+
 void MainWindow::on_scaleButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0 &&  ui->openGLWidget->getSelected() != -1){
-        int id = ui->openGLWidget->getSelected();
-        Mesh* mdlPtr = this->ui->openGLWidget->get(id);
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLModel->getSelected() != -1){
+        int id = ui->openGLModel->getSelected();
+        Mesh* mdlPtr = this->ui->openGLModel->get(id);
         ScaleDialog *dialog = new ScaleDialog(mdlPtr, this);
          dialog->show();
     }
@@ -276,28 +301,28 @@ void MainWindow::on_scaleButton_clicked()
 
 void MainWindow::on_rotateButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0 &&  ui->openGLWidget->getSelected() != -1){
-        int id = ui->openGLWidget->getSelected();
-        Mesh* mdlPtr = this->ui->openGLWidget->get(id);
-        RotDialog *dialog = new RotDialog(mdlPtr);
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLModel->getSelected() != -1){
+        int id = ui->openGLModel->getSelected();
+        Mesh* mdlPtr = this->ui->openGLModel->get(id);
+        RotDialog *dialog = new RotDialog(mdlPtr, this);
         dialog->show();
     }
 }
 
 void MainWindow::on_deleteButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0 &&  ui->openGLWidget->getSelected() != -1){
-        this->ui->openGLWidget->unloadModel(ui->openGLWidget->getSelected());
-        ui->openGLWidget->select(-1);
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLModel->getSelected() != -1){
+        this->ui->openGLModel->unloadModel(ui->openGLModel->getSelected());
+        ui->openGLModel->select(-1);
         updateList();
     }
 }
 
 void MainWindow::on_duplicateButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0 &&  ui->openGLWidget->getSelected() != -1){
-        int id = ui->openGLWidget->getSelected();
-        Mesh* mdlPtr = this->ui->openGLWidget->get(id);
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLModel->getSelected() != -1){
+        int id = ui->openGLModel->getSelected();
+        Mesh* mdlPtr = this->ui->openGLModel->get(id);
         addModel(mdlPtr);
     }
 }
@@ -305,28 +330,28 @@ void MainWindow::on_duplicateButton_clicked()
 void MainWindow::on_listWidget_itemPressed(QListWidgetItem*)
 {
     int id = ui->listWidget->currentRow();
-    ui->openGLWidget->select(id);
-    ui->openGLWidget->updateGL();
+    ui->openGLModel->select(id);
+    ui->openGLModel->updateGL();
 }
 
 
 //Reset View Button
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_centerButton_clicked()
 {
-    ui->openGLWidget->FrontView();
+    ui->openGLModel->FrontView();
 }
 
 //Add button
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_addButton_clicked()
 {
     browseFile();
 }
 
 void MainWindow::on_moveButton_clicked()
 {
-    if(this->ui->listWidget->count() > 0 && ui->openGLWidget->getSelected() != -1){
-        int id = ui->openGLWidget->getSelected();
-        Mesh* mdlPtr = this->ui->openGLWidget->get(id);
+    if(this->ui->listWidget->count() > 0 && ui->openGLModel->getSelected() != -1){
+        int id = ui->openGLModel->getSelected();
+        Mesh* mdlPtr = this->ui->openGLModel->get(id);
         moveDialog *dialog = new moveDialog(mdlPtr);
         dialog->show();
     }
@@ -336,48 +361,48 @@ void MainWindow::on_sliceButton_clicked()
 {
     this->setCursor(QCursor(Qt::WaitCursor));
     //check if one ore more model are loaded
-    if(this->ui->listWidget->count() > 0 &&  ui->openGLWidget->getSelected() != -1 && ui->layerHeightSpinBox->value() > 0.001){
+    if(this->ui->openGLModel->modelCount() > 0 &&  ui->openGLModel->getSelected() > -1 && ui->layerHeightSpinBox->value() > 0.001){
         //generate slice polygon (result of plane intersecting with mesh)
         QVector<Lines2D> *lines;
         lines = new  QVector<Lines2D>();
 
         ui->progressLabel->setText("Traitements des polygon...");
 
-        triMeshSlicer(ui->openGLWidget->get(ui->openGLWidget->getSelected()), *lines, ui->layerHeightSpinBox->value(), ui->progressBar);
+        triMeshSlicer(ui->openGLModel->get(ui->openGLModel->getSelected()), *lines, ui->layerHeightSpinBox->value(), ui->progressBar);
 
         //generate slice from lines
         ui->progressLabel->setText("Géneration des tranches...");
 
-        ui->openGLWidget_2->getSlice()->clear();
+        ui->openGLSlice->getSlice()->clear();
         int progress = 0;
         for(QVector<Lines2D>::Iterator l = lines->begin(); l < lines->end(); l++, progress++){
             Slice sliceBuf(*l);
-            ui->openGLWidget_2->getSlice()->push_back(sliceBuf);
+            ui->openGLSlice->getSlice()->push_back(sliceBuf);
             qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
             ui->progressBar->setValue(float(float(progress) / float(lines->size())) * 100);
         }
         ui->progressLabel->setText("Fait.");
         ui->progressBar->setValue(100);
-        ui->openGLWidget_2->getSlice()->remove(0);
-        //ui->openGLWidget_2->getSlice()->remove(ui->openGLWidget_2->sliceCount() - 1);
-        int nSlice = ui->openGLWidget_2->sliceCount();
+        ui->openGLSlice->getSlice()->remove(0);
+        //ui->openGLSlice->getSlice()->remove(ui->openGLSlice->sliceCount() - 1);
+        int nSlice = ui->openGLSlice->sliceCount();
         ui->verticalSlider->setMaximum(nSlice - 1);
         ui->sliceCount->setText(QString::number(nSlice));
 
         //update Gui
         ui->verticalSlider2->setMaximum(nSlice - 1);
         ui->sliceCount2->setText(QString::number(nSlice));
-        ui->openGLWidget_3->clear();
+        ui->openGLToolpath->clear();
 
 
         //SubSlicing
         ui->progressLabel->setText("Géneration des sous-stanches...");
 
-        QVector<Slice> slices = *ui->openGLWidget_2->getSlice();
+        QVector<Slice> slices = *ui->openGLSlice->getSlice();
         for(int i(0); i < nSlice; i++){
             this->ui->progressBar->setValue(float(float(i) / float(nSlice) * 100));
             Lines2D subLines = slices[i].subSlice(96);
-            ui->openGLWidget_3->push(subLines);
+            ui->openGLToolpath->push(subLines);
         }
         this->ui->progressBar->setValue(100);
         ui->progressLabel->setText("Fait.");
@@ -386,7 +411,7 @@ void MainWindow::on_sliceButton_clicked()
         if(!(ui->layerHeightSpinBox->value() > 0.001)){
             ui->progressLabel->setText("Hauteur de couche invalide");
         }else{
-            ui->progressLabel->setText("Sélectionnez un modèle !");
+            ui->progressLabel->setText("Sélectionnez un modèle valide");
         }
     }
     this->setCursor(QCursor(Qt::ArrowCursor));
@@ -395,72 +420,79 @@ void MainWindow::on_sliceButton_clicked()
 
 void MainWindow::generateGcode(){
 
+    ui->gcode->clear();
     //GUI
     this->setCursor(QCursor(Qt::WaitCursor));
-    ui->progressLabel->setText("Géneration du Gcode...");
+
+    if(this->ui->openGLModel->modelCount() > 0 && ui->openGLSlice->sliceCount() > 0){
+
+        ui->progressLabel->setText("Géneration du Gcode...");
+
+        //initialisation
+        this->ui->gcode->setPlainText(this->ui->SGcode->toPlainText());                 //Start Gcode
+        QVector2D offset(-ui->X_OffsetSpinBox->value(), -ui->Y_OffsetSpinBox->value()); //Store origin offset
+        int id = this->ui->openGLModel->getSelected();
+        Mesh* mdlPtr = this->ui->openGLModel->get(id);
+        //offset += QVector2D(mdlPtr->getBBSize().x, mdlPtr->getBBSize().y) / 2;        //Move to model bottom left corner
+        offset += QVector2D(mdlPtr->getPosition().x(), mdlPtr->getPosition().y());
+        offset += QVector2D(ui->openGLModel->plateDim.x()/2, ui->openGLModel->plateDim.y()/2);
+        int nSlice = ui->openGLSlice->sliceCount();                                     //Store sliceCount
+        QVector<Lines2D> subLines = *ui->openGLToolpath->getLines();                    //Store nozzleLines
+        int pass = ui->passSpinBox->value();
+        int progress(0);                                                              //TODO modify this progress handling
 
 
-    //initialisation
-    this->ui->gcode->setPlainText(this->ui->SGcode->toPlainText());               //Start Gcode
-    QVector2D offset(-ui->X_OffsetSpinBox->value(), -ui->Y_OffsetSpinBox->value()); //Store origin offset
-    int id = this->ui->listWidget->currentRow();
-    Mesh* mdlPtr = this->ui->openGLWidget->get(id);
-    //offset += QVector2D(mdlPtr->getBBSize().x, mdlPtr->getBBSize().y) / 2;        //Move to model bottom left corner
-    offset += QVector2D(mdlPtr->getPosition().x(), mdlPtr->getPosition().y());
-    offset += QVector2D(ui->openGLWidget->plateDim.x()/2, ui->openGLWidget->plateDim.y()/2);
-    int nSlice = ui->openGLWidget_2->sliceCount();                                //Store sliceCount
-    QVector<Lines2D> subLines = *ui->openGLWidget_3->getLines();                  //Store nozzleLines
-    int pass = ui->passSpinBox->value();
-    int progress(0);                                                              //TODO modify this progress handling
+        long max(subLines.size());
 
+        ui->gcodePBar->setMaximum(max);
 
-    long max(subLines.size());
+        for (QVector<Lines2D>::Iterator lines = subLines.begin(); lines != subLines.end(); lines++, progress++) { //For each slice
+            //GUI Update
+            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
+            this->ui->gcodePBar->setValue(progress);
 
-    ui->gcodePBar->setMaximum(max);
+            this->ui->gcode->append(this->ui->BLGcode->toPlainText());
+            this->ui->gcode->append(";Switching to layer " + QString::number(progress + 1));
+            this->ui->gcode->append("G1 Z" +  QString::number(ui->layerHeightSpinBox->value()) + " F" + QString::number(ui->verticalSpeedSpinBox->value())); //Move to next layer
+            //this->ui->gcode->append("G1 F" +  QString::number(ui->horizontalSpeedSpinBox->value())); //Move to next layer
+            this->ui->gcode->append(this->ui->ALGcode->toPlainText());
 
-    for (QVector<Lines2D>::Iterator lines = subLines.begin(); lines != subLines.end(); lines++, progress++) { //For each slice
-        //GUI Update
-        qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
-        this->ui->gcodePBar->setValue(progress);
+            SweepCollection sweeps = SweepCollection::generateSweeps(lines->toStdVector(), ui->firstNozzleSpinBox->value() - 1, ui->lastNozzleSpinBox->value() - 1, 96); //Generate slice sweeps
+            std::string out = sweeps.toGcode(pass, offset,ui->sweepSpeedSpinBox->value(), ui->InkFlowSpinBox->value() / 100.0); //number of pass
+            QString cast = QString::fromStdString(out);
 
-        this->ui->gcode->append(this->ui->BLGcode->toPlainText());
-        this->ui->gcode->append(";Switching to layer " + QString::number(progress + 1));
-        this->ui->gcode->append("G1 Z" +  QString::number(ui->layerHeightSpinBox->value()) + " F" + QString::number(ui->verticalSpeedSpinBox->value())); //Move to next layer
-        this->ui->gcode->append("G1 F" +  QString::number(ui->horizontalSpeedSpinBox->value())); //Move to next layer
-        this->ui->gcode->append(this->ui->ALGcode->toPlainText());
-
-        SweepCollection sweeps = SweepCollection::generateSweeps(lines->toStdVector(), ui->firstNozzleSpinBox->value() - 1, ui->lastNozzleSpinBox->value() - 1, 96); //Generate slice sweeps
-        std::string out = sweeps.toGcode(pass, offset,ui->sweepSpeedSpinBox->value(), ui->InkFlowSpinBox->value() / 100.0); //number of pass
-        QString cast = QString::fromStdString(out);
-
-        this->ui->gcode->append(cast);
+            this->ui->gcode->append(cast);
+        }
+         ui->gcode->append(this->ui->EGcode->toPlainText());
+         ui->progressLabel->setText("Fait.");
+         ui->gcodePBar->setMaximum(100);
+         ui->gcodePBar->setValue(100);
+         upddateLineNumber();
+    }else{
+        //ui->progressLabel->setText("Sélectionnez un modèle valide");
     }
-     ui->gcode->append(this->ui->EGcode->toPlainText());
-     ui->progressLabel->setText("Fait.");
-     ui->gcodePBar->setMaximum(100);
-     ui->gcodePBar->setValue(100);
-     this->setCursor(QCursor(Qt::ArrowCursor));
+    this->setCursor(QCursor(Qt::ArrowCursor));
  }
 
 
 
 void MainWindow::on_verticalSlider_valueChanged(int value)
 {
-    ui->openGLWidget_2->selectSlice(value);
+    ui->openGLSlice->selectSlice(value);
     ui->zeroCount->setText(QString::number(value));
     ui->verticalSlider2->setValue(value);
 }
 
 void MainWindow::on_verticalSlider2_valueChanged(int value)
 {
-    ui->openGLWidget_3->selectSlice(value);
+    ui->openGLToolpath->selectSlice(value);
     ui->zeroCount3->setText(QString::number(value));
     ui->verticalSlider->setValue(value);
 }
 
 
 
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_gcodeExportButton_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
             tr("Export Gcode"), "",
@@ -485,60 +517,79 @@ void MainWindow::on_pushButton_3_clicked()
     }
 }
 
-void MainWindow::on_pushButton_4_clicked()
+void MainWindow::on_gcodeGenButton_clicked()
 {
     generateGcode();
 }
 
 void MainWindow::on_firstNozzleSpinBox_valueChanged(int)
 {
-    ui->openGLWidget_3->nozzleCount = ui->lastNozzleSpinBox->value() + 1 - ui->firstNozzleSpinBox->value();
+    ui->openGLToolpath->nozzleCount = ui->lastNozzleSpinBox->value() + 1 - ui->firstNozzleSpinBox->value();
 }
 
 void MainWindow::on_lastNozzleSpinBox_valueChanged(int)
 {
-    ui->openGLWidget_3->nozzleCount = ui->lastNozzleSpinBox->value() + 1 - ui->firstNozzleSpinBox->value();
+    ui->openGLToolpath->nozzleCount = ui->lastNozzleSpinBox->value() + 1 - ui->firstNozzleSpinBox->value();
 }
 
 
 
 //Build plate
-void MainWindow::on_doubleSpinBox_valueChanged(double arg)
+void MainWindow::on_widthSpinBox_valueChanged(double arg)
 {
-    ui->openGLWidget->plateDim.setX(arg);
-    ui->openGLWidget_2->plateDim.setX(arg);
-    ui->openGLWidget_3->plateDim.setX(arg);
+    ui->openGLModel->plateDim.setX(arg);
+    ui->openGLSlice->plateDim.setX(arg);
+    ui->openGLToolpath->plateDim.setX(arg);
 }
 
-void MainWindow::on_doubleSpinBox_3_valueChanged(double arg)
+void MainWindow::on_depthSpinBox_valueChanged(double arg)
 {
-    ui->openGLWidget->plateDim.setY(arg);
-    ui->openGLWidget_2->plateDim.setY(arg);
-    ui->openGLWidget_3->plateDim.setY(arg);
+    ui->openGLModel->plateDim.setY(arg);
+    ui->openGLSlice->plateDim.setY(arg);
+    ui->openGLToolpath->plateDim.setY(arg);
 }
 
-void MainWindow::on_doubleSpinBox_2_valueChanged(double arg)
+void MainWindow::on_heightSpinBox_valueChanged(double arg)
 {
-    ui->openGLWidget->plateDim.setZ(arg);
+    ui->openGLModel->plateDim.setZ(arg);
 }
 
 
 //Origin offset
 void MainWindow::on_X_OffsetSpinBox_valueChanged(double arg)
 {
-    ui->openGLWidget->originOffset.setX(arg);
-    ui->openGLWidget_2->originOffset.setX(arg);
-    ui->openGLWidget_3->originOffset.setX(arg);
+    ui->openGLModel->originOffset.setX(arg);
+    ui->openGLSlice->originOffset.setX(arg);
+    ui->openGLToolpath->originOffset.setX(arg);
 }
 
 void MainWindow::on_Y_OffsetSpinBox_valueChanged(double arg)
 {
-    ui->openGLWidget->originOffset.setY(arg);
-    ui->openGLWidget_2->originOffset.setY(arg);
-    ui->openGLWidget_3->originOffset.setY(arg);
+    ui->openGLModel->originOffset.setY(arg);
+    ui->openGLSlice->originOffset.setY(arg);
+    ui->openGLToolpath->originOffset.setY(arg);
 }
 
 void MainWindow::on_Z_OffsetSpinBox_valueChanged(double arg)
 {
-    ui->openGLWidget->originOffset.setZ(arg);
+    ui->openGLModel->originOffset.setZ(arg);
+}
+
+
+void MainWindow::upddateLineNumber(){
+    ui->lineNumber->clear();
+    int nLine = ui->gcode->document()->blockCount();
+    QString numbers = "";
+    for(int i = 0; i < nLine; i++){
+        numbers += QString::number(i);
+        numbers += '\n';
+    }
+    ui->lineNumber->append(numbers);
+    //
+}
+
+
+void MainWindow::on_gcode_textChanged()
+{
+
 }

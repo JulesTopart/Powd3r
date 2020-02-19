@@ -6,13 +6,13 @@
 #include "GL/glu.h"
 #include "mesh.h"
 
-class glPath : public QGLWidget
+class GLPath : public QGLWidget
 {
     Q_OBJECT
 public:
 
-    glPath(QWidget *parent = nullptr) ;
-    ~glPath();
+    GLPath(QWidget *parent = nullptr) ;
+    ~GLPath();
 
     void drawAxis();
     void drawGrid(QVector2D grid_size);

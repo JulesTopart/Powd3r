@@ -23,7 +23,7 @@
    <string>Powd3r</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+   <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
     <normaloff>:/ressources/main.png</normaloff>:/ressources/main.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -58,7 +58,7 @@
        <enum>Qt::NoFocus</enum>
       </property>
       <property name="tabPosition">
-       <enum>QTabWidget::West</enum>
+       <enum>QTabWidget::North</enum>
       </property>
       <property name="tabShape">
        <enum>QTabWidget::Rounded</enum>
@@ -86,7 +86,7 @@
       </property>
       <widget class="QWidget" name="mainTab">
        <attribute name="icon">
-        <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+        <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
          <normaloff>:/ressources/frontview.png</normaloff>:/ressources/frontview.png</iconset>
        </attribute>
        <attribute name="title">
@@ -111,7 +111,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="GLWidget" name="openGLWidget">
+           <widget class="GLModel" name="openGLModel">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -197,7 +197,7 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QPushButton" name="pushButton_2">
+               <widget class="QPushButton" name="addButton">
                 <property name="minimumSize">
                  <size>
                   <width>130</width>
@@ -219,7 +219,7 @@
                  <string> Ajouter</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/add.png</normaloff>:/ressources/add.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -229,7 +229,7 @@
                  </size>
                 </property>
                 <property name="flat">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
@@ -263,7 +263,7 @@
                  <string> Dupliquer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/copy.png</normaloff>:/ressources/copy.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -276,7 +276,7 @@
                  <bool>false</bool>
                 </property>
                 <property name="flat">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
@@ -313,7 +313,7 @@
                  <string> Déplacer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/move.png</normaloff>:/ressources/move.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -326,7 +326,7 @@
                  <bool>false</bool>
                 </property>
                 <property name="flat">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
@@ -363,7 +363,7 @@
                  <string> Echelle</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/scale.png</normaloff>:/ressources/scale.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -376,7 +376,7 @@
                  <bool>false</bool>
                 </property>
                 <property name="flat">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
@@ -413,7 +413,7 @@
                  <string> Orbite</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/rotate.png</normaloff>:/ressources/rotate.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -426,12 +426,12 @@
                  <bool>false</bool>
                 </property>
                 <property name="flat">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton">
+               <widget class="QPushButton" name="centerButton">
                 <property name="minimumSize">
                  <size>
                   <width>130</width>
@@ -454,7 +454,7 @@
                  <string> Centrer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/coordinate.png</normaloff>:/ressources/coordinate.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -467,7 +467,7 @@
                  <bool>false</bool>
                 </property>
                 <property name="flat">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
@@ -504,7 +504,7 @@
                  <string>Supprimer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                   <normaloff>:/ressources/delete.png</normaloff>:/ressources/delete.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -517,7 +517,7 @@
                  <bool>false</bool>
                 </property>
                 <property name="flat">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
@@ -1040,7 +1040,7 @@
               <string>Trancher</string>
              </property>
              <property name="icon">
-              <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+              <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
                <normaloff>:/ressources/slice.png</normaloff>:/ressources/slice.png</iconset>
              </property>
              <property name="iconSize">
@@ -1142,7 +1142,7 @@
       </widget>
       <widget class="QWidget" name="sliceTab">
        <attribute name="icon">
-        <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+        <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
          <normaloff>:/ressources/slice.png</normaloff>:/ressources/slice.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1158,7 +1158,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="gl2D" name="openGLWidget_2">
+           <widget class="GL2D" name="openGLSlice">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -1235,7 +1235,7 @@
       </widget>
       <widget class="QWidget" name="toolpathTab">
        <attribute name="icon">
-        <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+        <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
          <normaloff>:/ressources/main.png</normaloff>:/ressources/main.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1248,7 +1248,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="glPath" name="openGLWidget_3">
+           <widget class="GLPath" name="openGLToolpath">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -1331,7 +1331,7 @@
       </widget>
       <widget class="QWidget" name="GcodeTab">
        <attribute name="icon">
-        <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+        <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
          <normaloff>:/ressources/copy.png</normaloff>:/ressources/copy.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1509,6 +1509,9 @@ M83</string>
                <property name="frameShape">
                 <enum>QFrame::Box</enum>
                </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
                <property name="plainText">
                 <string>G28 X
 T1
@@ -1550,32 +1553,151 @@ M83</string>
             <number>0</number>
            </property>
            <item>
-            <widget class="QTextEdit" name="gcode">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
+            <layout class="QHBoxLayout" name="horizontalLayout_11">
+             <property name="spacing">
+              <number>0</number>
              </property>
-             <property name="minimumSize">
-              <size>
-               <width>507</width>
-               <height>0</height>
-              </size>
+             <property name="leftMargin">
+              <number>0</number>
              </property>
-             <property name="frameShape">
-              <enum>QFrame::Box</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <property name="verticalScrollBarPolicy">
-              <enum>Qt::ScrollBarAlwaysOn</enum>
-             </property>
-             <property name="placeholderText">
-              <string>;Empty Gcode</string>
-             </property>
-            </widget>
+             <item alignment="Qt::AlignLeft">
+              <widget class="QTextEdit" name="lineNumber">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>10</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>52</width>
+                 <height>2000</height>
+                </size>
+               </property>
+               <property name="baseSize">
+                <size>
+                 <width>10</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="cursor" stdset="0">
+                <cursorShape>IBeamCursor</cursorShape>
+               </property>
+               <property name="tabletTracking">
+                <bool>false</bool>
+               </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::DefaultContextMenu</enum>
+               </property>
+               <property name="acceptDrops">
+                <bool>false</bool>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::RightToLeft</enum>
+               </property>
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background : rgb(234, 234, 234);
+color :  rgb(80, 80, 80);</string>
+               </property>
+               <property name="inputMethodHints">
+                <set>Qt::ImhMultiLine</set>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Panel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="horizontalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContents</enum>
+               </property>
+               <property name="autoFormatting">
+                <set>QTextEdit::AutoNone</set>
+               </property>
+               <property name="undoRedoEnabled">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="html">
+                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Century Gothic'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;right&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="overwriteMode">
+                <bool>false</bool>
+               </property>
+               <property name="placeholderText">
+                <string>0</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTextEdit" name="gcode">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>20</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::Panel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOn</enum>
+               </property>
+               <property name="undoRedoEnabled">
+                <bool>false</bool>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="html">
+                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Century Gothic'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="placeholderText">
+                <string>;Empty Gcode</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -1586,14 +1708,14 @@ M83</string>
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="pushButton_4">
+              <widget class="QPushButton" name="gcodeGenButton">
                <property name="text">
                 <string>Générer</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_3">
+              <widget class="QPushButton" name="gcodeExportButtonButton">
                <property name="text">
                 <string>Exporter le Gcode</string>
                </property>
@@ -1613,9 +1735,9 @@ M83</string>
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="parameterTab">
        <attribute name="icon">
-        <iconset resource="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc">
+        <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
          <normaloff>:/ressources/settings.png</normaloff>:/ressources/settings.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1651,7 +1773,7 @@ M83</string>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox">
+          <widget class="QDoubleSpinBox" name="widthSpinBox">
            <property name="suffix">
             <string> mm</string>
            </property>
@@ -1671,7 +1793,7 @@ M83</string>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+          <widget class="QDoubleSpinBox" name="depthSpinBox">
            <property name="suffix">
             <string> mm</string>
            </property>
@@ -1691,7 +1813,7 @@ M83</string>
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+          <widget class="QDoubleSpinBox" name="heightSpinBox">
            <property name="suffix">
             <string> mm</string>
            </property>
@@ -1961,30 +2083,28 @@ M83</string>
      <x>0</x>
      <y>0</y>
      <width>1322</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="File">
     <property name="title">
      <string>Fichiers</string>
     </property>
+    <widget class="QMenu" name="menuPr_f_rences">
+     <property name="title">
+      <string>Préférences</string>
+     </property>
+     <addaction name="actionShowBoundaries"/>
+    </widget>
     <addaction name="separator"/>
     <addaction name="actionImporter"/>
     <addaction name="separator"/>
-    <addaction name="actionSave"/>
-    <addaction name="actionSaveAs"/>
-    <addaction name="separator"/>
-    <addaction name="actionOption"/>
+    <addaction name="menuPr_f_rences"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
    <addaction name="File"/>
   </widget>
-  <action name="actionOption">
-   <property name="text">
-    <string>Préférences</string>
-   </property>
-  </action>
   <action name="actionSave">
    <property name="text">
     <string>Enregistrer</string>
@@ -2005,27 +2125,35 @@ M83</string>
     <string>Importer</string>
    </property>
   </action>
+  <action name="actionShowBoundaries">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Afficher les limites</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>GLWidget</class>
+   <class>GLModel</class>
    <extends>QOpenGLWidget</extends>
-   <header>glwidget.h</header>
+   <header>glModel.h</header>
   </customwidget>
   <customwidget>
-   <class>gl2D</class>
+   <class>GL2D</class>
    <extends>QOpenGLWidget</extends>
    <header>gl2d.h</header>
   </customwidget>
   <customwidget>
-   <class>glPath</class>
+   <class>GLPath</class>
    <extends>QOpenGLWidget</extends>
-   <header>glpath.h</header>
+   <header>glPath.h</header>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../build-Powd3r-Desktop_Qt_5_12_5_MinGW_64_bit-Release/release/qmake_qmake_immediate.qrc"/>
+  <include location="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc"/>
  </resources>
  <connections/>
 </ui>

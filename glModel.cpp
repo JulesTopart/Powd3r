@@ -1,12 +1,12 @@
-#include "glwidget.h"
+#include "glModel.h"
 
 
-GLWidget::~GLWidget()
+GLModel::~GLModel()
 {
 
 }
 
-GLWidget::GLWidget(QWidget *parent) :
+GLModel::GLModel(QWidget *parent) :
     QGLWidget(parent)
 {
     int seconde = 1000; // 1 seconde = 1000 ms
@@ -16,47 +16,49 @@ GLWidget::GLWidget(QWidget *parent) :
     t_Timer->start( timerInterval );
 }
 
-void GLWidget::initializeGL(){
-    glShadeModel(GL_SMOOTH);
+void GLModel::initializeGL(){
+
     glClearColor(0.9f, 0.9f, 0.9f, 1);
     glClearDepth(1.0);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
-    //glEnable(GL_CULL_FACE);
+
     glDepthFunc(GL_LEQUAL);
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_DEPTH_CLAMP);
     glEnable(GL_LINE_SMOOTH);
-    //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-    //glLightf(GL_LIGHT1,GL_QUADRATIC_ATTENUATION, 0.05f);
-    //glEnable(GL_LIGHT0);      // Enable Lighting
-    glEnable(GL_LIGHT1);      // Enable Lighting
+
+    glEnable(GL_NORMALIZE);
+
+    glEnable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);        // Enable Lighting
+    glEnable(GL_LIGHT2);        // Enable Lighting
 }
 
-void GLWidget::paintGL(){
-    glDisable(GL_LIGHTING);     // Disable Lighting
-    glEnable(GL_NORMALIZE);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLoadIdentity();
-    //glMatrixMode(GL_MODELVIEW);
+void GLModel::paintGL(){
 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLoadIdentity();
+
+    //Camera pos
     glTranslatef(position.x(), position.y(), position.z());
-    //glRotatef(rotation.length(), rotation.normalized().x(), rotation.normalized().y(), rotation.normalized().z());
+
     glRotatef(rotation.x(), 1, 0, 0);
     glRotatef(rotation.y(), 0, 1, 0);
     glRotatef(rotation.z(), 0, 0, 1);
 
+    glDisable(GL_LIGHT2);
+    glDisable(GL_LIGHT3);
+    glEnable(GL_LIGHT1);        // Enable Lighting
+    glLightfv(GL_LIGHT1, GL_AMBIENT,  LightAmbient);      // Setup The Ambient Light
     //Draw grid
     glScalef(scale.x(), scale.y(), scale.z());
     drawGrid(plateDim);
+
     glColor3f(0.5,0.5,0.48f); //retablish default color
 
     glRotatef(-90, 1, 0, 0); //mê !
-    //glRotatef(-90, 0, 0, 1); //mê !
-
-    //Draw axis
-
-    //glRotatef(90, 0, 0, 1); //mê !
 
     glPushMatrix();
     glTranslatef(originOffset.x() - plateDim.x()/2, originOffset.y() - plateDim.y()/2, originOffset.z());
@@ -64,22 +66,25 @@ void GLWidget::paintGL(){
     glPopMatrix();
 
     glColor3f(0.5,0.5,0.48f);
-    if (light) glEnable(GL_LIGHTING);      // Enable Lighting
-    //glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);                     // Setup The Diffuse Light
-    //glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);                       // Setup The Diffuse Light
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, LightAmbient);             // Setup The Diffuse Light
+
+
 
     int index(0);
     for(QVector<Mesh>::Iterator model = models.begin(); model != models.end(); model ++, index++){
         glPushMatrix();
-        //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE ); //WireFrame
-        //glScalef(model->getScale().x(), model->getScale().y(), model->getScale().z());
-        //glTranslatef(model->getPosition().x(), model->getPosition().y(), model->getPosition().z());
-        //glRotatef(model->getRotation().x(), 1, 0, 0);
-        //glRotatef(model->getRotation().y(), 0, 1, 0);
-        //glRotatef(model->getRotation().z(), 0, 0, 1);
-        if(index == selectedModel) glColor3f(0.7,1,0.68f);
+        model->drawBB();
+        glPopMatrix();
+
+        glPushMatrix();
+        if(index == selectedModel) glColor3f(1,0.8,0.0);
         else glColor3f(0.8,0.8,0.78f);
+
+        glDisable(GL_LIGHT1);
+        glEnable(GL_LIGHT2);        // Enable Lighting
+        glEnable(GL_LIGHT3);
+        GLfloat ambient[4] = { 0.6f, 0.6f, 0.6f, 1.0f };
+        glLightfv(GL_LIGHT2, GL_DIFFUSE,  LightDiffuse);
+        glLightfv(GL_LIGHT3, GL_AMBIENT,  ambient);
         model->draw();
         glPopMatrix();
     }
@@ -87,7 +92,7 @@ void GLWidget::paintGL(){
     rotation += rotationSpeed;     // Add speed To rotation
 }
 
-void GLWidget::drawGrid(QVector3D size)
+void GLModel::drawGrid(QVector3D size)
 {
     float HALF_GRID_X = size.y()/2;
     float HALF_GRID_Y = size.x()/2;
@@ -136,7 +141,7 @@ void GLWidget::drawGrid(QVector3D size)
     glEnd();
 }
 
-void GLWidget::drawAxis(){
+void GLModel::drawAxis(){
     glPushMatrix();
     glLineWidth(2.2);
     //glTranslatef(0.1f,0.1f,0.1f);
@@ -152,7 +157,7 @@ void GLWidget::drawAxis(){
     glPopMatrix();
 }
 
-void GLWidget::resizeGL(int width, int height){
+void GLModel::resizeGL(int width, int height){
     if(height == 0)
         height = 1;
     glViewport(0, 0, width, height);
@@ -164,7 +169,7 @@ void GLWidget::resizeGL(int width, int height){
 }
 
 
-void GLWidget::keyPressEvent(QKeyEvent *keyEvent)
+void GLModel::keyPressEvent(QKeyEvent *keyEvent)
 {
     switch(keyEvent->key())
     {
@@ -203,34 +208,34 @@ void GLWidget::keyPressEvent(QKeyEvent *keyEvent)
 }
 
 
-void GLWidget::wheelEvent( QWheelEvent *event){
+void GLModel::wheelEvent( QWheelEvent *event){
     float t = event->angleDelta().y() * 0.0002f;
     if((this->scale + QVector3D(t,t,t)).length() >= 0.1) this->scale += QVector3D(t,t,t);
     event->accept();
 }
 
 
-void GLWidget::timeOutSlot()
+void GLModel::timeOutSlot()
 {
     updateGL();
 }
 
-void GLWidget::loadModel(Mesh *mdl){
+void GLModel::loadModel(Mesh *mdl){
+
     mdl->normalize();
-    mdl->putOnPlate();
-    mdl->applyTransform();
+    mdl->applyChange();
     models.push_back(*mdl);
     models[models.size() - 1].setId(models.size() - 1);
 }
 
-void GLWidget::unloadModel(int id){
+void GLModel::unloadModel(int id){
     models.remove(id);
     for(int i(0); i < models.size(); i++){
         models[i].setId(i);
     }
 }
 
-void GLWidget::mousePressEvent(QMouseEvent *event){
+void GLModel::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
         leftMousePressed = true;
@@ -248,7 +253,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event){
     event->ignore();
 }
 
-void GLWidget::mouseReleaseEvent(QMouseEvent *event){
+void GLModel::mouseReleaseEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
         leftMousePressed = false;
@@ -264,7 +269,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event){
     event->ignore();
 }
 
-void GLWidget::mouseMoveEvent(QMouseEvent *event){
+void GLModel::mouseMoveEvent(QMouseEvent *event){
     if (leftMousePressed)
     {
         // Mouse release position - mouse press position
@@ -300,60 +305,62 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event){
 
 
 
-void GLWidget::timerEvent(QTimerEvent *)
+void GLModel::timerEvent(QTimerEvent *)
 {
 
 }
 
 
 
-void GLWidget::centerOnModel(int i){
+void GLModel::centerOnModel(int i){
     QVector3D pos = models[i].getPosition();
     QVector3D bb  = models[i].getBBSize();
     position = pos + (bb / 2);
 }
 
-void GLWidget::TopView()
+void GLModel::TopView()
 {
     // TODO: Add your command handler code here
     position = QVector3D(0,0,-50);
     rotation = QVector3D(90,0,0);
+
 }
 
-void GLWidget::BottomView()
+void GLModel::BottomView()
 {
     // TODO: Add your command handler code here
     position = QVector3D(0,0,-50);
     rotation = QVector3D(-90,0,0);
 }
 
-void GLWidget::FrontView()
+void GLModel::FrontView()
 {
     // TODO: Add your command handler code here
-    position = QVector3D(0,0,-50);
+    position = QVector3D(0,-10,-50);
     rotation = QVector3D(0,0,0);
+    scale    = QVector3D(0.5,0.5,0.5);
 }
 
-void GLWidget::BackView()
+void GLModel::BackView()
 {
     // TODO: Add your command handler code here
     position = QVector3D(0,0,-50);
     rotation = QVector3D(0,0,-180);
 }
 
-void GLWidget::LeftView()
+void GLModel::LeftView()
 {
     position = QVector3D(0,0,-50);
     rotation = QVector3D(0,0,-90);
 }
 
-void GLWidget::RightView()
+void GLModel::RightView()
 {
     position = QVector3D(0,0,-50);
     rotation = QVector3D(0,0,90);
 }
 
-void GLWidget::AxonView()
+void GLModel::AxonView()
 {
     position = QVector3D(0,0,-50);
     rotation = QVector3D(-45,0,-45);
