@@ -45,12 +45,93 @@ void MainWindow::closeEvent (QCloseEvent *event)
     }else */event->accept();
 }
 
+void MainWindow::loadDefault(){
+
+    if (ui->BLGcode) ui->BLGcode->setPlainText("");
+    if (ui->EGcode) ui->EGcode->setPlainText("");
+
+    QString macro;
+    macro = "";
+    macro += ";Gcode generated with Powd3r slicer";
+    macro += ";Start MACRO";
+    macro += "G28 X Y;Homing";
+    macro += "G92 Z0";
+    macro += "G90;absolute mode";
+    macro += "T0";
+    macro += "M83;Extruder relative mode";
+    macro += ";END";
+
+    if (ui->SGcode) ui->SGcode->setPlainText(macro);
+
+    macro = "";
+
+    macro += ";ALC MACRO";
+    macro += "G28 X;Homming X";
+    macro += "T1";
+    macro += "G92 E0";
+    macro += "M82;Extruder absolute mode";
+    macro += "G1 E5300 F50000";
+    macro += "M400";
+    macro += "G1 E0 F50000";
+    macro += "M400";
+    macro += "T1";
+    macro += "G92 E0";
+    macro += "T0";
+    macro += "M83;Extruder relative mode";
+    macro += ";END";
+
+    if (ui->ALGcode) ui->ALGcode->setPlainText(macro);
+
+    if (ui->layerHeightSpinBox) ui->layerHeightSpinBox->setValue(0.2);
+
+    if (ui->SpreadRateSpinBox) ui->SpreadRateSpinBox->setValue(1);
+
+    if (ui->firstNozzleSpinBox) ui->firstNozzleSpinBox->setValue(1);
+
+    if (ui->lastNozzleSpinBox) ui->lastNozzleSpinBox->setValue(12);
+
+    if (ui->InkFlowSpinBox) ui->InkFlowSpinBox->setValue(100);
+
+    if (ui->InkFlowSpinBox) ui->passSpinBox->setValue(1);
+
+    if (ui->doubleSpinBox) ui->doubleSpinBox->setValue(100);
+
+    if (ui->doubleSpinBox) ui->doubleSpinBox_3->setValue(100);
+
+    if (ui->doubleSpinBox) ui->doubleSpinBox_2->setValue(150);
+
+    if (ui->X_OffsetSpinBox) ui->X_OffsetSpinBox->setValue(-100);
+
+    if (ui->Y_OffsetSpinBox) ui->Y_OffsetSpinBox->setValue(10);
+
+    if (ui->Z_OffsetSpinBox) ui->Z_OffsetSpinBox->setValue(0);
+
+    ui->openGLWidget->originOffset.setX(-100);
+    ui->openGLWidget->originOffset.setY(10);
+    ui->openGLWidget->originOffset.setZ(0);
+    ui->openGLWidget->plateDim.setX(100);
+    ui->openGLWidget->plateDim.setY(100);
+    ui->openGLWidget->plateDim.setZ(150);
+
+    ui->openGLWidget_2->originOffset.setX(-100);
+    ui->openGLWidget_2->originOffset.setY(10);
+    ui->openGLWidget_2->plateDim.setX(100);
+    ui->openGLWidget_2->plateDim.setY(100);
+
+    ui->openGLWidget_3->originOffset.setX(-100);
+    ui->openGLWidget_3->originOffset.setY(10);
+    ui->openGLWidget_3->plateDim.setX(100);
+    ui->openGLWidget_3->plateDim.setY(100);
+}
 
 void MainWindow::loadSettings()
 {
-    QSettings settings("Machinerie", "Powd3r");
+    QSettings settings("La Machinerie", "Powd3r");
 
-    QString sText = settings.value("after_layer_gcode", "").toString();
+    QString sText = settings.value("is_setting", "").toString();
+    if (sText != "true") loadDefault();
+
+    sText = settings.value("after_layer_gcode", "").toString();
     if (ui->ALGcode) ui->ALGcode->setPlainText(sText);
 
     sText = settings.value("before_layer_gcode", "").toString();
@@ -110,7 +191,6 @@ void MainWindow::loadSettings()
     ui->openGLWidget_2->plateDim.setX(buildX);
     ui->openGLWidget_2->plateDim.setY(buildY);
 
-
     ui->openGLWidget_3->originOffset.setX(offbuildX);
     ui->openGLWidget_3->originOffset.setY(offbuildY);
     ui->openGLWidget_3->plateDim.setX(buildX);
@@ -119,9 +199,12 @@ void MainWindow::loadSettings()
 
 void MainWindow::saveSettings()
 {
-    QSettings settings("Machinerie", "Powd3r");
+    QSettings settings("La Machinerie", "Powd3r");
 
-    QString sText = (ui->ALGcode) ? ui->ALGcode->toPlainText() : "";
+    QString sText = "true";
+    settings.setValue("is_setting", sText);
+
+    sText = (ui->ALGcode) ? ui->ALGcode->toPlainText() : "";
     settings.setValue("after_layer_gcode", sText);
     if (ui->ALGcode) ui->ALGcode->setPlainText(sText);
 

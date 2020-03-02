@@ -30,6 +30,7 @@ public:
     void updateList             ();
     void generateGcode          ();
 
+    void loadDefault ();
     void loadSettings();
     void saveSettings();
 

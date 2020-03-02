@@ -25,36 +25,36 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-        glwidget.cpp \
-        mesh.cpp \
-        geometry.cpp \
-        rotdialog.cpp \
-        scaledialog.cpp \
-        movedialog.cpp \
-        gl2d.cpp \
-        glpath.cpp \
-        sweep.cpp
+        src/geometry.cpp \
+        src/gl2d.cpp \
+        src/glpath.cpp \
+        src/glwidget.cpp \
+        src/main.cpp \
+        src/mainwindow.cpp \
+        src/mesh.cpp \
+        src/movedialog.cpp \
+        src/rotdialog.cpp \
+        src/scaledialog.cpp \
+        src/sweep.cpp
 
 HEADERS += \
-        mainwindow.h \
-        glwidget.h \
-        mesh.h \
-        geometry.h \
-        scaledialog.h \
-        rotdialog.h \
-        movedialog.h \
-        gl2d.h \
-        glpath.h \
-        sweep.h
+        src/geometry.h \
+        src/gl2d.h \
+        src/glpath.h \
+        src/glwidget.h \
+        src/mainwindow.h \
+        src/mesh.h \
+        src/movedialog.h \
+        src/rotdialog.h \
+        src/scaledialog.h \
+        src/sweep.h
 
 
 FORMS += \
-        mainwindow.ui \
-    rotdialog.ui \
-    scaledialog.ui \
-    movedialog.ui
+    src/mainwindow.ui \
+    src/movedialog.ui \
+    src/rotdialog.ui \
+    src/scaledialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -76,6 +76,8 @@ RESOURCES = \
     ressources/main.png
 
 DISTFILES += \
+    .gitignore \
+    README.md \
     ressources/coordinate.png \
     ressources/copy.png \
     ressources/delete.png \
