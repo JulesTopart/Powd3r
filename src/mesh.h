@@ -25,6 +25,35 @@ enum FILE_FORMAT{
     INVALID
 };
 
+
+class Mesh;
+
+Mesh prepareMesh(Mesh);
+
+class BoundingBox{
+public:
+    BoundingBox ();
+    BoundingBox(Mesh *mdlPtr);
+    BoundingBox (Vec3 ur, Vec3 bl);
+
+    void calculate(Mesh *mdlPtr);
+
+    void setBottomLeft  (Vec3);
+    void setUpperRight  (Vec3);
+
+    Vec3 getSize        ();
+    Vec3 getBottomLeft  ();
+    Vec3 getUpperRight  ();
+
+    Vec3 getHalfBox     ();
+
+    void draw           ();
+
+protected:
+    Vec3 _upperRight, _bottomLeft, _center;
+};
+
+
 class Mesh{
 public:
 
@@ -35,8 +64,8 @@ public:
 //------------ Methods --------------
 
     void        draw     ();
+    void        drawBB   ();
     void        push_back(Facet f);
-    void        calculateBB();
 
 //----- Transformation Methods -----
 
@@ -46,15 +75,19 @@ public:
     void        scale       (Vec3 v                     );
     void        move        (float x, float y, float z  );
     void        move        (Vec3 v                     );
-    void        normalize   ();                 ///move the 3D model coordinate to be center around COG(0,0,0)
+
+    void        applyChange ();
+    void        updateBB    ();
+    void        normalize   ();
+
     void        transform   (QMatrix4x4 mat);
-    void        applyTransform();
-    void        resetTransform();
-    void        putOnPlate    ();
+
 
     //          ------ Get Methods ------
 
     Vec3        getBBSize   ();                 ///return scaled bounding box size
+    BoundingBox getBoundingBox();
+
     QVector3D   getPosition ();                 ///return relative position (self origin)
     QVector3D   getRotation ();                 ///return rotation arround each axis in a QVector
     QVector3D   getScale    ();                 ///return scale factor for each axis
@@ -64,9 +97,6 @@ public:
 
     Facets          &getMesh()          { return _facets; }
     const Facets    &getMesh() const    { return _facets; }
-
-    Vec3 getBottomLeftVertex() const    { return _bottomLeftVertex; }
-    Vec3 getUpperRightVertex() const    { return _upperRightVertex; }
 
     //          --------Set Methods---------
 
@@ -85,8 +115,8 @@ protected:
 
     //-------- Geometry --------
     Facets      _facets     ;
-    Vec3        _bottomLeftVertex,
-                _upperRightVertex;
+
+    BoundingBox _bb;
 
     //-------- OpenGL --------
     QVector3D   _position = QVector3D(0,0,0);
@@ -97,21 +127,25 @@ protected:
 };
 
 
+
 std::ostream& operator<<(std::ostream& out, const Vec3 p    );
 std::ostream& operator<<(std::ostream& out, const Facet& t  );
 
 FILE_FORMAT getFileFormat       (const QString &path);
 FILE_FORMAT checkStlFileFormat  (const QString &path);
 
-float      parseDouble         (std::ifstream& s);
+float       parseDouble         (std::ifstream& s);
 Vec3        parseQVector        (std::ifstream& s);
 
 Mesh        parseAscii          (const QString& stl_path, QProgressBar &pBar);
 Mesh        parseBinary         (const std::string& stl_path, QProgressBar &pBar);
-void triMeshSlicer(   const Mesh *meshPtr, // the const input mesh
-                     QVector<Lines2D> &slicesWithLineSegments,
-                      float sliceSize,
-                      QProgressBar* p);
+
+
+//Mesh prepareMesh(Mesh);
+void triMeshSlicer( const Mesh       *meshPtr, // the const input mesh
+                    QVector<Lines2D> &slicesWithLineSegments,
+                    float            sliceSize,
+                    QProgressBar     *p);
 
 
 #endif // MESH_H

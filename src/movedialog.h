@@ -29,7 +29,6 @@ private:
     Ui::moveDialog *ui;
     Mesh* mdlPtr;
     Vec3 initialPos;
-    bool active;
 };
 
 #endif // MOVEDIALOG_H

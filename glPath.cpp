@@ -1,7 +1,7 @@
-#include "gl2d.h"
+#include "glPath.h"
 
 
-GL2D::GL2D(QWidget *parent){
+GLPath::GLPath(QWidget *parent){
     int seconde = 1000; // 1 seconde = 1000 ms
     int timerInterval = seconde / 60;
     t_Timer = new QTimer(this);
@@ -9,11 +9,11 @@ GL2D::GL2D(QWidget *parent){
     t_Timer->start( timerInterval );
 }
 
-GL2D::~GL2D(){
+GLPath::~GLPath(){
 
 }
 
-void GL2D::drawAxis(){
+void GLPath::drawAxis(){
     glEnable(GL_LINE_SMOOTH);
     glPushMatrix();
     glBegin(GL_LINES);
@@ -26,7 +26,7 @@ void GL2D::drawAxis(){
     glDisable(GL_LINE_SMOOTH);
 }
 
-void GL2D::drawGrid(QVector2D size)
+void GLPath::drawGrid(QVector2D size)
 {
     float HALF_GRID_X = size.y()/2;
     float HALF_GRID_Y = size.x()/2;
@@ -38,7 +38,7 @@ void GL2D::drawGrid(QVector2D size)
         glVertex2f((float)i,(float)HALF_GRID_X);
     }
 
-    for(int i =- HALF_GRID_X; i <= HALF_GRID_X; i += 10){
+    for(int i=-HALF_GRID_X;i<=HALF_GRID_X;i += 10){
         glVertex2f((float)-HALF_GRID_Y,(float)i);
         glVertex2f((float)HALF_GRID_Y,(float)i);
     }
@@ -47,15 +47,14 @@ void GL2D::drawGrid(QVector2D size)
 }
 
 
-
-void GL2D::initializeGL(){
+void GLPath::initializeGL(){
     glShadeModel(GL_SMOOTH);
     glClearColor(0.2f, 0.2f, 0.2f, 1);
     glClearDepth(1.0);
     glDepthFunc(GL_LEQUAL);
 }
 
-void GL2D::paintGL(){
+void GLPath::paintGL(){
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -71,24 +70,29 @@ void GL2D::paintGL(){
     glPopMatrix();
 
     glColor3f(0.3f,0.3f,0.28f);
-    //Draw grid
     drawGrid(plateDim);
+
+
+    //Draw grid
+    //drawGrid(200);
     glColor3f(0.5,0.5,0.48f); //retablish default color
 
-    if(activeSlice < slices.size() && slices.size() > 0){
-        Lines2D lines;
-        lines = slices[activeSlice].asLines();
+
+    if(activeSlice < _subLines.size() && _subLines.size() > 0){
         glBegin(GL_LINES);
-        glColor3f(0.5f, 0.5f, 0.5f);
-        for(int i(0); i < lines.size(); i++){
-            glVertex3f(lines[i].A().x(), lines[i].A().y(), 0);
-            glVertex3f(lines[i].B().x(), lines[i].B().y(), 0);
+
+        for(size_t i(0); i < _subLines[activeSlice].size(); i++){
+            if((i / nozzleCount) % 2 == 0) glColor3f(0.7f, 1, 0.7f);
+            else glColor3f(1, 0.7f, 0.7f);
+            glVertex3f(_subLines[activeSlice][i].A().x(), _subLines[activeSlice][i].A().y(), 0);
+            glVertex3f(_subLines[activeSlice][i].B().x(), _subLines[activeSlice][i].B().y(), 0);
         }
         glEnd();
     }
+
 }
 
-void GL2D::resizeGL(int width, int height){
+void GLPath::resizeGL(int width, int height){
     if(height == 0)
         height = 1;
     glViewport(0, 0, width, height);
@@ -99,12 +103,12 @@ void GL2D::resizeGL(int width, int height){
     glLoadIdentity();
 }
 
-void GL2D::timeOutSlot()
+void GLPath::timeOutSlot()
 {
     updateGL();
 }
 
-void GL2D::mouseMoveEvent( QMouseEvent* event){
+void GLPath::mouseMoveEvent( QMouseEvent* event){
     if (leftMousePressed){
         // Mouse release position - mouse press position
         QVector2D diff = QVector2D(event->localPos()) - mousePressPosition;
@@ -121,7 +125,7 @@ void GL2D::mouseMoveEvent( QMouseEvent* event){
     event->ignore();
 }
 
-void GL2D::mousePressEvent(QMouseEvent *event){
+void GLPath::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
         leftMousePressed = true;
@@ -133,7 +137,7 @@ void GL2D::mousePressEvent(QMouseEvent *event){
     event->ignore();
 }
 
-void GL2D::mouseReleaseEvent(QMouseEvent *event){
+void GLPath::mouseReleaseEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
         leftMousePressed = false;
@@ -144,8 +148,13 @@ void GL2D::mouseReleaseEvent(QMouseEvent *event){
     event->ignore();
 }
 
-void GL2D::wheelEvent(QWheelEvent* event){
+void GLPath::wheelEvent(QWheelEvent* event){
     float t = event->angleDelta().y() * 0.0005f;
     if((this->scale + QVector2D(t,t)).length() >= 0.1) this->scale += QVector2D(t,t);
     event->accept();
+}
+
+
+void subSlice(std::vector<std::vector<Line3D>> lines){
+
 }

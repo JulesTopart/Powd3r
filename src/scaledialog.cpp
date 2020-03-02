@@ -38,8 +38,9 @@ void ScaleDialog::on_applyButton_clicked()
         scl3D /= intialDim;
         mdlPtr->setScale(scl3D);
     }
+
+    mdlPtr->applyChange();
     mw->updateList();
-    mdlPtr->applyTransform();
     this->close();
     delete this;
 }
@@ -47,7 +48,6 @@ void ScaleDialog::on_applyButton_clicked()
 void ScaleDialog::on_cancelButton_clicked()
 {
     mdlPtr->setScale(initialScale);
-    mdlPtr->applyTransform();
     mw->updateList();
     this->close();
     delete this;
@@ -75,7 +75,6 @@ void ScaleDialog::on_widthSpin_valueChanged(double)
         mdlPtr->setScale(scl3D);
     }
     running = false;
-    mdlPtr->applyTransform();
 }
 
 void ScaleDialog::on_heightSpin_valueChanged(double)
@@ -100,7 +99,6 @@ void ScaleDialog::on_heightSpin_valueChanged(double)
         mdlPtr->setScale(scl3D);
     }
     running = false;
-    mdlPtr->applyTransform();
 }
 
 void ScaleDialog::on_depthSpin_valueChanged(double)
@@ -125,7 +123,6 @@ void ScaleDialog::on_depthSpin_valueChanged(double)
         mdlPtr->setScale(scl3D);
     }
     running = false;
-    mdlPtr->applyTransform();
 }
 
 
@@ -155,5 +152,4 @@ void ScaleDialog::on_fromBBCheckBox_stateChanged(int)
 void ScaleDialog::on_ScaleDialog_destroyed()
 {
     mdlPtr->setScale(initialScale);
-    mdlPtr->applyTransform();
 }

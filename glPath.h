@@ -1,38 +1,35 @@
-#ifndef GL2D_H
-#define GL2D_H
+#ifndef GLPATH_H
+#define GLPATH_H
 
 #include <QtOpenGL>
 #include <QGLWidget>
 #include "GL/glu.h"
 #include "mesh.h"
 
-class GL2D : public QGLWidget
+class GLPath : public QGLWidget
 {
     Q_OBJECT
 public:
-public:
 
-    GL2D(QWidget *parent = nullptr) ;
-    ~GL2D();
+    GLPath(QWidget *parent = nullptr) ;
+    ~GLPath();
 
     void drawAxis();
     void drawGrid(QVector2D grid_size);
-
-    int sliceCount(){
-        return slices.size();
-    }
-
+    QVector<Lines2D> *getLines(){ return &_subLines;}
     void selectSlice(int n){
         activeSlice = n;
     }
+    void push(Lines2D subLines_){_subLines.push_back(subLines_);}
+    void clear(){_subLines.clear();}
 
-    Slices* getSlice(){return &slices;}
+     int nozzleCount = 12;
 
-    QVector2D
-    originOffset = QVector2D(0,0);
+     QVector2D
+     originOffset = QVector2D(0,0);
 
-    QVector2D
-    plateDim      = QVector2D(200,200);
+     QVector2D
+     plateDim      = QVector2D(200,200);
 
 protected:
 
@@ -45,28 +42,25 @@ protected:
      void mouseReleaseEvent(QMouseEvent *e);
      void wheelEvent( QWheelEvent* );
 
+
+
 public slots:
      void timeOutSlot();
 
 private:
-
-     //OpenGL
      QTimer *t_Timer;
      QVector2D
      position      = QVector2D(0,0);
      QVector2D
      scale         = QVector2D(0.5,0.5);
 
-     //Input
      QVector2D
      mousePressPosition;
      bool
      leftMousePressed = false;
 
-     //Slices
-     int activeSlice = 0;
-     Slices slices;
+     size_t activeSlice = 0;
+     QVector<Lines2D> _subLines;
+
 };
-
-#endif // GL2D_H
-
+#endif // GLPATH_H
