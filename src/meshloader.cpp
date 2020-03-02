@@ -89,7 +89,11 @@ Mesh parseAscii(const QString& stl_path, QProgressBar &pBar){
 
     }while(!cBuf.isNull());
 
-    output.normalize();
+    //Put on plate
+    output.applyChange();
+    output.move(0, 0, output.getBBSize().z/2);
+    output.applyChange();
+
     return output;
 }
 
@@ -121,6 +125,12 @@ Mesh parseBinary(const std::string& stl_path, QProgressBar &pBar){
     pBar.setMaximum(100);
     pBar.setValue(100);
     model.normalize();
+
+    //Put on plate
+    model.applyChange();
+    model.move(0, 0, model.getBBSize().z/2);
+    model.applyChange();
+
     return model;
 }
 

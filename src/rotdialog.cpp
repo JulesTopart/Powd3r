@@ -32,11 +32,19 @@ void RotDialog::on_applyButton_clicked()
 {
     QVector3D rot(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
     mdlPtr->setRotation(rot);
+
+    if(ui->stickOnPlate->isChecked()){
+        mdlPtr->updateBB();
+        Vec3 newPos(mdlPtr->getPosition());
+        newPos.z = (mdlPtr->getBBSize().z/2);
+        mdlPtr->setPosition(newPos);
+    }
+
     mdlPtr->applyChange();
 
-    QMessageBox msgBox;
-    msgBox.setText("z : " + QString::number(mdlPtr->getBoundingBox().getBottomLeft().z).toUtf8());
-    msgBox.exec();
+    //QMessageBox msgBox;
+    //msgBox.setText("z : " + QString::number(mdlPtr->getBoundingBox().getBottomLeft().z).toUtf8());
+    //msgBox.exec();
 
     mw->updateList();
     this->close();

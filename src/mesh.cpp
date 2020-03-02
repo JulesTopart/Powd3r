@@ -56,13 +56,7 @@ void Mesh::draw(){
 }
 
 void Mesh::drawBB(){
-
-    glTranslatef(_position.x(),
-                 _position.y(),
-                 _position.z());
-
     _bb.draw();
-
 }
 
 void Mesh::updateBB(){
@@ -108,8 +102,6 @@ void Mesh::move(Vec3 v){
 
 void Mesh::applyChange(){
     _bb.calculate(this);
-    _position.setZ(getBBSize().z/2);
-    _bb.calculate(this);
 }
 
 /************************************
@@ -149,7 +141,6 @@ BoundingBox Mesh::getBoundingBox(){
     _bb.calculate(this);
     return _bb;
 }
-
 
 Vec3 Mesh::getBBSize(){
     _bb.calculate(this);
@@ -229,12 +220,11 @@ std::ostream& operator<<(std::ostream& out, const Facet& t) {
 
 Mesh prepareMesh(Mesh mesh){
     QMatrix4x4 trans;
-
     trans.translate(mesh.getPosition());
+
     trans.rotate(mesh.getRotation().x(), 1,0,0);
     trans.rotate(mesh.getRotation().y(), 0,1,0);
     trans.rotate(mesh.getRotation().z(), 0,0,1);
-
     trans.scale(mesh.getScale());
 
     mesh.transform(trans);
@@ -245,37 +235,48 @@ Mesh prepareMesh(Mesh mesh){
 // parameter ‘slicesWithLineSegments’ with line segments for
 // each slice
 void triMeshSlicer(
-    const Mesh *meshPtr, // the const input mesh
+    QVector<Mesh> multiMesh, // the const input mesh
     QVector<Lines2D> &slicesWithLineSegments, const float sliceSize, QProgressBar *p)
 {                                                           // slice size in 3D Model digital units
     Plane plane;                                            // The intersection plane
-    Mesh mesh = prepareMesh(*meshPtr);
-    mesh.updateBB();
+    QVector<Facets> facets;
 
-    plane.setNormal(Vec3(0, 0, 1));                         // normal does not change during slicing
-    const Vec3 aabb = mesh.getBBSize();                     // as the model for it’s 3D axis-aligned bounding-box
-    const size_t nSlices = 1 + (int)(aabb.z / sliceSize);   // compute number of output slices
-    const Facets &m = mesh.getMesh();                       // get a const handle to the input mesh
-    const float z0 = 0;                                     // find the minimal z coordinate of the model (z0)
+    float zMax = 0;
+    float z0 = 0;
+
+    foreach (Mesh mesh, multiMesh) {
+        const float tzMax = mesh.getBoundingBox().getUpperRight().z - mesh.getBoundingBox().getBottomLeft().z ;  // as the model for it’s 3D axis-aligned bounding-box
+        if(tzMax > zMax) zMax = tzMax;
+
+        const float tz0 = mesh.getBoundingBox().getBottomLeft().z;   // find the minimal z coordinate of the model (z0)
+        if(tz0 < z0) z0 = tz0;
+        mesh = prepareMesh(mesh);
+        const Facets &m = mesh.getMesh();                       // get a const handle to the input mesh
+        facets.push_back(m);
+    }
+
+    const size_t nSlices = 1 + (int)( zMax / sliceSize);    // compute number of output slices
+    plane.setNormal(Vec3(0, 0, 1));                         // normal does not change during slicing    
+
 
     for (size_t i = 0; i < nSlices; ++i)
     {
         p->setValue(float(float(i) / float(nSlices)) * 100); // start generating slices
-        Lines2D linesegs;                              // the linesegs vector for each slice
-        plane.setDistance(z0 + (float)i * sliceSize);       // position the plane according to slice index
-        for (size_t t = 0; t < m.size(); ++t)
-        {                                                   // iterate all mesh triangles
-            const Facet &triangle = m[t];                   // get a const handle to a triangle
-            Line2D ls;
-            if (0 == triangle.intersectPlane(plane, ls))
-            {                                               // the plane does intersect the triangle
-                linesegs.push_back(ls);                     // push a new Line Segment object to this slice
+        Lines2D linesegs;                                    // the linesegs vector for each slice
+        plane.setDistance(z0 + (float)i * sliceSize);        // position the plane according to slice index
+        foreach (Facets m, facets) {
+            for (size_t t = 0; t < m.size(); ++t)
+            {                                                    // iterate all mesh triangles
+                const Facet &triangle = m[t];                    // get a const handle to a triangle
+                Line2D ls;
+                if (0 == triangle.intersectPlane(plane, ls))
+                {                                                // the plane does intersect the triangle
+                    linesegs.push_back(ls);                      // push a new Line Segment object to this slice
+                }
             }
         }
-        slicesWithLineSegments.push_back(linesegs);         // push this vector to the slices vector
+        slicesWithLineSegments.push_back(linesegs);          // push this vector to the slices vector
     }
     return;
 }
-
-
 

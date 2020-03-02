@@ -25,13 +25,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        src/boundingbox.cpp \
         src/geometry.cpp \
-        src/gl2d.cpp \
-        src/glpath.cpp \
-        src/glwidget.cpp \
+        src/glModel.cpp \
+        src/glPath.cpp \
+        src/glSlice.cpp \
         src/main.cpp \
         src/mainwindow.cpp \
         src/mesh.cpp \
+        src/meshloader.cpp \
         src/movedialog.cpp \
         src/rotdialog.cpp \
         src/scaledialog.cpp \
@@ -39,9 +41,9 @@ SOURCES += \
 
 HEADERS += \
         src/geometry.h \
-        src/gl2d.h \
-        src/glpath.h \
-        src/glwidget.h \
+        src/glModel.h \
+        src/glPath.h \
+        src/glSlice.h \
         src/mainwindow.h \
         src/mesh.h \
         src/movedialog.h \

@@ -21,6 +21,7 @@ public:
     void drawGrid(QVector3D size);
 
     Mesh* get(int i){return &models[i];}
+    QVector<Mesh> getModels(){return models;}
     void rotate(int i, QVector3D r){ models[i].rotate(r);}
     void select(int i){ selectedModel = i;}
     int getSelected(){ return this->selectedModel;}

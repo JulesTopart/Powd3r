@@ -52,33 +52,33 @@ void MainWindow::loadDefault(){
 
     QString macro;
     macro = "";
-    macro += ";Gcode generated with Powd3r slicer";
-    macro += ";Start MACRO";
-    macro += "G28 X Y;Homing";
-    macro += "G92 Z0";
-    macro += "G90;absolute mode";
-    macro += "T0";
-    macro += "M83;Extruder relative mode";
-    macro += ";END";
+    macro += ";Gcode generated with Powd3r slicer\n";
+    macro += ";Start MACRO\n";
+    macro += "G28 X Y;Homing\n";
+    macro += "G92 Z0\n";
+    macro += "G90;absolute mode\n";
+    macro += "T0\n";
+    macro += "M83;Extruder relative mode\n";
+    macro += ";END\n";
 
     if (ui->SGcode) ui->SGcode->setPlainText(macro);
 
     macro = "";
 
-    macro += ";ALC MACRO";
-    macro += "G28 X;Homming X";
-    macro += "T1";
-    macro += "G92 E0";
-    macro += "M82;Extruder absolute mode";
-    macro += "G1 E5300 F50000";
-    macro += "M400";
-    macro += "G1 E0 F50000";
-    macro += "M400";
-    macro += "T1";
-    macro += "G92 E0";
-    macro += "T0";
-    macro += "M83;Extruder relative mode";
-    macro += ";END";
+    macro += ";ALC MACRO\n";
+    macro += "G28 X;Homming X\n";
+    macro += "T1\n";
+    macro += "G92 E0\n";
+    macro += "M82;Extruder absolute mode\n";
+    macro += "G1 E5300 F50000\n";
+    macro += "M400\n";
+    macro += "G1 E0 F50000\n";
+    macro += "M400\n";
+    macro += "T1\n";
+    macro += "G92 E0\n";
+    macro += "T0\n";
+    macro += "M83;Extruder relative mode\n";
+    macro += ";END\n";
 
     if (ui->ALGcode) ui->ALGcode->setPlainText(macro);
 
@@ -94,11 +94,11 @@ void MainWindow::loadDefault(){
 
     if (ui->InkFlowSpinBox) ui->passSpinBox->setValue(1);
 
-    if (ui->doubleSpinBox) ui->doubleSpinBox->setValue(100);
+    if (ui->widthSpinBox) ui->widthSpinBox->setValue(100);
 
-    if (ui->doubleSpinBox) ui->doubleSpinBox_3->setValue(100);
+    if (ui->depthSpinBox) ui->depthSpinBox->setValue(100);
 
-    if (ui->doubleSpinBox) ui->doubleSpinBox_2->setValue(150);
+    if (ui->heightSpinBox) ui->heightSpinBox->setValue(150);
 
     if (ui->X_OffsetSpinBox) ui->X_OffsetSpinBox->setValue(-100);
 
@@ -106,27 +106,27 @@ void MainWindow::loadDefault(){
 
     if (ui->Z_OffsetSpinBox) ui->Z_OffsetSpinBox->setValue(0);
 
-    ui->openGLWidget->originOffset.setX(-100);
-    ui->openGLWidget->originOffset.setY(10);
-    ui->openGLWidget->originOffset.setZ(0);
-    ui->openGLWidget->plateDim.setX(100);
-    ui->openGLWidget->plateDim.setY(100);
-    ui->openGLWidget->plateDim.setZ(150);
+    ui->openGLModel->originOffset.setX(-100);
+    ui->openGLModel->originOffset.setY(10);
+    ui->openGLModel->originOffset.setZ(0);
+    ui->openGLModel->plateDim.setX(100);
+    ui->openGLModel->plateDim.setY(100);
+    ui->openGLModel->plateDim.setZ(150);
 
-    ui->openGLWidget_2->originOffset.setX(-100);
-    ui->openGLWidget_2->originOffset.setY(10);
-    ui->openGLWidget_2->plateDim.setX(100);
-    ui->openGLWidget_2->plateDim.setY(100);
+    ui->openGLSlice->originOffset.setX(-100);
+    ui->openGLSlice->originOffset.setY(10);
+    ui->openGLSlice->plateDim.setX(100);
+    ui->openGLSlice->plateDim.setY(100);
 
-    ui->openGLWidget_3->originOffset.setX(-100);
-    ui->openGLWidget_3->originOffset.setY(10);
-    ui->openGLWidget_3->plateDim.setX(100);
-    ui->openGLWidget_3->plateDim.setY(100);
+    ui->openGLToolpath->originOffset.setX(-100);
+    ui->openGLToolpath->originOffset.setY(10);
+    ui->openGLToolpath->plateDim.setX(100);
+    ui->openGLToolpath->plateDim.setY(100);
 }
 
 void MainWindow::loadSettings()
 {
-    QSettings settings("La Machinerie", "Powd3r");
+    QSettings settings("LaMachinerie", "Powd3r");
 
     QString sText = settings.value("is_setting", "").toString();
     if (sText != "true") loadDefault();
@@ -159,16 +159,16 @@ void MainWindow::loadSettings()
     if (ui->InkFlowSpinBox) ui->InkFlowSpinBox->setValue(sInkflow);
 
     int pass = settings.value("pass_count", "").toInt();
-    if (ui->InkFlowSpinBox) ui->passSpinBox->setValue(pass);
+    if (ui->passSpinBox) ui->passSpinBox->setValue(pass);
 
     float buildX = settings.value("build_x","").toFloat();
     if (ui->widthSpinBox) ui->widthSpinBox->setValue(buildX);
 
     float buildY = settings.value("build_y","").toFloat();
-    if (ui->widthSpinBox) ui->heightSpinBox->setValue(buildY);
+    if (ui->depthSpinBox) ui->depthSpinBox->setValue(buildY);
 
     float buildZ = settings.value("build_z","").toFloat();
-    if (ui->widthSpinBox) ui->depthSpinBox->setValue(buildZ);
+    if (ui->heightSpinBox) ui->heightSpinBox->setValue(buildZ);
 
     float offbuildX = settings.value("offbuild_x", "").toFloat();
     if (ui->X_OffsetSpinBox) ui->X_OffsetSpinBox->setValue(offbuildX);
@@ -199,7 +199,7 @@ void MainWindow::loadSettings()
 
 void MainWindow::saveSettings()
 {
-    QSettings settings("La Machinerie", "Powd3r");
+    QSettings settings("LaMachinerie", "Powd3r");
 
     QString sText = "true";
     settings.setValue("is_setting", sText);
@@ -248,13 +248,13 @@ void MainWindow::saveSettings()
     settings.setValue("build_x", buildX);
     if (ui->widthSpinBox) ui->widthSpinBox->setValue(buildX);
 
-    float buildY = (ui->heightSpinBox) ? ui->heightSpinBox->value() : 100.0f;
+    float buildY = (ui->depthSpinBox) ? ui->depthSpinBox->value() : 100.0f;
     settings.setValue("build_y", buildY);
-    if (ui->heightSpinBox) ui->heightSpinBox->setValue(buildY);
+    if (ui->depthSpinBox) ui->depthSpinBox->setValue(buildY);
 
-    float buildZ = (ui->depthSpinBox) ? ui->depthSpinBox->value() : 100.0f;
+    float buildZ = (ui->heightSpinBox) ? ui->heightSpinBox->value() : 150.0f;
     settings.setValue("build_z", buildZ);
-    if (ui->depthSpinBox) ui->depthSpinBox->setValue(buildZ);
+    if (ui->heightSpinBox) ui->heightSpinBox->setValue(buildZ);
 
     float offbuildX = (ui->X_OffsetSpinBox) ? ui->X_OffsetSpinBox->value() : -110.0f;
     settings.setValue("offbuild_x", offbuildX);
@@ -271,7 +271,7 @@ void MainWindow::saveSettings()
 
 
 void MainWindow::resetSettings(){
-    QSettings settings("Machinerie", "Powd3r");
+    QSettings settings("LaMachinerie", "Powd3r");
     settings.clear();
 }
 
@@ -451,7 +451,7 @@ void MainWindow::on_sliceButton_clicked()
 
         ui->progressLabel->setText("Traitements des polygon...");
 
-        triMeshSlicer(ui->openGLModel->get(ui->openGLModel->getSelected()), *lines, ui->layerHeightSpinBox->value(), ui->progressBar);
+        triMeshSlicer(ui->openGLModel->getModels(), *lines, ui->layerHeightSpinBox->value(), ui->progressBar);
 
         //generate slice from lines
         ui->progressLabel->setText("Géneration des tranches...");
@@ -671,8 +671,26 @@ void MainWindow::upddateLineNumber(){
     //
 }
 
-
-void MainWindow::on_gcode_textChanged()
+void MainWindow::on_actionLoadDefaultSetting_triggered()
 {
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Attention", "Vous allez perdre vos paramètres machine. Voulez vous continuez ?",
+                                  QMessageBox::Yes|QMessageBox::No);
 
+    if (reply == QMessageBox::Yes)
+        loadDefault();
+        saveSettings();
+        loadSettings();
+}
+
+void MainWindow::on_actionCleanSettings_triggered()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Attention", "Vous allez perdre vos paramètres machine. Voulez vous continuez ?",
+                                  QMessageBox::Yes|QMessageBox::No);
+
+    if (reply == QMessageBox::Yes)
+        resetSettings();
+        saveSettings();
+        loadSettings();
 }

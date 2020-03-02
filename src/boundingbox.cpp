@@ -22,6 +22,7 @@ void BoundingBox::calculate(Mesh *mdlPtr){
 
     Mesh newMesh = prepareMesh(*mdlPtr);
 
+    _center = mdlPtr->getPosition();
     _bottomLeft = Vec3( 999999, 999999, 999999);
     _upperRight = Vec3(-999999,-999999,-999999);
 
@@ -47,9 +48,10 @@ void BoundingBox::calculate(Mesh *mdlPtr){
     }
 }
 
-BoundingBox::BoundingBox(Vec3 ur, Vec3 bl){
+BoundingBox::BoundingBox(Vec3 ur, Vec3 bl, Vec3 center){
     _upperRight = ur;
     _bottomLeft = bl;
+    _center = center;
 }
 
 Vec3 BoundingBox::getSize(){
@@ -59,6 +61,8 @@ Vec3 BoundingBox::getSize(){
 }
 
 void BoundingBox::draw(){
+    glTranslatef(_center.x, _center.y, _center.z);
+
     glRotatef(90, 1, 0, 0); //mê !
 
     float HALF_GRID_X = getSize().y/2;

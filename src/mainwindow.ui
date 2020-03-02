@@ -23,7 +23,7 @@
    <string>Powd3r</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+   <iconset>
     <normaloff>:/ressources/main.png</normaloff>:/ressources/main.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -86,7 +86,7 @@
       </property>
       <widget class="QWidget" name="mainTab">
        <attribute name="icon">
-        <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+        <iconset>
          <normaloff>:/ressources/frontview.png</normaloff>:/ressources/frontview.png</iconset>
        </attribute>
        <attribute name="title">
@@ -212,6 +212,7 @@
                 </property>
                 <property name="font">
                  <font>
+                  <family>Century Gothic</family>
                   <pointsize>10</pointsize>
                  </font>
                 </property>
@@ -219,7 +220,7 @@
                  <string> Ajouter</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset>
                   <normaloff>:/ressources/add.png</normaloff>:/ressources/add.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -263,7 +264,7 @@
                  <string> Dupliquer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset>
                   <normaloff>:/ressources/copy.png</normaloff>:/ressources/copy.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -313,7 +314,7 @@
                  <string> Déplacer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset>
                   <normaloff>:/ressources/move.png</normaloff>:/ressources/move.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -363,7 +364,7 @@
                  <string> Echelle</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset>
                   <normaloff>:/ressources/scale.png</normaloff>:/ressources/scale.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -413,7 +414,7 @@
                  <string> Orbite</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset>
                   <normaloff>:/ressources/rotate.png</normaloff>:/ressources/rotate.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -454,7 +455,7 @@
                  <string> Centrer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset>
                   <normaloff>:/ressources/coordinate.png</normaloff>:/ressources/coordinate.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -504,7 +505,7 @@
                  <string>Supprimer</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+                 <iconset>
                   <normaloff>:/ressources/delete.png</normaloff>:/ressources/delete.png</iconset>
                 </property>
                 <property name="iconSize">
@@ -1040,7 +1041,7 @@
               <string>Trancher</string>
              </property>
              <property name="icon">
-              <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+              <iconset>
                <normaloff>:/ressources/slice.png</normaloff>:/ressources/slice.png</iconset>
              </property>
              <property name="iconSize">
@@ -1142,7 +1143,7 @@
       </widget>
       <widget class="QWidget" name="sliceTab">
        <attribute name="icon">
-        <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+        <iconset>
          <normaloff>:/ressources/slice.png</normaloff>:/ressources/slice.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1235,7 +1236,7 @@
       </widget>
       <widget class="QWidget" name="toolpathTab">
        <attribute name="icon">
-        <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+        <iconset>
          <normaloff>:/ressources/main.png</normaloff>:/ressources/main.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1331,7 +1332,7 @@
       </widget>
       <widget class="QWidget" name="GcodeTab">
        <attribute name="icon">
-        <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+        <iconset>
          <normaloff>:/ressources/copy.png</normaloff>:/ressources/copy.png</iconset>
        </attribute>
        <attribute name="title">
@@ -1737,7 +1738,7 @@ p, li { white-space: pre-wrap; }
       </widget>
       <widget class="QWidget" name="parameterTab">
        <attribute name="icon">
-        <iconset resource="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc">
+        <iconset>
          <normaloff>:/ressources/settings.png</normaloff>:/ressources/settings.png</iconset>
        </attribute>
        <attribute name="title">
@@ -2083,7 +2084,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1322</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="File">
@@ -2095,6 +2096,8 @@ p, li { white-space: pre-wrap; }
       <string>Préférences</string>
      </property>
      <addaction name="actionShowBoundaries"/>
+     <addaction name="actionCleanSettings"/>
+     <addaction name="actionLoadDefaultSetting"/>
     </widget>
     <addaction name="separator"/>
     <addaction name="actionImporter"/>
@@ -2133,27 +2136,35 @@ p, li { white-space: pre-wrap; }
     <string>Afficher les limites</string>
    </property>
   </action>
+  <action name="actionCleanSettings">
+   <property name="text">
+    <string>Nettoyer les paramètres</string>
+   </property>
+  </action>
+  <action name="actionLoadDefaultSetting">
+   <property name="text">
+    <string>Paramètres par défaut</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
    <class>GLModel</class>
    <extends>QOpenGLWidget</extends>
-   <header>glModel.h</header>
+   <header>src/glModel.h</header>
   </customwidget>
   <customwidget>
    <class>GL2D</class>
    <extends>QOpenGLWidget</extends>
-   <header>gl2d.h</header>
+   <header>src/glSlice.h</header>
   </customwidget>
   <customwidget>
    <class>GLPath</class>
    <extends>QOpenGLWidget</extends>
-   <header>glPath.h</header>
+   <header>src/glPath.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../build-Powd3r-Desktop_Qt_5_13_0_MSVC2017_32bit-Debug/debug/qmake_qmake_immediate.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

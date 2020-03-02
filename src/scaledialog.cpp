@@ -39,6 +39,12 @@ void ScaleDialog::on_applyButton_clicked()
         mdlPtr->setScale(scl3D);
     }
 
+    if(ui->stickOnPlate->isChecked()){
+        mdlPtr->updateBB();
+        Vec3 newPos(mdlPtr->getPosition());
+        newPos.z = (mdlPtr->getBBSize().z/2);
+        mdlPtr->setPosition(newPos);
+    }
     mdlPtr->applyChange();
     mw->updateList();
     this->close();

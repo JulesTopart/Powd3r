@@ -221,8 +221,6 @@ void GLModel::timeOutSlot()
 }
 
 void GLModel::loadModel(Mesh *mdl){
-
-    mdl->normalize();
     mdl->applyChange();
     models.push_back(*mdl);
     models[models.size() - 1].setId(models.size() - 1);

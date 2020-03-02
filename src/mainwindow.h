@@ -32,9 +32,10 @@ public:
     void generateGcode          ();
     void upddateLineNumber      ();
 
-    void loadDefault ();
-    void loadSettings();
-    void saveSettings();
+    void loadDefault  ();
+    void loadSettings ();
+    void saveSettings ();
+    void resetSettings();
 
     void closeEvent             (QCloseEvent *event);
     void reject();
@@ -83,7 +84,9 @@ private slots:
 
     void on_Z_OffsetSpinBox_valueChanged(double arg1);
 
-    void on_gcode_textChanged();
+    void on_actionLoadDefaultSetting_triggered();
+
+    void on_actionCleanSettings_triggered();
 
 private:
     Ui::MainWindow *ui;

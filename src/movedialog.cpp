@@ -31,6 +31,13 @@ void moveDialog::on_validateButton_clicked()
 {
     QVector3D pos(ui->XSpinBox->value(), ui->YSpinBox->value(), ui->ZSpinBox->value());
     mdlPtr->setPosition(pos);
+
+    if(ui->stickOnPlate->isChecked()){
+        mdlPtr->updateBB();
+        Vec3 newPos(mdlPtr->getPosition());
+        newPos.z = (mdlPtr->getBBSize().z/2);
+        mdlPtr->setPosition(newPos);
+    }
     mdlPtr->applyChange();
     this->close();
     delete this;

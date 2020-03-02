@@ -34,7 +34,7 @@ class BoundingBox{
 public:
     BoundingBox ();
     BoundingBox(Mesh *mdlPtr);
-    BoundingBox (Vec3 ur, Vec3 bl);
+    BoundingBox (Vec3 ur, Vec3 bl, Vec3 _center);
 
     void calculate(Mesh *mdlPtr);
 
@@ -142,7 +142,7 @@ Mesh        parseBinary         (const std::string& stl_path, QProgressBar &pBar
 
 
 //Mesh prepareMesh(Mesh);
-void triMeshSlicer( const Mesh       *meshPtr, // the const input mesh
+void triMeshSlicer( QVector<Mesh>    multimesh, // the const input mesh
                     QVector<Lines2D> &slicesWithLineSegments,
                     float            sliceSize,
                     QProgressBar     *p);
