@@ -32,6 +32,8 @@ public:
     void generateGcode          ();
     void upddateLineNumber      ();
 
+    bool showBoundaries();
+
     void loadDefault  ();
     void loadSettings ();
     void saveSettings ();
@@ -87,6 +89,12 @@ private slots:
     void on_actionLoadDefaultSetting_triggered();
 
     void on_actionCleanSettings_triggered();
+
+    void on_saveSetting_pressed();
+
+    void on_defaultSetting_pressed();
+
+    void on_actionBoundaries_stateChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;

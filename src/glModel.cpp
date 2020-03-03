@@ -71,9 +71,11 @@ void GLModel::paintGL(){
 
     int index(0);
     for(QVector<Mesh>::Iterator model = models.begin(); model != models.end(); model ++, index++){
-        glPushMatrix();
-        model->drawBB();
-        glPopMatrix();
+        if(showBoundaries){
+            glPushMatrix();
+            model->drawBB();
+            glPopMatrix();
+        }
 
         glPushMatrix();
         if(index == selectedModel) glColor3f(1,0.8,0.0);

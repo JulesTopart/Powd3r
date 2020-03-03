@@ -142,6 +142,9 @@
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -1927,7 +1930,7 @@ p, li { white-space: pre-wrap; }
           <x>460</x>
           <y>0</y>
           <width>330</width>
-          <height>169</height>
+          <height>146</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_3">
@@ -2073,6 +2076,75 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>130</y>
+          <width>441</width>
+          <height>161</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_11">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_10">
+           <item>
+            <widget class="QCheckBox" name="actionBoundaries">
+             <property name="text">
+              <string>Show Bounding Box</string>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+             <property name="tristate">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBoxGenerateLineNumber">
+             <property name="text">
+              <string>Generate line number</string>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <item>
+            <widget class="QPushButton" name="saveSetting">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Save Settings</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="defaultSetting">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Default Setting</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
       </widget>
      </widget>
     </item>
@@ -2091,18 +2163,17 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Fichiers</string>
     </property>
-    <widget class="QMenu" name="menuPr_f_rences">
+    <widget class="QMenu" name="menuCustom">
      <property name="title">
       <string>Préférences</string>
      </property>
-     <addaction name="actionShowBoundaries"/>
      <addaction name="actionCleanSettings"/>
      <addaction name="actionLoadDefaultSetting"/>
     </widget>
     <addaction name="separator"/>
     <addaction name="actionImporter"/>
     <addaction name="separator"/>
-    <addaction name="menuPr_f_rences"/>
+    <addaction name="menuCustom"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
@@ -2126,14 +2197,6 @@ p, li { white-space: pre-wrap; }
   <action name="actionImporter">
    <property name="text">
     <string>Importer</string>
-   </property>
-  </action>
-  <action name="actionShowBoundaries">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Afficher les limites</string>
    </property>
   </action>
   <action name="actionCleanSettings">

@@ -112,6 +112,7 @@ void MainWindow::loadDefault(){
     ui->openGLModel->plateDim.setX(100);
     ui->openGLModel->plateDim.setY(100);
     ui->openGLModel->plateDim.setZ(150);
+    ui->openGLModel->toggleBoundaries(ui->actionBoundaries->isChecked());
 
     ui->openGLSlice->originOffset.setX(-100);
     ui->openGLSlice->originOffset.setY(10);
@@ -122,7 +123,11 @@ void MainWindow::loadDefault(){
     ui->openGLToolpath->originOffset.setY(10);
     ui->openGLToolpath->plateDim.setX(100);
     ui->openGLToolpath->plateDim.setY(100);
+
+    ui->checkBoxGenerateLineNumber->setCheckState(Qt::Unchecked);
+    ui->actionBoundaries->setCheckState(Qt::Checked);
 }
+
 
 void MainWindow::loadSettings()
 {
@@ -178,6 +183,19 @@ void MainWindow::loadSettings()
 
     float offbuildZ = settings.value("offbuild_z", "").toFloat();
     if (ui->Z_OffsetSpinBox) ui->Z_OffsetSpinBox->setValue(offbuildZ);
+
+    bool showBound = settings.value("showBound", "").toBool();
+    if(showBound >= 1)
+        ui->actionBoundaries->setCheckState(Qt::Checked);
+    else
+        ui->actionBoundaries->setCheckState(Qt::Unchecked);
+    ui->openGLModel->toggleBoundaries(ui->actionBoundaries->checkState() > 1);
+
+    int genLine = settings.value("genLine", "").toInt();
+    if(genLine >= 1)
+        ui->checkBoxGenerateLineNumber->setCheckState(Qt::Checked);
+    else
+        ui->checkBoxGenerateLineNumber->setCheckState(Qt::Unchecked);
 
     ui->openGLModel->originOffset.setX(offbuildX);
     ui->openGLModel->originOffset.setY(offbuildY);
@@ -267,6 +285,12 @@ void MainWindow::saveSettings()
     float offbuildZ = (ui->Z_OffsetSpinBox) ? ui->Z_OffsetSpinBox->value() : 0.0f;
     settings.setValue("offbuild_z", offbuildZ);
     if (ui->Z_OffsetSpinBox) ui->Z_OffsetSpinBox->setValue(offbuildZ);
+
+    int showBound = (ui->actionBoundaries) ? ui->actionBoundaries->isChecked() : 2;
+    settings.setValue("showBound", showBound);
+
+    int genLine = (ui->checkBoxGenerateLineNumber) ? ui->checkBoxGenerateLineNumber->isChecked() : 0;
+    settings.setValue("genLine", genLine);
 }
 
 
@@ -552,7 +576,7 @@ void MainWindow::generateGcode(){
          ui->gcodePBar->setValue(100);
          upddateLineNumber();
     }else{
-        //ui->progressLabel->setText("Sélectionnez un modèle valide");
+        ui->progressLabel->setText("Sélectionnez un modèle valide");
     }
     this->setCursor(QCursor(Qt::ArrowCursor));
  }
@@ -661,15 +685,25 @@ void MainWindow::on_Z_OffsetSpinBox_valueChanged(double arg)
 
 void MainWindow::upddateLineNumber(){
     ui->lineNumber->clear();
-    int nLine = ui->gcode->document()->blockCount();
-    QString numbers = "";
-    for(int i = 0; i < nLine; i++){
-        numbers += QString::number(i);
-        numbers += '\n';
+
+    if(ui->checkBoxGenerateLineNumber->isChecked()){
+        ui->gcodePBar->setMaximum(100);
+        ui->gcodePBar->setValue(0);
+
+        int nLine = ui->gcode->document()->blockCount();
+        QString numbers = "";
+        for(int i = 0; i < nLine; i++){
+            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
+            numbers += QString::number(i);
+            numbers += '\n';
+            ui->gcodePBar->setValue(float(float(i) / float(nLine)) * 100);
+        }
+
+        ui->gcodePBar->setValue(100);
+        ui->lineNumber->append(numbers);
     }
-    ui->lineNumber->append(numbers);
-    //
 }
+
 
 void MainWindow::on_actionLoadDefaultSetting_triggered()
 {
@@ -693,4 +727,23 @@ void MainWindow::on_actionCleanSettings_triggered()
         resetSettings();
         saveSettings();
         loadSettings();
+}
+
+void MainWindow::on_saveSetting_pressed()
+{
+    saveSettings();
+}
+
+void MainWindow::on_defaultSetting_pressed()
+{
+    on_actionLoadDefaultSetting_triggered();
+}
+
+void MainWindow::on_actionBoundaries_stateChanged(int i)
+{
+    bool state = false;
+    if(i == 2) state = true;
+    ui->openGLModel->toggleBoundaries(state);
+    if(state)ui->actionBoundaries->setCheckState(Qt::Checked);
+    else ui->actionBoundaries->setCheckState(Qt::Unchecked);
 }

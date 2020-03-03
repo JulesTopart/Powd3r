@@ -26,6 +26,8 @@ public:
     void select(int i){ selectedModel = i;}
     int getSelected(){ return this->selectedModel;}
 
+    void toggleBoundaries(boolean state){ showBoundaries = state;}
+
     void TopView();
     void BottomView();
     void FrontView();
@@ -101,6 +103,8 @@ private:
 
     GLfloat
     selectedEmission[4] = { 1.0, 1.0, 1.0, 1.0 };
+
+    boolean showBoundaries = false;
 };
 
 #endif // GLWIDGET_H
