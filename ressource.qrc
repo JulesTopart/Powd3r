@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/new/assets">
+        <file>assets/add.png</file>
+        <file>assets/coordinate.png</file>
+        <file>assets/copy.png</file>
+        <file>assets/delete.png</file>
+        <file>assets/frontview.png</file>
+        <file>assets/main.png</file>
+        <file>assets/move.png</file>
+        <file>assets/remove.png</file>
+        <file>assets/rotate.png</file>
+        <file>assets/scale.png</file>
+        <file>assets/settings.png</file>
+        <file>assets/slice.png</file>
+        <file>assets/save.png</file>
+    </qresource>
+</RCC>

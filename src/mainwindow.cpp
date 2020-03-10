@@ -598,32 +598,6 @@ void MainWindow::on_verticalSlider2_valueChanged(int value)
 }
 
 
-
-void MainWindow::on_gcodeExportButton_clicked()
-{
-    QString fileName = QFileDialog::getSaveFileName(this,
-            tr("Export Gcode"), "",
-            tr("GCode (*.gcode);;All Files (*)"));
-
-    if (fileName.isEmpty())
-        return;
-    else {
-        QFile file(fileName);
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
-            QMessageBox::information(this, tr("Unable to open file"),
-                file.errorString());
-            return;
-        }
-
-
-        QTextStream out(&file);
-        out << this->ui->gcode->toPlainText();
-
-
-        file.close();
-    }
-}
-
 void MainWindow::on_gcodeGenButton_clicked()
 {
     generateGcode();
@@ -746,4 +720,29 @@ void MainWindow::on_actionBoundaries_stateChanged(int i)
     ui->openGLModel->toggleBoundaries(state);
     if(state)ui->actionBoundaries->setCheckState(Qt::Checked);
     else ui->actionBoundaries->setCheckState(Qt::Unchecked);
+}
+
+void MainWindow::on_gcodeExportButton_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this,
+            tr("Export Gcode"), "",
+            tr("GCode (*.gcode);;All Files (*)"));
+
+    if (fileName.isEmpty())
+        return;
+    else {
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
+            QMessageBox::information(this, tr("Unable to open file"),
+                file.errorString());
+            return;
+        }
+
+
+        QTextStream out(&file);
+        out << this->ui->gcode->toPlainText();
+
+
+        file.close();
+    }
 }

@@ -25,12 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        main.cpp \
         src/boundingbox.cpp \
         src/geometry.cpp \
         src/glModel.cpp \
         src/glPath.cpp \
         src/glSlice.cpp \
-        src/main.cpp \
         src/mainwindow.cpp \
         src/mesh.cpp \
         src/meshloader.cpp \
@@ -53,42 +53,18 @@ HEADERS += \
 
 
 FORMS += \
-    src/mainwindow.ui \
-    src/movedialog.ui \
-    src/rotdialog.ui \
-    src/scaledialog.ui
+    ui/mainwindow.ui \
+    ui/movedialog.ui \
+    ui/rotdialog.ui \
+    ui/scaledialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-RESOURCES = \
-    ressources/coordinate.png \
-    ressources/copy.png \
-    ressources/delete.png \
-    ressources/frontview.png \
-    ressources/move.png \
-    ressources/remove.png \
-    ressources/rotate.png \
-    ressources/scale.png \
-    ressources/settings.png \
-    ressources/slice.png \
-    ressources/add.png \
-    ressources/main.png
+RESOURCES = ressource.qrc
 
 DISTFILES += \
     .gitignore \
-    README.md \
-    ressources/coordinate.png \
-    ressources/copy.png \
-    ressources/delete.png \
-    ressources/frontview.png \
-    ressources/move.png \
-    ressources/remove.png \
-    ressources/rotate.png \
-    ressources/scale.png \
-    ressources/settings.png \
-    ressources/slice.png \
-    ressources/add.png \
-    ressources/main.png
+    README.md

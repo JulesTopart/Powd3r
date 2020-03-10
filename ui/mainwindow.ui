@@ -223,8 +223,8 @@
                  <string> Ajouter</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>:/ressources/add.png</normaloff>:/ressources/add.png</iconset>
+                 <iconset resource="../ressource.qrc">
+                  <normaloff>:/new/assets/assets/add.png</normaloff>:/new/assets/assets/add.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -267,8 +267,8 @@
                  <string> Dupliquer</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>:/ressources/copy.png</normaloff>:/ressources/copy.png</iconset>
+                 <iconset resource="../ressource.qrc">
+                  <normaloff>:/new/assets/assets/copy.png</normaloff>:/new/assets/assets/copy.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -317,8 +317,8 @@
                  <string> Déplacer</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>:/ressources/move.png</normaloff>:/ressources/move.png</iconset>
+                 <iconset resource="../ressource.qrc">
+                  <normaloff>:/new/assets/assets/move.png</normaloff>:/new/assets/assets/move.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -367,8 +367,8 @@
                  <string> Echelle</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>:/ressources/scale.png</normaloff>:/ressources/scale.png</iconset>
+                 <iconset resource="../ressource.qrc">
+                  <normaloff>:/new/assets/assets/scale.png</normaloff>:/new/assets/assets/scale.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -417,8 +417,8 @@
                  <string> Orbite</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>:/ressources/rotate.png</normaloff>:/ressources/rotate.png</iconset>
+                 <iconset resource="../ressource.qrc">
+                  <normaloff>:/new/assets/assets/rotate.png</normaloff>:/new/assets/assets/rotate.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -458,8 +458,8 @@
                  <string> Centrer</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>:/ressources/coordinate.png</normaloff>:/ressources/coordinate.png</iconset>
+                 <iconset resource="../ressource.qrc">
+                  <normaloff>:/new/assets/assets/coordinate.png</normaloff>:/new/assets/assets/coordinate.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -508,14 +508,23 @@
                  <string>Supprimer</string>
                 </property>
                 <property name="icon">
-                 <iconset>
-                  <normaloff>:/ressources/delete.png</normaloff>:/ressources/delete.png</iconset>
+                 <iconset resource="../ressource.qrc">
+                  <normaloff>:/new/assets/assets/remove.png</normaloff>:/new/assets/assets/remove.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
                   <width>23</width>
                   <height>23</height>
                  </size>
+                </property>
+                <property name="checkable">
+                 <bool>false</bool>
+                </property>
+                <property name="checked">
+                 <bool>false</bool>
+                </property>
+                <property name="autoDefault">
+                 <bool>false</bool>
                 </property>
                 <property name="default">
                  <bool>false</bool>
@@ -1044,8 +1053,8 @@
               <string>Trancher</string>
              </property>
              <property name="icon">
-              <iconset>
-               <normaloff>:/ressources/slice.png</normaloff>:/ressources/slice.png</iconset>
+              <iconset resource="../ressource.qrc">
+               <normaloff>:/new/assets/assets/slice.png</normaloff>:/new/assets/assets/slice.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1174,19 +1183,6 @@
               <width>200</width>
               <height>0</height>
              </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="coordLabel_1">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>XY: 0,0</string>
             </property>
            </widget>
           </item>
@@ -1719,7 +1715,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="gcodeExportButtonButton">
+              <widget class="QPushButton" name="gcodeExportButton">
                <property name="text">
                 <string>Exporter le Gcode</string>
                </property>
@@ -2126,6 +2122,15 @@ p, li { white-space: pre-wrap; }
              <property name="text">
               <string>Save Settings</string>
              </property>
+             <property name="iconSize">
+              <size>
+               <width>32</width>
+               <height>32</height>
+              </size>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
             </widget>
            </item>
            <item>
@@ -2228,6 +2233,8 @@ p, li { white-space: pre-wrap; }
    <header>src/glPath.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../ressource.qrc"/>
+ </resources>
  <connections/>
 </ui>
