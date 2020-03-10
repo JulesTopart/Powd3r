@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/new/assets">
+    <qresource prefix="/assets">
         <file>assets/add.png</file>
         <file>assets/coordinate.png</file>
         <file>assets/copy.png</file>

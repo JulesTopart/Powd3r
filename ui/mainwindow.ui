@@ -86,8 +86,8 @@
       </property>
       <widget class="QWidget" name="mainTab">
        <attribute name="icon">
-        <iconset>
-         <normaloff>:/ressources/frontview.png</normaloff>:/ressources/frontview.png</iconset>
+        <iconset resource="../ressource.qrc">
+         <normaloff>:/assets/assets/frontview.png</normaloff>:/assets/assets/frontview.png</iconset>
        </attribute>
        <attribute name="title">
         <string>3D Object</string>
@@ -224,7 +224,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../ressource.qrc">
-                  <normaloff>:/new/assets/assets/add.png</normaloff>:/new/assets/assets/add.png</iconset>
+                  <normaloff>:/assets/assets/add.png</normaloff>:/assets/assets/add.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -268,7 +268,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../ressource.qrc">
-                  <normaloff>:/new/assets/assets/copy.png</normaloff>:/new/assets/assets/copy.png</iconset>
+                  <normaloff>:/assets/assets/copy.png</normaloff>:/assets/assets/copy.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -318,7 +318,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../ressource.qrc">
-                  <normaloff>:/new/assets/assets/move.png</normaloff>:/new/assets/assets/move.png</iconset>
+                  <normaloff>:/assets/assets/move.png</normaloff>:/assets/assets/move.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -368,7 +368,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../ressource.qrc">
-                  <normaloff>:/new/assets/assets/scale.png</normaloff>:/new/assets/assets/scale.png</iconset>
+                  <normaloff>:/assets/assets/scale.png</normaloff>:/assets/assets/scale.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -418,7 +418,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../ressource.qrc">
-                  <normaloff>:/new/assets/assets/rotate.png</normaloff>:/new/assets/assets/rotate.png</iconset>
+                  <normaloff>:/assets/assets/rotate.png</normaloff>:/assets/assets/rotate.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -459,7 +459,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../ressource.qrc">
-                  <normaloff>:/new/assets/assets/coordinate.png</normaloff>:/new/assets/assets/coordinate.png</iconset>
+                  <normaloff>:/assets/assets/coordinate.png</normaloff>:/assets/assets/coordinate.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -509,7 +509,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../ressource.qrc">
-                  <normaloff>:/new/assets/assets/remove.png</normaloff>:/new/assets/assets/remove.png</iconset>
+                  <normaloff>:/assets/assets/remove.png</normaloff>:/assets/assets/remove.png</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -1054,7 +1054,7 @@
              </property>
              <property name="icon">
               <iconset resource="../ressource.qrc">
-               <normaloff>:/new/assets/assets/slice.png</normaloff>:/new/assets/assets/slice.png</iconset>
+               <normaloff>:/assets/assets/slice.png</normaloff>:/assets/assets/slice.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -1155,8 +1155,8 @@
       </widget>
       <widget class="QWidget" name="sliceTab">
        <attribute name="icon">
-        <iconset>
-         <normaloff>:/ressources/slice.png</normaloff>:/ressources/slice.png</iconset>
+        <iconset resource="../ressource.qrc">
+         <normaloff>:/assets/assets/slice.png</normaloff>:/assets/assets/slice.png</iconset>
        </attribute>
        <attribute name="title">
         <string>2D Slice</string>
@@ -1235,8 +1235,8 @@
       </widget>
       <widget class="QWidget" name="toolpathTab">
        <attribute name="icon">
-        <iconset>
-         <normaloff>:/ressources/main.png</normaloff>:/ressources/main.png</iconset>
+        <iconset resource="../ressource.qrc">
+         <normaloff>:/assets/assets/coordinate.png</normaloff>:/assets/assets/coordinate.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Toolpath</string>
@@ -1331,8 +1331,8 @@
       </widget>
       <widget class="QWidget" name="GcodeTab">
        <attribute name="icon">
-        <iconset>
-         <normaloff>:/ressources/copy.png</normaloff>:/ressources/copy.png</iconset>
+        <iconset resource="../ressource.qrc">
+         <normaloff>:/assets/assets/copy.png</normaloff>:/assets/assets/copy.png</iconset>
        </attribute>
        <attribute name="title">
         <string>G-Code</string>
@@ -1737,8 +1737,8 @@ p, li { white-space: pre-wrap; }
       </widget>
       <widget class="QWidget" name="parameterTab">
        <attribute name="icon">
-        <iconset>
-         <normaloff>:/ressources/settings.png</normaloff>:/ressources/settings.png</iconset>
+        <iconset resource="../ressource.qrc">
+         <normaloff>:/assets/assets/settings.png</normaloff>:/assets/assets/settings.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Paramètre</string>
