@@ -111,7 +111,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="GLModel" name="openGLModel">
+           <widget class="glModel" name="openGLModel">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -1171,7 +1171,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="GL2D" name="openGLSlice">
+           <widget class="glSlice" name="openGLSlice">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -1248,7 +1248,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="GLPath" name="openGLToolpath">
+           <widget class="glPath" name="openGLToolpath">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -1731,6 +1731,27 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
           </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="GcodeViewerTab">
+       <attribute name="icon">
+        <iconset resource="../ressource.qrc">
+         <normaloff>:/assets/assets/coordinate.png</normaloff>:/assets/assets/coordinate.png</iconset>
+       </attribute>
+       <attribute name="title">
+        <string>Gcode viewer</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout_12">
+        <item>
+         <widget class="glGcode" name="openGLViewer"/>
+        </item>
+        <item>
+         <widget class="QSlider" name="viewerVerticalSlider">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
          </widget>
         </item>
        </layout>
@@ -2218,19 +2239,24 @@ p, li { white-space: pre-wrap; }
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>GLModel</class>
+   <class>glModel</class>
    <extends>QOpenGLWidget</extends>
    <header>src/glModel.h</header>
   </customwidget>
   <customwidget>
-   <class>GL2D</class>
+   <class>glSlice</class>
    <extends>QOpenGLWidget</extends>
    <header>src/glSlice.h</header>
   </customwidget>
   <customwidget>
-   <class>GLPath</class>
+   <class>glPath</class>
    <extends>QOpenGLWidget</extends>
    <header>src/glPath.h</header>
+  </customwidget>
+  <customwidget>
+   <class>glGcode</class>
+   <extends>QOpenGLWidget</extends>
+   <header>src/glGcode.h</header>
   </customwidget>
  </customwidgets>
  <resources>

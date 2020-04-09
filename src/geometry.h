@@ -47,7 +47,7 @@ public:
     operator QVector3D() const; //Cast to QVector
 
 //-------------- Attribute --------------
-    float x,y,z;
+    double x,y,z;
 };
 
 typedef QVector<Vec3> Vec3Collection;
@@ -163,11 +163,11 @@ public:
     float   distance        () const;
     float   distanceToPoint (const Vec3 &vertex ) const;
     void    setNormal       (Vec3 normal        );
-    void    setDistance     (float distance     );
+    void    setDistance     (double distance    );
 
 protected:
     Vec3  mNormal;      // normalized Normal-Vector of the plane
-    float mDistance;    // shortest distance from plane to Origin
+    double mDistance;    // shortest distance from plane to Origin
 };
 
 

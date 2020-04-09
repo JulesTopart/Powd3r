@@ -105,8 +105,11 @@ void Mesh::applyChange(){
 }
 
 /************************************
- * Danger Zone this modify the mesh *
+ *    Danger Zone de magie noire    *
  ************************************/
+               /*||*/
+               /*||*/
+               /*||*/
                /*||*/
                /*||*/
                /*||*/
@@ -130,9 +133,6 @@ void Mesh::transform (QMatrix4x4 mat){
         triangle.transform(mat);
      }
 }
-
-
-
 
 
 //---------------------- Get Methods -------------------------
@@ -261,15 +261,16 @@ void triMeshSlicer(
 
     for (size_t i = 0; i < nSlices; ++i)
     {
-        p->setValue(float(float(i) / float(nSlices)) * 100); // start generating slices
+        p->setValue(double(double(i) / double(nSlices)) * 100); // start generating slices
         Lines2D linesegs;                                    // the linesegs vector for each slice
-        plane.setDistance(z0 + (float)i * sliceSize);        // position the plane according to slice index
+        plane.setDistance(z0 + (double)i * sliceSize);        // position the plane according to slice index
         foreach (Facets m, facets) {
             for (size_t t = 0; t < m.size(); ++t)
             {                                                    // iterate all mesh triangles
                 const Facet &triangle = m[t];                    // get a const handle to a triangle
                 Line2D ls;
-                if (0 == triangle.intersectPlane(plane, ls))
+                int result = triangle.intersectPlane(plane, ls);
+                if (0 == result)
                 {                                                // the plane does intersect the triangle
                     linesegs.push_back(ls);                      // push a new Line Segment object to this slice
                 }

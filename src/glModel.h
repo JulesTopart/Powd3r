@@ -6,12 +6,12 @@
 #include "GL/glu.h"
 #include "mesh.h"
 
-class GLModel : public QGLWidget
+class glModel : public QGLWidget
 {
     Q_OBJECT
 public:
-    GLModel(QWidget *parent = nullptr) ;
-    ~GLModel();
+    glModel(QWidget *parent = nullptr) ;
+    ~glModel();
 
     void loadModel(Mesh *mdl);
     void unloadModel(int id);

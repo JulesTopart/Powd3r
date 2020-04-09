@@ -96,6 +96,8 @@ private slots:
 
     void on_actionBoundaries_stateChanged(int arg1);
 
+    void on_viewerVerticalSlider_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     QString m_sSettingsFile;

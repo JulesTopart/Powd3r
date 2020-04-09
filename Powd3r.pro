@@ -37,7 +37,8 @@ SOURCES += \
         src/movedialog.cpp \
         src/rotdialog.cpp \
         src/scaledialog.cpp \
-        src/sweep.cpp
+        src/sweep.cpp \
+        src/glGcode.cpp
 
 HEADERS += \
         src/geometry.h \
@@ -49,8 +50,8 @@ HEADERS += \
         src/movedialog.h \
         src/rotdialog.h \
         src/scaledialog.h \
-        src/sweep.h
-
+        src/sweep.h \
+        src/glGcode.h
 
 FORMS += \
     ui/mainwindow.ui \

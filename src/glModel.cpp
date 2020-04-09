@@ -1,12 +1,12 @@
 #include "glModel.h"
 
 
-GLModel::~GLModel()
+glModel::~glModel()
 {
 
 }
 
-GLModel::GLModel(QWidget *parent) :
+glModel::glModel(QWidget *parent) :
     QGLWidget(parent)
 {
     int seconde = 1000; // 1 seconde = 1000 ms
@@ -16,7 +16,7 @@ GLModel::GLModel(QWidget *parent) :
     t_Timer->start( timerInterval );
 }
 
-void GLModel::initializeGL(){
+void glModel::initializeGL(){
 
     glClearColor(0.9f, 0.9f, 0.9f, 1);
     glClearDepth(1.0);
@@ -36,7 +36,7 @@ void GLModel::initializeGL(){
     glEnable(GL_LIGHT2);        // Enable Lighting
 }
 
-void GLModel::paintGL(){
+void glModel::paintGL(){
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -94,7 +94,7 @@ void GLModel::paintGL(){
     rotation += rotationSpeed;     // Add speed To rotation
 }
 
-void GLModel::drawGrid(QVector3D size)
+void glModel::drawGrid(QVector3D size)
 {
     float HALF_GRID_X = size.y()/2;
     float HALF_GRID_Y = size.x()/2;
@@ -143,7 +143,7 @@ void GLModel::drawGrid(QVector3D size)
     glEnd();
 }
 
-void GLModel::drawAxis(){
+void glModel::drawAxis(){
     glPushMatrix();
     glLineWidth(2.2);
     //glTranslatef(0.1f,0.1f,0.1f);
@@ -159,7 +159,7 @@ void GLModel::drawAxis(){
     glPopMatrix();
 }
 
-void GLModel::resizeGL(int width, int height){
+void glModel::resizeGL(int width, int height){
     if(height == 0)
         height = 1;
     glViewport(0, 0, width, height);
@@ -171,7 +171,7 @@ void GLModel::resizeGL(int width, int height){
 }
 
 
-void GLModel::keyPressEvent(QKeyEvent *keyEvent)
+void glModel::keyPressEvent(QKeyEvent *keyEvent)
 {
     switch(keyEvent->key())
     {
@@ -210,32 +210,32 @@ void GLModel::keyPressEvent(QKeyEvent *keyEvent)
 }
 
 
-void GLModel::wheelEvent( QWheelEvent *event){
+void glModel::wheelEvent( QWheelEvent *event){
     float t = event->angleDelta().y() * 0.0002f;
     if((this->scale + QVector3D(t,t,t)).length() >= 0.1) this->scale += QVector3D(t,t,t);
     event->accept();
 }
 
 
-void GLModel::timeOutSlot()
+void glModel::timeOutSlot()
 {
     updateGL();
 }
 
-void GLModel::loadModel(Mesh *mdl){
+void glModel::loadModel(Mesh *mdl){
     mdl->applyChange();
     models.push_back(*mdl);
     models[models.size() - 1].setId(models.size() - 1);
 }
 
-void GLModel::unloadModel(int id){
+void glModel::unloadModel(int id){
     models.remove(id);
     for(int i(0); i < models.size(); i++){
         models[i].setId(i);
     }
 }
 
-void GLModel::mousePressEvent(QMouseEvent *event){
+void glModel::mousePressEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
         leftMousePressed = true;
@@ -253,7 +253,7 @@ void GLModel::mousePressEvent(QMouseEvent *event){
     event->ignore();
 }
 
-void GLModel::mouseReleaseEvent(QMouseEvent *event){
+void glModel::mouseReleaseEvent(QMouseEvent *event){
     if (event->button() == Qt::LeftButton)
     {
         leftMousePressed = false;
@@ -269,7 +269,7 @@ void GLModel::mouseReleaseEvent(QMouseEvent *event){
     event->ignore();
 }
 
-void GLModel::mouseMoveEvent(QMouseEvent *event){
+void glModel::mouseMoveEvent(QMouseEvent *event){
     if (leftMousePressed)
     {
         // Mouse release position - mouse press position
@@ -305,20 +305,20 @@ void GLModel::mouseMoveEvent(QMouseEvent *event){
 
 
 
-void GLModel::timerEvent(QTimerEvent *)
+void glModel::timerEvent(QTimerEvent *)
 {
 
 }
 
 
 
-void GLModel::centerOnModel(int i){
+void glModel::centerOnModel(int i){
     QVector3D pos = models[i].getPosition();
     QVector3D bb  = models[i].getBBSize();
     position = pos + (bb / 2);
 }
 
-void GLModel::TopView()
+void glModel::TopView()
 {
     // TODO: Add your command handler code here
     position = QVector3D(0,0,-50);
@@ -326,14 +326,14 @@ void GLModel::TopView()
 
 }
 
-void GLModel::BottomView()
+void glModel::BottomView()
 {
     // TODO: Add your command handler code here
     position = QVector3D(0,0,-50);
     rotation = QVector3D(-90,0,0);
 }
 
-void GLModel::FrontView()
+void glModel::FrontView()
 {
     // TODO: Add your command handler code here
     position = QVector3D(0,-10,-50);
@@ -341,26 +341,26 @@ void GLModel::FrontView()
     scale    = QVector3D(0.5,0.5,0.5);
 }
 
-void GLModel::BackView()
+void glModel::BackView()
 {
     // TODO: Add your command handler code here
     position = QVector3D(0,0,-50);
     rotation = QVector3D(0,0,-180);
 }
 
-void GLModel::LeftView()
+void glModel::LeftView()
 {
     position = QVector3D(0,0,-50);
     rotation = QVector3D(0,0,-90);
 }
 
-void GLModel::RightView()
+void glModel::RightView()
 {
     position = QVector3D(0,0,-50);
     rotation = QVector3D(0,0,90);
 }
 
-void GLModel::AxonView()
+void glModel::AxonView()
 {
     position = QVector3D(0,0,-50);
     rotation = QVector3D(-45,0,-45);

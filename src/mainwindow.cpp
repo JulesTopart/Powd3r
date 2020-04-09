@@ -213,6 +213,13 @@ void MainWindow::loadSettings()
     ui->openGLToolpath->originOffset.setY(offbuildY);
     ui->openGLToolpath->plateDim.setX(buildX);
     ui->openGLToolpath->plateDim.setY(buildY);
+
+    ui->openGLViewer->originOffset.setX(offbuildX);
+    ui->openGLViewer->originOffset.setY(offbuildY);
+    ui->openGLViewer->originOffset.setZ(offbuildZ);
+    ui->openGLViewer->plateDim.setX(buildX);
+    ui->openGLViewer->plateDim.setY(buildY);
+    ui->openGLViewer->plateDim.setZ(buildZ);
 }
 
 void MainWindow::saveSettings()
@@ -494,6 +501,7 @@ void MainWindow::on_sliceButton_clicked()
         //ui->openGLSlice->getSlice()->remove(ui->openGLSlice->sliceCount() - 1);
         int nSlice = ui->openGLSlice->sliceCount();
         ui->verticalSlider->setMaximum(nSlice - 1);
+        ui->viewerVerticalSlider->setMaximum(nSlice - 1);
         ui->sliceCount->setText(QString::number(nSlice));
 
         //update Gui
@@ -575,6 +583,7 @@ void MainWindow::generateGcode(){
          ui->gcodePBar->setMaximum(100);
          ui->gcodePBar->setValue(100);
          upddateLineNumber();
+         ui->openGLViewer->generatePath(ui->gcode->toPlainText());
     }else{
         ui->progressLabel->setText("Sélectionnez un modèle valide");
     }
@@ -745,4 +754,11 @@ void MainWindow::on_gcodeExportButton_clicked()
 
         file.close();
     }
+}
+
+void MainWindow::on_viewerVerticalSlider_valueChanged(int value)
+{
+    ui->openGLViewer->selectSlice(value);
+    ui->zeroCount->setText(QString::number(value));
+    ui->viewerVerticalSlider->setValue(value);
 }

@@ -72,24 +72,18 @@ void glPath::paintGL(){
     glColor3f(0.3f,0.3f,0.28f);
     drawGrid(plateDim);
 
-
-    //Draw grid
-    //drawGrid(200);
     glColor3f(0.5,0.5,0.48f); //retablish default color
-
 
     if(activeSlice < _subLines.size() && _subLines.size() > 0){
         glBegin(GL_LINES);
 
         for(size_t i(0); i < _subLines[activeSlice].size(); i++){
-            if((i / nozzleCount) % 2 == 0) glColor3f(0.7f, 1, 0.7f);
-            else glColor3f(1, 0.7f, 0.7f);
+            glColor3f(0.7f, 1, 0.7f);
             glVertex3f(_subLines[activeSlice][i].A().x(), _subLines[activeSlice][i].A().y(), 0);
             glVertex3f(_subLines[activeSlice][i].B().x(), _subLines[activeSlice][i].B().y(), 0);
         }
         glEnd();
     }
-
 }
 
 void glPath::resizeGL(int width, int height){

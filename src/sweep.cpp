@@ -160,7 +160,7 @@ std::string NozzleAction::toGcode(bool dir, float xOffset, float inkQuantity) {
 
     float xPos = xOffset + this->length;
 
-    out += to_string_with_precision(xPos,5);
+    out += to_string_with_precision(xPos,6);
     out += " E";
     out += to_string_with_precision(length * inkQuantity, 3); /// length/float(dpiconst) ?
     out += " S" + std::to_string(code);
@@ -424,7 +424,7 @@ SweepCollection::generateSweeps(std::vector<Line2D> lines, short firstNozzle, sh
     float y = min;
     while(y <= max){
         nozzleLine.clear();
-        while(sortedLines[index][0].y() < y + (spacing / 2.0) && sortedLines[index][0].y() >= y - (spacing / 2.0)) {
+        while(sortedLines[index][0].y() < y + (spacing / 2.0f) && sortedLines[index][0].y() >= y - (spacing / 2.0f)) {
             nozzleLine.push(sortedLines[index]);
             index++;
             if (index >= sortedLines.size()) break;
@@ -458,14 +458,14 @@ SweepCollection::generateSweeps(std::vector<Line2D> lines, short firstNozzle, sh
         std::cout << std::endl << "New Sweep : " << "Min: " << sweep->getXMin() << " | Max: " << sweep->getXMax() << std::endl;
 #endif
         float curX = sweep->getXMin();
-        float nextX = sweep->getNextX(curX + spacing);
+        float nextX = sweep->getNextX(curX + spacing/2.0f);
 
         int lastCode = 0;
         while (curX != sweep->getXMax()) {
 #ifdef DEBUG_SWEEP
             std::cout << std::endl << " curX : " << curX << " | nextX : " << nextX;
 #endif
-            int code = sweep->arrayToCode(sweep->getbyX(curX + spacing));
+            int code = sweep->arrayToCode(sweep->getbyX(curX + spacing/2.0f));
             if (lastCode != code || sweep->sizeA() == 0) {
                 NozzleAction n = NozzleAction(curX, std::abs(nextX - curX), code, 96);
                 sweep->addNozzleAction(n);
@@ -480,7 +480,7 @@ SweepCollection::generateSweeps(std::vector<Line2D> lines, short firstNozzle, sh
             //while((curX - lastX) <= spacing && curX < sweep->getXMax()){
             //    curX = sweep->getNextX(curX);
             //}
-            nextX = sweep->getNextX(curX + spacing);
+            nextX = sweep->getNextX(curX + spacing/2.0f);
         }
     }
 

@@ -352,7 +352,7 @@ void    Plane::setNormal(Vec3 normal        ){
     mNormal = normal;
 }
 
-void    Plane::setDistance(float distance     ){
+void    Plane::setDistance(double distance     ){
     mDistance = distance;
 }
 
@@ -419,7 +419,7 @@ int Facet::intersectPlane(const Plane &plane, Line2D &ls) const
     size_t cntFront = 0, cntBack = 0;
     for (size_t j = 0; j < 3; ++j)
     {
-        float distance = plane.distanceToPoint(v[j]);
+        double distance = plane.distanceToPoint(v[j]);
         if (distance < 0)
             ++cntBack;
         else
