@@ -82,7 +82,7 @@ void MainWindow::loadDefault(){
 
     if (ui->ALGcode) ui->ALGcode->setPlainText(macro);
 
-    if (ui->layerHeightSpinBox) ui->layerHeightSpinBox->setValue(0.2);
+    if (ui->layerHeightSpinBox) ui->layerHeightSpinBox->setValue(0.3);
 
     if (ui->SpreadRateSpinBox) ui->SpreadRateSpinBox->setValue(1);
 
@@ -90,39 +90,46 @@ void MainWindow::loadDefault(){
 
     if (ui->lastNozzleSpinBox) ui->lastNozzleSpinBox->setValue(12);
 
-    if (ui->InkFlowSpinBox) ui->InkFlowSpinBox->setValue(100);
+    if (ui->InkFlowSpinBox) ui->InkFlowSpinBox->setValue(300);
 
-    if (ui->InkFlowSpinBox) ui->passSpinBox->setValue(1);
+    if (ui->InkFlowSpinBox) ui->passSpinBox->setValue(3);
 
-    if (ui->widthSpinBox) ui->widthSpinBox->setValue(100);
+    if (ui->widthSpinBox) ui->widthSpinBox->setValue(90);
 
-    if (ui->depthSpinBox) ui->depthSpinBox->setValue(100);
+    if (ui->depthSpinBox) ui->depthSpinBox->setValue(80);
 
-    if (ui->heightSpinBox) ui->heightSpinBox->setValue(150);
+    if (ui->heightSpinBox) ui->heightSpinBox->setValue(80);
 
-    if (ui->X_OffsetSpinBox) ui->X_OffsetSpinBox->setValue(-100);
+    if (ui->X_OffsetSpinBox) ui->X_OffsetSpinBox->setValue(0);
 
-    if (ui->Y_OffsetSpinBox) ui->Y_OffsetSpinBox->setValue(10);
+    if (ui->Y_OffsetSpinBox) ui->Y_OffsetSpinBox->setValue(-215);
 
     if (ui->Z_OffsetSpinBox) ui->Z_OffsetSpinBox->setValue(0);
 
-    ui->openGLModel->originOffset.setX(-100);
-    ui->openGLModel->originOffset.setY(10);
+    ui->openGLModel->originOffset.setX(0);
+    ui->openGLModel->originOffset.setY(-215);
     ui->openGLModel->originOffset.setZ(0);
-    ui->openGLModel->plateDim.setX(100);
-    ui->openGLModel->plateDim.setY(100);
-    ui->openGLModel->plateDim.setZ(150);
+    ui->openGLModel->plateDim.setX(90);
+    ui->openGLModel->plateDim.setY(80);
+    ui->openGLModel->plateDim.setZ(80);
     ui->openGLModel->toggleBoundaries(ui->actionBoundaries->isChecked());
 
-    ui->openGLSlice->originOffset.setX(-100);
-    ui->openGLSlice->originOffset.setY(10);
-    ui->openGLSlice->plateDim.setX(100);
-    ui->openGLSlice->plateDim.setY(100);
+    ui->openGLSlice->originOffset.setX(0);
+    ui->openGLSlice->originOffset.setY(-215);
+    ui->openGLSlice->plateDim.setX(90);
+    ui->openGLSlice->plateDim.setY(80);
 
-    ui->openGLToolpath->originOffset.setX(-100);
-    ui->openGLToolpath->originOffset.setY(10);
-    ui->openGLToolpath->plateDim.setX(100);
-    ui->openGLToolpath->plateDim.setY(100);
+    ui->openGLToolpath->originOffset.setX(0);
+    ui->openGLToolpath->originOffset.setY(-215);
+    ui->openGLToolpath->plateDim.setX(90);
+    ui->openGLToolpath->plateDim.setY(80);
+
+    ui->openGLViewer->originOffset.setX(0);
+    ui->openGLViewer->originOffset.setY(-215);
+    ui->openGLViewer->originOffset.setZ(0);
+    ui->openGLViewer->plateDim.setX(90);
+    ui->openGLViewer->plateDim.setY(80);
+    ui->openGLViewer->plateDim.setZ(80);
 
     ui->checkBoxGenerateLineNumber->setCheckState(Qt::Unchecked);
     ui->actionBoundaries->setCheckState(Qt::Checked);
@@ -245,11 +252,11 @@ void MainWindow::saveSettings()
     settings.setValue("start_gcode", sText);
     if (ui->SGcode) ui->SGcode->setPlainText(sText);
 
-    float slayerHeight = (ui->layerHeightSpinBox) ? ui->layerHeightSpinBox->value() : 0.2f;
+    double slayerHeight = (ui->layerHeightSpinBox) ? ui->layerHeightSpinBox->value() : 0.2f;
     settings.setValue("layer_height", slayerHeight);
     if (ui->layerHeightSpinBox) ui->layerHeightSpinBox->setValue(slayerHeight);
 
-    float sSpread_rate = (ui->SpreadRateSpinBox) ? ui->SpreadRateSpinBox->value() : 0.0f;
+    double sSpread_rate = (ui->SpreadRateSpinBox) ? ui->SpreadRateSpinBox->value() : 0.0f;
     settings.setValue("spread_rate", sSpread_rate);
     if (ui->SpreadRateSpinBox) ui->SpreadRateSpinBox->setValue(sSpread_rate);
 
@@ -261,35 +268,36 @@ void MainWindow::saveSettings()
     settings.setValue("last_nozzle", slastNozzle);
     if (ui->lastNozzleSpinBox) ui->lastNozzleSpinBox->setValue(slastNozzle);
 
-    float sInkflow = (ui->InkFlowSpinBox) ? ui->InkFlowSpinBox->value() : 100.0f;
+    double sInkflow = (ui->InkFlowSpinBox) ? ui->InkFlowSpinBox->value() : 100.0;
     settings.setValue("ink_flow", sInkflow);
-    if (ui->InkFlowSpinBox) ui->InkFlowSpinBox->setValue(sInkflow);
+    //if (ui->InkFlowSpinBox) ui->InkFlowSpinBox->setValue(sInkflow);
+    //qDebug() << sInkflow << "\n";
 
-    int pass_count = (ui->InkFlowSpinBox) ? ui->passSpinBox->value() : 1;
+    int pass_count = (ui->passSpinBox) ? ui->passSpinBox->value() : 1;
     settings.setValue("pass_count", pass_count);
-    if (ui->InkFlowSpinBox) ui->InkFlowSpinBox->setValue(pass_count);
+    if (ui->passSpinBox) ui->passSpinBox->setValue(pass_count);
 
-    float buildX = (ui->widthSpinBox) ? ui->widthSpinBox->value() : 100.0f;
+    double buildX = (ui->widthSpinBox) ? ui->widthSpinBox->value() : 100.0f;
     settings.setValue("build_x", buildX);
     if (ui->widthSpinBox) ui->widthSpinBox->setValue(buildX);
 
-    float buildY = (ui->depthSpinBox) ? ui->depthSpinBox->value() : 100.0f;
+    double buildY = (ui->depthSpinBox) ? ui->depthSpinBox->value() : 100.0f;
     settings.setValue("build_y", buildY);
     if (ui->depthSpinBox) ui->depthSpinBox->setValue(buildY);
 
-    float buildZ = (ui->heightSpinBox) ? ui->heightSpinBox->value() : 150.0f;
+    double buildZ = (ui->heightSpinBox) ? ui->heightSpinBox->value() : 150.0f;
     settings.setValue("build_z", buildZ);
     if (ui->heightSpinBox) ui->heightSpinBox->setValue(buildZ);
 
-    float offbuildX = (ui->X_OffsetSpinBox) ? ui->X_OffsetSpinBox->value() : -110.0f;
+    double offbuildX = (ui->X_OffsetSpinBox) ? ui->X_OffsetSpinBox->value() : -110.0f;
     settings.setValue("offbuild_x", offbuildX);
     if (ui->X_OffsetSpinBox) ui->X_OffsetSpinBox->setValue(offbuildX);
 
-    float offbuildY = (ui->Y_OffsetSpinBox) ? ui->Y_OffsetSpinBox->value() : 10.0f;
+    double offbuildY = (ui->Y_OffsetSpinBox) ? ui->Y_OffsetSpinBox->value() : 10.0f;
     settings.setValue("offbuild_y", offbuildY);
     if (ui->Y_OffsetSpinBox) ui->Y_OffsetSpinBox->setValue(offbuildY);
 
-    float offbuildZ = (ui->Z_OffsetSpinBox) ? ui->Z_OffsetSpinBox->value() : 0.0f;
+    double offbuildZ = (ui->Z_OffsetSpinBox) ? ui->Z_OffsetSpinBox->value() : 0.0f;
     settings.setValue("offbuild_z", offbuildZ);
     if (ui->Z_OffsetSpinBox) ui->Z_OffsetSpinBox->setValue(offbuildZ);
 

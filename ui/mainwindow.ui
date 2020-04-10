@@ -23,8 +23,8 @@
    <string>Powd3r</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>:/ressources/main.png</normaloff>:/ressources/main.png</iconset>
+   <iconset resource="../ressource.qrc">
+    <normaloff>:/assets/assets/raindrop.png</normaloff>:/assets/assets/raindrop.png</iconset>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
@@ -148,7 +148,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QTabWidget" name="tabWidget1">
+           <widget class="QFrame" name="frame1">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -161,381 +161,364 @@
               <pointsize>10</pointsize>
              </font>
             </property>
-            <property name="tabPosition">
-             <enum>QTabWidget::South</enum>
-            </property>
-            <property name="tabShape">
-             <enum>QTabWidget::Rounded</enum>
-            </property>
-            <property name="elideMode">
-             <enum>Qt::ElideNone</enum>
-            </property>
-            <property name="usesScrollButtons">
-             <bool>false</bool>
-            </property>
-            <property name="tabBarAutoHide">
-             <bool>true</bool>
-            </property>
-            <widget class="QWidget" name="tabWidgetPage1">
-             <attribute name="title">
-              <string/>
-             </attribute>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="sizeConstraint">
-               <enum>QLayout::SetDefaultConstraint</enum>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="addButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>130</width>
-                  <height>33</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>85</width>
-                  <height>33</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Century Gothic</family>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string> Ajouter</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../ressource.qrc">
-                  <normaloff>:/assets/assets/add.png</normaloff>:/assets/assets/add.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>23</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="duplicateButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>130</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>39</width>
-                  <height>33</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Century Gothic</family>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string> Dupliquer</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../ressource.qrc">
-                  <normaloff>:/assets/assets/copy.png</normaloff>:/assets/assets/copy.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>23</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="default">
-                 <bool>false</bool>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="moveButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>130</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>39</width>
-                  <height>33</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Century Gothic</family>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string>Déplacer</string>
-                </property>
-                <property name="text">
-                 <string> Déplacer</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../ressource.qrc">
-                  <normaloff>:/assets/assets/move.png</normaloff>:/assets/assets/move.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>23</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="default">
-                 <bool>false</bool>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="scaleButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>130</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>39</width>
-                  <height>33</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Century Gothic</family>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string>Echelle</string>
-                </property>
-                <property name="text">
-                 <string> Echelle</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../ressource.qrc">
-                  <normaloff>:/assets/assets/scale.png</normaloff>:/assets/assets/scale.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>23</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="default">
-                 <bool>false</bool>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="rotateButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>130</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>39</width>
-                  <height>33</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Century Gothic</family>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string>Tourner</string>
-                </property>
-                <property name="text">
-                 <string> Orbite</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../ressource.qrc">
-                  <normaloff>:/assets/assets/rotate.png</normaloff>:/assets/assets/rotate.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>23</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="default">
-                 <bool>false</bool>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="centerButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>130</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>39</width>
-                  <height>33</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Century Gothic</family>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string> Centrer</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../ressource.qrc">
-                  <normaloff>:/assets/assets/coordinate.png</normaloff>:/assets/assets/coordinate.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>23</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="default">
-                 <bool>false</bool>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="deleteButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>130</width>
-                  <height>25</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>57</width>
-                  <height>33</height>
-                 </size>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>Century Gothic</family>
-                  <pointsize>10</pointsize>
-                 </font>
-                </property>
-                <property name="toolTip">
-                 <string>Supprimer</string>
-                </property>
-                <property name="text">
-                 <string>Supprimer</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../ressource.qrc">
-                  <normaloff>:/assets/assets/remove.png</normaloff>:/assets/assets/remove.png</iconset>
-                </property>
-                <property name="iconSize">
-                 <size>
-                  <width>23</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="checkable">
-                 <bool>false</bool>
-                </property>
-                <property name="checked">
-                 <bool>false</bool>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
-                </property>
-                <property name="default">
-                 <bool>false</bool>
-                </property>
-                <property name="flat">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="sizeConstraint">
+              <enum>QLayout::SetDefaultConstraint</enum>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="addButton">
+               <property name="minimumSize">
+                <size>
+                 <width>130</width>
+                 <height>33</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>85</width>
+                 <height>33</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string> Ajouter</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../ressource.qrc">
+                 <normaloff>:/assets/assets/add.png</normaloff>:/assets/assets/add.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>23</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="default">
+                <bool>false</bool>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="duplicateButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>130</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>39</width>
+                 <height>33</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string> Dupliquer</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../ressource.qrc">
+                 <normaloff>:/assets/assets/copy.png</normaloff>:/assets/assets/copy.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>23</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="default">
+                <bool>false</bool>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="moveButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>130</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>39</width>
+                 <height>33</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Déplacer</string>
+               </property>
+               <property name="text">
+                <string> Déplacer</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../ressource.qrc">
+                 <normaloff>:/assets/assets/move.png</normaloff>:/assets/assets/move.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>23</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="default">
+                <bool>false</bool>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="scaleButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>130</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>39</width>
+                 <height>33</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Echelle</string>
+               </property>
+               <property name="text">
+                <string> Echelle</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../ressource.qrc">
+                 <normaloff>:/assets/assets/scale.png</normaloff>:/assets/assets/scale.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>23</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="default">
+                <bool>false</bool>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="rotateButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>130</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>39</width>
+                 <height>33</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Tourner</string>
+               </property>
+               <property name="text">
+                <string> Orbite</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../ressource.qrc">
+                 <normaloff>:/assets/assets/rotate.png</normaloff>:/assets/assets/rotate.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>23</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="default">
+                <bool>false</bool>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="centerButton">
+               <property name="minimumSize">
+                <size>
+                 <width>130</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>39</width>
+                 <height>33</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string> Centrer</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../ressource.qrc">
+                 <normaloff>:/assets/assets/coordinate.png</normaloff>:/assets/assets/coordinate.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>23</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="default">
+                <bool>false</bool>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="deleteButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>130</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>57</width>
+                 <height>33</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Century Gothic</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>Supprimer</string>
+               </property>
+               <property name="text">
+                <string>Supprimer</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../ressource.qrc">
+                 <normaloff>:/assets/assets/remove.png</normaloff>:/assets/assets/remove.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>23</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="checkable">
+                <bool>false</bool>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+               <property name="default">
+                <bool>false</bool>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
           <item>
@@ -745,6 +728,9 @@
                  <height>0</height>
                 </size>
                </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::PlusMinus</enum>
+               </property>
               </widget>
              </item>
              <item row="2" column="0">
@@ -799,6 +785,9 @@
              </item>
              <item row="4" column="1">
               <widget class="QSpinBox" name="passSpinBox">
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::PlusMinus</enum>
+               </property>
                <property name="minimum">
                 <number>1</number>
                </property>
@@ -915,6 +904,15 @@
                  <height>0</height>
                 </size>
                </property>
+               <property name="wrapping">
+                <bool>false</bool>
+               </property>
+               <property name="frame">
+                <bool>true</bool>
+               </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::PlusMinus</enum>
+               </property>
                <property name="suffix">
                 <string>%</string>
                </property>
@@ -981,6 +979,9 @@
                  <pointsize>10</pointsize>
                 </font>
                </property>
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::PlusMinus</enum>
+               </property>
                <property name="suffix">
                 <string> mm</string>
                </property>
@@ -989,6 +990,9 @@
                </property>
                <property name="maximum">
                 <double>2.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>0.050000000000000</double>
                </property>
                <property name="value">
                 <double>0.200000000000000</double>
@@ -1004,6 +1008,9 @@
              </item>
              <item row="3" column="1">
               <widget class="QDoubleSpinBox" name="sweepSpeedSpinBox">
+               <property name="buttonSymbols">
+                <enum>QAbstractSpinBox::PlusMinus</enum>
+               </property>
                <property name="suffix">
                 <string> mm/min</string>
                </property>

@@ -131,9 +131,6 @@ NozzleLine::calcMinMax() {
             if (line[1].x() < x_min) x_min = line[1].x();
             if (line[1].x() > x_max) x_max = line[1].x();
         }
-#ifdef DEBUG_SWEEP
-        std::cout << "Xmin : " << xmin << " | Xmax : " << xmax << std::endl;
-#endif
         xmin = x_min;
         xmax = x_max;
     }
@@ -275,18 +272,9 @@ Sweep::getbyX(float X) {
 int
 Sweep::arrayToCode(std::vector<bool> nozzleArray) {
     int out = 0;
-#ifdef DEBUG_SWEEP
-    std::cout << std::endl << "  [";
-#endif
     for (int i(firstNozzle); i < nozzleArray.size(); i++) {
         if (nozzleArray[i]) out += pow(2, i);
-#ifdef DEBUG_SWEEP
-        std::cout << nozzleArray[i] << ((i < nozzleArray.size() - 1) ? ":" : "]");
-#endif
     }
-#ifdef DEBUG_SWEEP
-    std::cout << std::endl << "  -> Out: " << out << std::endl;
-#endif
     return out;
 }
 
@@ -366,9 +354,6 @@ SweepCollection::SweepCollection() {
 std::string
 SweepCollection::toGcode(short nPass, QVector2D offset, float speed,float inkQuantity) {
     std::string out = "";
-#ifdef DEBUG_SWEEP
-    std::cout << std::endl << "Number of sweep : " << sweeps.size() << std::endl;
-#endif
     for (int i(0); i < sweeps.size(); i++) {
         for (int j(0); j < nPass; j++) {
             out += sweeps[i].toGcode(lastDir, &offset, speed, inkQuantity);
@@ -397,27 +382,18 @@ SweepCollection::generateSweeps(std::vector<Line2D> lines, short firstNozzle, sh
         }
 
         //Sorting lines
-#ifdef DEBUG_SWEEP
-        std::cout << "Sorting Line...";
-#endif
+
+
         //std::sort(unsortedLines.begin(), unsortedLines.end());
         sortedLines = unsortedLines;
-        //if (sortedLines.size() == 0) return sweeps; // Is this really neccessary ?
-#ifdef DEBUG_SWEEP
-        std::cout << "Done" << std::endl;
-#endif
+
     }
 
     //Generate sweep
-#ifdef DEBUG_SWEEP
-    std::cout << "Generating Sweep...";
-#endif
     float min, max;
     min = getMinY(sortedLines);
     max = getMaxY(sortedLines);
-#ifdef DEBUG_SWEEP
-    std::cout << std::endl << "Min Max : " << "Min: " << min << " | Max: " << max << std::endl;
-#endif
+
     int index = 0;
     Sweep sweep; //Collection of line of in a sweep
     NozzleLine nozzleLine; //Collection of line with the same height
@@ -438,33 +414,20 @@ SweepCollection::generateSweeps(std::vector<Line2D> lines, short firstNozzle, sh
         }
         y += spacing;
     }
-#ifdef DEBUG_SWEEP
-    std::cout << "Done" << std::endl;
-#endif
+
     if (sweep.size() != 0) sweeps.push(sweep);
 
     //Generate the sweepAction
-#ifdef DEBUG_SWEEP
-    std::cout << "Generating Nozzle Action..." << std::endl;
-#endif
-
 
     for (std::vector<Sweep>::iterator sweep = sweeps.begin(); sweep != sweeps.end(); ++sweep) {
 
         sweep->calcMinMax();
 
-
-#ifdef DEBUG_SWEEP
-        std::cout << std::endl << "New Sweep : " << "Min: " << sweep->getXMin() << " | Max: " << sweep->getXMax() << std::endl;
-#endif
         float curX = sweep->getXMin();
         float nextX = sweep->getNextX(curX + spacing/2.0f);
 
         int lastCode = 0;
         while (curX != sweep->getXMax()) {
-#ifdef DEBUG_SWEEP
-            std::cout << std::endl << " curX : " << curX << " | nextX : " << nextX;
-#endif
             int code = sweep->arrayToCode(sweep->getbyX(curX + spacing/2.0f));
             if (lastCode != code || sweep->sizeA() == 0) {
                 NozzleAction n = NozzleAction(curX, std::abs(nextX - curX), code, 96);
@@ -475,11 +438,7 @@ SweepCollection::generateSweeps(std::vector<Line2D> lines, short firstNozzle, sh
                 sweep->addLengthOf(sweep->sizeA() - 1 ,std::abs(nextX - curX));
             }
 
-            //float lastX = curX;
-            curX = nextX; //sweep->getNextX(curX+(spacing/2.0f));
-            //while((curX - lastX) <= spacing && curX < sweep->getXMax()){
-            //    curX = sweep->getNextX(curX);
-            //}
+            curX = nextX;
             nextX = sweep->getNextX(curX + spacing/2.0f);
         }
     }

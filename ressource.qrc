@@ -5,7 +5,6 @@
         <file>assets/copy.png</file>
         <file>assets/delete.png</file>
         <file>assets/frontview.png</file>
-        <file>assets/main.png</file>
         <file>assets/move.png</file>
         <file>assets/remove.png</file>
         <file>assets/rotate.png</file>
@@ -13,5 +12,6 @@
         <file>assets/settings.png</file>
         <file>assets/slice.png</file>
         <file>assets/save.png</file>
+        <file>assets/raindrop.png</file>
     </qresource>
 </RCC>

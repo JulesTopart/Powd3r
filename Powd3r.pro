@@ -8,7 +8,7 @@ QT += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Powd3r
+TARGET = Powd3r-Slicer
 TEMPLATE = app
 LIBS += -LD:\Qt\5.11.2\mingw53_32\lib\libQt5OpenGL.a -lopengl32 -lglu32
 # The following define makes your compiler emit warnings if you use
@@ -64,7 +64,8 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-RESOURCES = ressource.qrc
+RESOURCES += \
+    ressource.qrc
 
 DISTFILES += \
     .gitignore \
