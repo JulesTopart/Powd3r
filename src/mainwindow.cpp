@@ -133,6 +133,7 @@ void MainWindow::loadDefault(){
 
     ui->checkBoxGenerateLineNumber->setCheckState(Qt::Unchecked);
     ui->actionBoundaries->setCheckState(Qt::Checked);
+    ui->checkBoxAlternatePass->setCheckState(Qt::Checked);
 }
 
 
@@ -203,6 +204,12 @@ void MainWindow::loadSettings()
         ui->checkBoxGenerateLineNumber->setCheckState(Qt::Checked);
     else
         ui->checkBoxGenerateLineNumber->setCheckState(Qt::Unchecked);
+
+    int altPass = settings.value("altPass", "").toInt();
+    if(genLine >= 1)
+        ui->checkBoxAlternatePass->setCheckState(Qt::Checked);
+    else
+        ui->checkBoxAlternatePass->setCheckState(Qt::Unchecked);
 
     ui->openGLModel->originOffset.setX(offbuildX);
     ui->openGLModel->originOffset.setY(offbuildY);
@@ -277,23 +284,23 @@ void MainWindow::saveSettings()
     settings.setValue("pass_count", pass_count);
     if (ui->passSpinBox) ui->passSpinBox->setValue(pass_count);
 
-    double buildX = (ui->widthSpinBox) ? ui->widthSpinBox->value() : 100.0f;
+    double buildX = (ui->widthSpinBox) ? ui->widthSpinBox->value() : 90.0f;
     settings.setValue("build_x", buildX);
     if (ui->widthSpinBox) ui->widthSpinBox->setValue(buildX);
 
-    double buildY = (ui->depthSpinBox) ? ui->depthSpinBox->value() : 100.0f;
+    double buildY = (ui->depthSpinBox) ? ui->depthSpinBox->value() : 80.0f;
     settings.setValue("build_y", buildY);
     if (ui->depthSpinBox) ui->depthSpinBox->setValue(buildY);
 
-    double buildZ = (ui->heightSpinBox) ? ui->heightSpinBox->value() : 150.0f;
+    double buildZ = (ui->heightSpinBox) ? ui->heightSpinBox->value() : 80.0f;
     settings.setValue("build_z", buildZ);
     if (ui->heightSpinBox) ui->heightSpinBox->setValue(buildZ);
 
-    double offbuildX = (ui->X_OffsetSpinBox) ? ui->X_OffsetSpinBox->value() : -110.0f;
+    double offbuildX = (ui->X_OffsetSpinBox) ? ui->X_OffsetSpinBox->value() : 0.0f;
     settings.setValue("offbuild_x", offbuildX);
     if (ui->X_OffsetSpinBox) ui->X_OffsetSpinBox->setValue(offbuildX);
 
-    double offbuildY = (ui->Y_OffsetSpinBox) ? ui->Y_OffsetSpinBox->value() : 10.0f;
+    double offbuildY = (ui->Y_OffsetSpinBox) ? ui->Y_OffsetSpinBox->value() : -215.0f;
     settings.setValue("offbuild_y", offbuildY);
     if (ui->Y_OffsetSpinBox) ui->Y_OffsetSpinBox->setValue(offbuildY);
 
@@ -306,6 +313,9 @@ void MainWindow::saveSettings()
 
     int genLine = (ui->checkBoxGenerateLineNumber) ? ui->checkBoxGenerateLineNumber->isChecked() : 0;
     settings.setValue("genLine", genLine);
+
+    int altPass = (ui->checkBoxAlternatePass) ? ui->checkBoxAlternatePass->isChecked() : 0;
+    settings.setValue("altPass", genLine);
 }
 
 
@@ -370,114 +380,10 @@ void MainWindow::processSTLFile(QString filePath){
     this->setCursor(QCursor(Qt::ArrowCursor));
 }
 
-void MainWindow::addModel(Mesh* mdlPtr){
-    ui->openGLModel->loadModel(mdlPtr);
-    ui->openGLModel->updateGL();
-    updateList();
-}
-
-void MainWindow::updateList(){
-   int size = ui->openGLModel->modelCount();
-    ui->listWidget->clear();
-    Mesh* mdlPtr;
-    for(int i(0); i < size; i++){
-        mdlPtr = this->ui->openGLModel->get(i);
-        ui->listWidget->addItem( "  " + QString::number(mdlPtr->getId()) + "  :  " + mdlPtr->getName() + " " + QString::number(mdlPtr->getBBSize().x) + " x " + QString::number(mdlPtr->getBBSize().y)+ " x " + QString::number(mdlPtr->getBBSize().z) + "mm");
-    }
-    selectModel();
-}
-
-void MainWindow::selectModel(int i){
-    if(i >= 0 && i < ui->openGLModel->modelCount()){
-        ui->openGLModel->select(i);
-        ui->listWidget->setCurrentRow(i);
-    }
-    else{
-        i = ui->openGLModel->modelCount() - 1;
-        ui->openGLModel->select(i);
-        ui->listWidget->setCurrentRow(i);
-    }
-}
-
-void MainWindow::on_actionImporter_triggered()
-{
-   browseFile();
-}
 
 
-void MainWindow::on_actionOption_triggered(){
-    ui->tabWidget->setCurrentIndex(4);
-}
 
-
-void MainWindow::on_scaleButton_clicked()
-{
-    if(this->ui->listWidget->count() > 0 &&  ui->openGLModel->getSelected() != -1){
-        int id = ui->openGLModel->getSelected();
-        Mesh* mdlPtr = this->ui->openGLModel->get(id);
-        ScaleDialog *dialog = new ScaleDialog(mdlPtr, this);
-         dialog->show();
-    }
-}
-
-
-void MainWindow::on_rotateButton_clicked()
-{
-    if(this->ui->listWidget->count() > 0 &&  ui->openGLModel->getSelected() != -1){
-        int id = ui->openGLModel->getSelected();
-        Mesh* mdlPtr = this->ui->openGLModel->get(id);
-        RotDialog *dialog = new RotDialog(mdlPtr, this);
-        dialog->show();
-    }
-}
-
-void MainWindow::on_deleteButton_clicked()
-{
-    if(this->ui->listWidget->count() > 0 &&  ui->openGLModel->getSelected() != -1){
-        this->ui->openGLModel->unloadModel(ui->openGLModel->getSelected());
-        ui->openGLModel->select(-1);
-        updateList();
-    }
-}
-
-void MainWindow::on_duplicateButton_clicked()
-{
-    if(this->ui->listWidget->count() > 0 &&  ui->openGLModel->getSelected() != -1){
-        int id = ui->openGLModel->getSelected();
-        Mesh* mdlPtr = this->ui->openGLModel->get(id);
-        addModel(mdlPtr);
-    }
-}
-
-void MainWindow::on_listWidget_itemPressed(QListWidgetItem*)
-{
-    int id = ui->listWidget->currentRow();
-    ui->openGLModel->select(id);
-    ui->openGLModel->updateGL();
-}
-
-
-//Reset View Button
-void MainWindow::on_centerButton_clicked()
-{
-    ui->openGLModel->FrontView();
-}
-
-//Add button
-void MainWindow::on_addButton_clicked()
-{
-    browseFile();
-}
-
-void MainWindow::on_moveButton_clicked()
-{
-    if(this->ui->listWidget->count() > 0 && ui->openGLModel->getSelected() != -1){
-        int id = ui->openGLModel->getSelected();
-        Mesh* mdlPtr = this->ui->openGLModel->get(id);
-        moveDialog *dialog = new moveDialog(mdlPtr);
-        dialog->show();
-    }
-}
+//Important button
 
 void MainWindow::on_sliceButton_clicked()
 {
@@ -562,7 +468,8 @@ void MainWindow::generateGcode(){
         int nSlice = ui->openGLSlice->sliceCount();                                     //Store sliceCount
         QVector<Lines2D> subLines = *ui->openGLToolpath->getLines();                    //Store nozzleLines
         int pass = ui->passSpinBox->value();
-        int progress(0);                                                              //TODO modify this progress handling
+        bool altPass = ui->checkBoxAlternatePass->isChecked();
+        int progress(0);
 
 
         long max(subLines.size());
@@ -577,11 +484,10 @@ void MainWindow::generateGcode(){
             this->ui->gcode->append(this->ui->BLGcode->toPlainText());
             this->ui->gcode->append(";Switching to layer " + QString::number(progress + 1));
             this->ui->gcode->append("G1 Z" +  QString::number(ui->layerHeightSpinBox->value()) + " F" + QString::number(ui->verticalSpeedSpinBox->value())); //Move to next layer
-            //this->ui->gcode->append("G1 F" +  QString::number(ui->horizontalSpeedSpinBox->value())); //Move to next layer
             this->ui->gcode->append(this->ui->ALGcode->toPlainText());
 
             SweepCollection sweeps = SweepCollection::generateSweeps(lines->toStdVector(), ui->firstNozzleSpinBox->value() - 1, ui->lastNozzleSpinBox->value() - 1, 96); //Generate slice sweeps
-            std::string out = sweeps.toGcode(pass, offset,ui->sweepSpeedSpinBox->value(), ui->InkFlowSpinBox->value() / 100.0); //number of pass
+            std::string out = sweeps.toGcode(pass, altPass,offset,ui->sweepSpeedSpinBox->value(), ui->InkFlowSpinBox->value() / 100.0); //number of pass
             QString cast = QString::fromStdString(out);
 
             this->ui->gcode->append(cast);
@@ -600,26 +506,9 @@ void MainWindow::generateGcode(){
 
 
 
-void MainWindow::on_verticalSlider_valueChanged(int value)
-{
-    ui->openGLSlice->selectSlice(value);
-    ui->zeroCount->setText(QString::number(value));
-    ui->verticalSlider2->setValue(value);
-}
-
-void MainWindow::on_verticalSlider2_valueChanged(int value)
-{
-    ui->openGLToolpath->selectSlice(value);
-    ui->zeroCount3->setText(QString::number(value));
-    ui->verticalSlider->setValue(value);
-}
 
 
-void MainWindow::on_gcodeGenButton_clicked()
-{
-    generateGcode();
-}
-
+//Spinboxs
 void MainWindow::on_firstNozzleSpinBox_valueChanged(int)
 {
     ui->openGLToolpath->nozzleCount = ui->lastNozzleSpinBox->value() + 1 - ui->firstNozzleSpinBox->value();
@@ -674,27 +563,93 @@ void MainWindow::on_Z_OffsetSpinBox_valueChanged(double arg)
 }
 
 
-void MainWindow::upddateLineNumber(){
-    ui->lineNumber->clear();
 
-    if(ui->checkBoxGenerateLineNumber->isChecked()){
-        ui->gcodePBar->setMaximum(100);
-        ui->gcodePBar->setValue(0);
 
-        int nLine = ui->gcode->document()->blockCount();
-        QString numbers = "";
-        for(int i = 0; i < nLine; i++){
-            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
-            numbers += QString::number(i);
-            numbers += '\n';
-            ui->gcodePBar->setValue(float(float(i) / float(nLine)) * 100);
-        }
+//Button
 
-        ui->gcodePBar->setValue(100);
-        ui->lineNumber->append(numbers);
+void MainWindow::on_gcodeGenButton_clicked()
+{
+    generateGcode();
+}
+
+void MainWindow::on_actionImporter_triggered()
+{
+   browseFile();
+}
+
+
+void MainWindow::on_listWidget_itemPressed(QListWidgetItem*)
+{
+    int id = ui->listWidget->currentRow();
+    ui->openGLModel->select(id);
+    ui->openGLModel->updateGL();
+}
+
+void MainWindow::on_actionOption_triggered(){
+    ui->tabWidget->setCurrentIndex(4);
+}
+
+
+void MainWindow::on_scaleButton_clicked()
+{
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLModel->getSelected() != -1){
+        int id = ui->openGLModel->getSelected();
+        Mesh* mdlPtr = this->ui->openGLModel->get(id);
+        ScaleDialog *dialog = new ScaleDialog(mdlPtr, this);
+         dialog->show();
     }
 }
 
+
+void MainWindow::on_rotateButton_clicked()
+{
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLModel->getSelected() != -1){
+        int id = ui->openGLModel->getSelected();
+        Mesh* mdlPtr = this->ui->openGLModel->get(id);
+        RotDialog *dialog = new RotDialog(mdlPtr, this);
+        dialog->show();
+    }
+}
+
+void MainWindow::on_deleteButton_clicked()
+{
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLModel->getSelected() != -1){
+        this->ui->openGLModel->unloadModel(ui->openGLModel->getSelected());
+        ui->openGLModel->select(-1);
+        updateList();
+    }
+}
+
+void MainWindow::on_duplicateButton_clicked()
+{
+    if(this->ui->listWidget->count() > 0 &&  ui->openGLModel->getSelected() != -1){
+        int id = ui->openGLModel->getSelected();
+        Mesh* mdlPtr = this->ui->openGLModel->get(id);
+        addModel(mdlPtr);
+    }
+}
+
+//Reset View Button
+void MainWindow::on_centerButton_clicked()
+{
+    ui->openGLModel->FrontView();
+}
+
+//Add button
+void MainWindow::on_addButton_clicked()
+{
+    browseFile();
+}
+
+void MainWindow::on_moveButton_clicked()
+{
+    if(this->ui->listWidget->count() > 0 && ui->openGLModel->getSelected() != -1){
+        int id = ui->openGLModel->getSelected();
+        Mesh* mdlPtr = this->ui->openGLModel->get(id);
+        moveDialog *dialog = new moveDialog(mdlPtr);
+        dialog->show();
+    }
+}
 
 void MainWindow::on_actionLoadDefaultSetting_triggered()
 {
@@ -730,15 +685,6 @@ void MainWindow::on_defaultSetting_pressed()
     on_actionLoadDefaultSetting_triggered();
 }
 
-void MainWindow::on_actionBoundaries_stateChanged(int i)
-{
-    bool state = false;
-    if(i == 2) state = true;
-    ui->openGLModel->toggleBoundaries(state);
-    if(state)ui->actionBoundaries->setCheckState(Qt::Checked);
-    else ui->actionBoundaries->setCheckState(Qt::Unchecked);
-}
-
 void MainWindow::on_gcodeExportButton_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
@@ -764,9 +710,92 @@ void MainWindow::on_gcodeExportButton_clicked()
     }
 }
 
+
+//CheckBox
+
+void MainWindow::on_actionBoundaries_stateChanged(int i)
+{
+    bool state = false;
+    if(i == 2) state = true;
+    ui->openGLModel->toggleBoundaries(state);
+    if(state)ui->actionBoundaries->setCheckState(Qt::Checked);
+    else ui->actionBoundaries->setCheckState(Qt::Unchecked);
+}
+
+
+//Sliders
+
+void MainWindow::on_verticalSlider_valueChanged(int value)
+{
+    ui->openGLSlice->selectSlice(value);
+    ui->zeroCount->setText(QString::number(value));
+    ui->verticalSlider2->setValue(value);
+}
+
+void MainWindow::on_verticalSlider2_valueChanged(int value)
+{
+    ui->openGLToolpath->selectSlice(value);
+    ui->zeroCount3->setText(QString::number(value));
+    ui->verticalSlider->setValue(value);
+}
+
 void MainWindow::on_viewerVerticalSlider_valueChanged(int value)
 {
     ui->openGLViewer->selectSlice(value);
     ui->zeroCount->setText(QString::number(value));
     ui->viewerVerticalSlider->setValue(value);
+}
+
+
+//Util
+
+void MainWindow::addModel(Mesh* mdlPtr){
+    ui->openGLModel->loadModel(mdlPtr);
+    ui->openGLModel->updateGL();
+    updateList();
+}
+
+void MainWindow::updateList(){
+   int size = ui->openGLModel->modelCount();
+    ui->listWidget->clear();
+    Mesh* mdlPtr;
+    for(int i(0); i < size; i++){
+        mdlPtr = this->ui->openGLModel->get(i);
+        ui->listWidget->addItem( "  " + QString::number(mdlPtr->getId()) + "  :  " + mdlPtr->getName() + " " + QString::number(mdlPtr->getBBSize().x) + " x " + QString::number(mdlPtr->getBBSize().y)+ " x " + QString::number(mdlPtr->getBBSize().z) + "mm");
+    }
+    selectModel();
+}
+
+void MainWindow::selectModel(int i){
+    if(i >= 0 && i < ui->openGLModel->modelCount()){
+        ui->openGLModel->select(i);
+        ui->listWidget->setCurrentRow(i);
+    }
+    else{
+        i = ui->openGLModel->modelCount() - 1;
+        ui->openGLModel->select(i);
+        ui->listWidget->setCurrentRow(i);
+    }
+}
+
+
+void MainWindow::upddateLineNumber(){
+    ui->lineNumber->clear();
+
+    if(ui->checkBoxGenerateLineNumber->isChecked()){
+        ui->gcodePBar->setMaximum(100);
+        ui->gcodePBar->setValue(0);
+
+        int nLine = ui->gcode->document()->blockCount();
+        QString numbers = "";
+        for(int i = 0; i < nLine; i++){
+            qApp->processEvents(QEventLoop::ExcludeSocketNotifiers,10);
+            numbers += QString::number(i);
+            numbers += '\n';
+            ui->gcodePBar->setValue(float(float(i) / float(nLine)) * 100);
+        }
+
+        ui->gcodePBar->setValue(100);
+        ui->lineNumber->append(numbers);
+    }
 }

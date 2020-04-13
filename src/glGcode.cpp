@@ -60,10 +60,10 @@ void NSweep::draw(float z){
         }
         previousX = s.x;
     }
-    glPointSize(3.0);
+    glPointSize(4.0);
     glColor3f(1,0.2f,0.2f);
     glBegin(GL_POINTS);
-        glVertex2f(x-0.1,y);
+        glVertex2f(x,y);
     glEnd();
 }
 

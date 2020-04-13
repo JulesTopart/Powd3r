@@ -224,7 +224,7 @@ public:
     }
 
 
-    std::string toGcode(short nPass = 1, QVector2D offset = QVector2D(0,0), float speed = 5000, float inkQuantity = 1);
+    std::string toGcode(short nPass = 1, bool alternatePass = true, QVector2D offset = QVector2D(0,0), float speed = 5000, float inkQuantity = 1);
 
     static SweepCollection generateSweeps(std::vector<Line2D> lines, short firstNozzle,short lastNozzle, short dpi);
 
